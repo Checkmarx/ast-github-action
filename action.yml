@@ -1,0 +1,62 @@
+name: 'Checkmarx AST CLI Action'
+description: 'Simplify Checkmarx Scanning of source code along with Result consumption leveraging Checkmarx AST solution.'
+author: 'Checkmarx Technical Services'
+inputs:
+  base_uri:
+    required: true
+    description: 'Provide the AST portal URL'
+    default: ''
+  client_id:
+    required: true
+    description: 'Client ID for AST portal authentication'
+    default: ''
+  secret:
+    required: true
+    description: 'Secret key for AST portal authentication'
+    default: ''
+  project_type:
+    required: false
+    description: 'Project type for AST'
+    default: 'sast'
+  project_name:
+    required: true
+    default: ''
+    description: 'Select a Checkmarx Project Name'
+  github_token:
+    required: false
+    default: ${{ github.token }}
+    description: 'GitHub API Token'
+  source:
+    required: false
+    default: ''
+    description: 'Source for the Zip file'
+  additional_params:
+    required: false
+    default: ''
+    description: 'Additional parameters for AST scan'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.base_uri }}
+    - ${{ inputs.client_id }}
+    - ${{ inputs.secret }}
+    - ${{ inputs.project_type }}
+    - ${{ inputs.prject_name }}
+    - ${{ inputs.github_token }}
+    - ${{ inputs.source }}
+    - ${{ inputs.additional_params }}
+
+  env:
+    BASE_URI: "${{ inputs.base_uri }}"
+    CLIENT_ID: ${{ inputs.client_id }}
+    SECRET: ${{ inputs.secret }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    PROJECT_TYPE: ${{ inputs.project_type }}
+    PROJECT_NAME: ${{ inputs.project_name }}
+    SOURCE: ${{ inputs.source }}
+    ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
+
+branding:
+  icon: 'check'
+  color: 'green'
