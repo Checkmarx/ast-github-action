@@ -42,15 +42,15 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.base_uri }}
-    - ${{ inputs.client_id }}
-    - ${{ inputs.secret }}
-    - ${{ inputs.project_type }}
-    - ${{ inputs.prject_name }}
+    - --base-uri ${{ inputs.base_uri }}
+    - -- client-id ${{ inputs.client_id }}
+    - --secret ${{ inputs.secret }}
+    - --project-type ${{ inputs.project_type }}
+    - --project-name ${{ inputs.project_name }}
     - ${{ inputs.github_token }}
-    - ${{ inputs.archive_source }}
-    - ${{ inputs.project_source }}
-    - ${{ inputs.additional_params }}
+    - --archive-source ${{ inputs.archive_source }}
+    - --project-source ${{ inputs.project_source }}
+    - --additional-parameters ${{ inputs.additional_params }}
 
   env:
     BASE_URI: "${{ inputs.base_uri }}"
