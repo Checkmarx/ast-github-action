@@ -26,10 +26,14 @@ inputs:
     required: false
     default: ${{ github.token }}
     description: 'GitHub API Token'
-  source:
+  archive_source:
     required: false
     default: ''
     description: 'Source for the Zip file'
+  project_source:
+    required: false
+    default: ''
+    description: 'Source for the project directory'
   additional_params:
     required: false
     default: ''
@@ -44,7 +48,8 @@ runs:
     - ${{ inputs.project_type }}
     - ${{ inputs.prject_name }}
     - ${{ inputs.github_token }}
-    - ${{ inputs.source }}
+    - ${{ inputs.archive_source }}
+    - ${{ inputs.project_source }}
     - ${{ inputs.additional_params }}
 
   env:
@@ -54,7 +59,8 @@ runs:
     GITHUB_TOKEN: ${{ inputs.github_token }}
     PROJECT_TYPE: ${{ inputs.project_type }}
     PROJECT_NAME: ${{ inputs.project_name }}
-    SOURCE: ${{ inputs.source }}
+    ARCHIVE_SOURCE: ${{ inputs.archive_source }}
+    PROJECT_SOURCE: ${{ inputs.project_source }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
 
 branding:
