@@ -34,6 +34,10 @@ inputs:
     required: false
     default: ''
     description: 'Source for the project directory'
+  filter:
+    required: false
+    default: ''
+    description: 'Project scan filters for AST'
   additional_params:
     required: false
     default: ''
@@ -62,6 +66,7 @@ runs:
     ARCHIVE_SOURCE: ${{ inputs.archive_source }}
     PROJECT_SOURCE: ${{ inputs.project_source }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
+    FILTER: ${{ inputs.filter }}
 
 branding:
   icon: 'check'
