@@ -5,22 +5,22 @@ inputs:
   base_uri:
     required: true
     description: 'Provide the AST portal URL'
-    default: ''
+    default: ' '
   client_id:
     required: true
     description: 'Client ID for AST portal authentication'
-    default: ''
+    default: ' '
   secret:
     required: true
     description: 'Secret key for AST portal authentication'
-    default: ''
+    default: ' '
   project_type:
     required: false
     description: 'Project type for AST'
     default: 'sast'
   project_name:
-    required: true
-    default: ''
+    required: false
+    default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
   github_token:
     required: false
@@ -28,19 +28,19 @@ inputs:
     description: 'GitHub API Token'
   archive_source:
     required: false
-    default: ''
+    default: ' '
     description: 'Source for the Zip file'
-  project_source:
+  source_directory:
     required: false
-    default: ''
+    default: ' '
     description: 'Source for the project directory'
   filter:
     required: false
-    default: ''
+    default: ' '
     description: 'Project scan filters for AST'
   additional_params:
     required: false
-    default: ''
+    default: ' '
     description: 'Additional parameters for AST scan'
 runs:
   using: 'docker'
@@ -64,7 +64,7 @@ runs:
     PROJECT_TYPE: ${{ inputs.project_type }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ARCHIVE_SOURCE: ${{ inputs.archive_source }}
-    PROJECT_SOURCE: ${{ inputs.project_source }}
+    SOURCE_DIRECTORY: ${{ inputs.source_directory }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     FILTER: ${{ inputs.filter }}
 
