@@ -5,7 +5,7 @@ inputs:
   base_uri:
     required: true
     description: 'Provide the AST portal URL'
-    default: ' '
+    default: 'http://demo.ast-cloud.com'
   client_id:
     required: true
     description: 'Client ID for AST portal authentication'
@@ -32,7 +32,7 @@ inputs:
     description: 'Source for the Zip file'
   source_directory:
     required: false
-    default: ' '
+    default: '.'
     description: 'Source for the project directory'
   filter:
     required: false
