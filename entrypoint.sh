@@ -8,8 +8,8 @@ if [[ -v ${CLIENT_ID} ]]; then
   --client-id ${CLIENT_ID}
 fi
 if [[ -v ${SECRET} ]]; then
-  --secret ${SECRET}
+  "--secret" ${SECRET}
 fi
 if [[ -v ${PROJECT_TYPE} ]]; then
-  --project-type ${PROJECT_TYPE}
+  "--project-type" ${PROJECT_TYPE}
 fi
