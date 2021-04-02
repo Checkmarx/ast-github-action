@@ -15,16 +15,16 @@
 #`if [[ -v ${PROJECT_TYPE} ]]; then
 #  --project-type "${PROJECT_TYPE}"
 #fi`
-params=()
-if [[ $FILTER -ge 0 ]]; then
-  params+=(--filter ${FILTER})
-fi
-if [[ $CLIENT_ID -ge 0 ]]; then
-  params+=(--client-id ${CLIENT_ID})
-fi
-if [[ $SECRET -ge 0 ]]; then
-  params+=(--secret ${SECRET})
-fi
+#params=()
+#if [[ $FILTER -ge 0 ]]; then
+#  params+=(--filter ${FILTER})
+#fi
+#if [[ $CLIENT_ID -ge 0 ]]; then
+#  params+=(--client-id ${CLIENT_ID})
+#fi
+#if [[ $SECRET -ge 0 ]]; then
+#  params+=(--secret ${SECRET})
+#fi
+#
 
-
-/app/bin/cx scan create --project-type ${PROJECT_TYPE} --base-uri ${BASE_URI} --project-name ${PROJECT_NAME} -d ${SOURCE_DIRECTORY} ${ADDITIONAL_PARAMS} "${params[@]}"
+/app/bin/cx scan create --project-type ${PROJECT_TYPE} --project-name ${PROJECT_NAME} -d ${SOURCE_DIRECTORY} --filter ${FILTER}

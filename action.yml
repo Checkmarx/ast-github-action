@@ -7,12 +7,16 @@ inputs:
     description: 'Provide the AST portal URL'
     default: 'http://demo.ast-cloud.com'
   client_id:
-    required: true
+    required: false
     description: 'Client ID for AST portal authentication'
     default: ''
   secret:
-    required: true
+    required: false
     description: 'Secret key for AST portal authentication'
+    default: ''
+  token:
+    required: false
+    description: 'Token for AST portal authentication'
     default: ''
   project_type:
     required: false
@@ -36,7 +40,7 @@ inputs:
     description: 'Source for the project directory'
   filter:
     required: false
-    default: ''
+    default: '.'
     description: 'Project scan filters for AST'
   additional_params:
     required: false
@@ -45,7 +49,7 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-#  args:
+  args:
 #    - --base-uri ${{ inputs.base_uri }}
 #    - -- client-id ${{ inputs.client_id }}
 #    - --secret ${{ inputs.secret }}
@@ -54,12 +58,13 @@ runs:
 #    - ${{ inputs.github_token }}
 #    - --archive-source ${{ inputs.archive_source }}
 #    - --project-source ${{ inputs.project_source }}
-#    - --additional-parameters ${{ inputs.additional_params }}
+    - --additional-parameters ${{ inputs.additional_params }}
 
   env:
-    BASE_URI: "${{ inputs.base_uri }}"
-    CLIENT_ID: ${{ inputs.client_id }}
-    SECRET: ${{ inputs.secret }}
+    CX_BASE_URI: "${{ inputs.base_uri }}"
+    CX_AST_ACCESS_KEY_ID: ${{ inputs.client_id }}
+    CX_AST_ACCESS_KEY_SECRET: ${{ inputs.secret }}
+    CX_TOKEN: ${{ inputs.token }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
     PROJECT_TYPE: ${{ inputs.project_type }}
     PROJECT_NAME: ${{ inputs.project_name }}
