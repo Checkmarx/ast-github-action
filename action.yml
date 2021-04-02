@@ -58,7 +58,7 @@ runs:
 #    - ${{ inputs.github_token }}
 #    - --archive-source ${{ inputs.archive_source }}
 #    - --project-source ${{ inputs.project_source }}
-    - --additional-parameters ${{ inputs.additional_params }}
+    - ${{ inputs.additional_params }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
