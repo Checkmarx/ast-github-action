@@ -50,14 +50,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-#    - --base-uri ${{ inputs.base_uri }}
-#    - -- client-id ${{ inputs.client_id }}
-#    - --secret ${{ inputs.secret }}
-#    - --project-type ${{ inputs.project_type }}
-#    - --project-name ${{ inputs.project_name }}
-#    - ${{ inputs.github_token }}
-#    - --archive-source ${{ inputs.archive_source }}
-#    - --project-source ${{ inputs.project_source }}
     - ${{ inputs.additional_params }}
 
   env:
