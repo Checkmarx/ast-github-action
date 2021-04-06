@@ -4,3 +4,6 @@ printenv
 /app/bin/cx version
 ls -la /tmp/
 cp /tmp/*.zip ./cx.zip
+chmod 777 ./cx.zip
+pwd
+find .
