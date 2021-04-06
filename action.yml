@@ -51,6 +51,7 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.additional_params }}
+    - ${{ inputs.base_uri }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
