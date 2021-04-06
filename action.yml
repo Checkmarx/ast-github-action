@@ -50,8 +50,17 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.additional_params }}
     - ${{ inputs.base_uri }}
+    - ${{ inputs.client_id }}
+    - ${{ inputs.secret }}
+    - ${{ inputs.token }}
+    - ${{ inputs.github_token }}
+    - ${{ inputs.project_type }}
+    - ${{ inputs.project_name }}
+    - ${{ inputs.archive_source }}
+    - ${{ inputs.source_directory }}
+    - ${{ inputs.additional_params }}
+    - ${{ inputs.filter }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
