@@ -1,6 +1,6 @@
 #!/bin/sh
 printenv
-/app/bin/cx scan create -v --project-type ${PROJECT_TYPE} --project-name ${PROJECT_NAME} -s ${ARCHIVE_SOURCE} --format json
+/app/bin/cx scan create -v --project-type ${PROJECT_TYPE} --project-name ${PROJECT_NAME} -d "." --format json
 /app/bin/cx version
 ls -la /github/workspace/
 cp /github/workspace/*.zip ./cx.zip
