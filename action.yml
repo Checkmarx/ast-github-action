@@ -44,7 +44,7 @@ inputs:
     description: 'Source for the project directory'
   filter:
     required: false
-    default: .
+    default: '*'
     description: 'Project scan filters for AST'
   additional_params:
     required: false
