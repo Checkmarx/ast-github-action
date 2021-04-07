@@ -1,5 +1,5 @@
 #Use AST Base image
-FROM jprannoyn474/astclitest
+FROM jprannoyn474/ast-cli
 #Apply any updates
 RUN apk update && apk upgrade
 #Copy the entrypoint script and properties used for the action
