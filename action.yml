@@ -26,6 +26,10 @@ inputs:
     required: false
     default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
+  preset_name:
+    required: true
+    default: 'Checkmarx Default' # default repo name
+    description: 'Checkmarx scan preset value'
   github_token:
     required: false
     default: ${{ github.token }}
@@ -61,6 +65,7 @@ runs:
     - ${{ inputs.source_directory }}
     - ${{ inputs.additional_params }}
     - ${{ inputs.filter }}
+    - ${{ inputs.preset_name }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
@@ -74,6 +79,7 @@ runs:
     SOURCE_DIRECTORY: ${{ inputs.source_directory }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     FILTER: ${{ inputs.filter }}
+    PRESET_NAME: ${{ inputs.preset_name }}
 
 branding:
   icon: 'check'
