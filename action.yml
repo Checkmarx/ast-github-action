@@ -21,14 +21,14 @@ inputs:
   project_type:
     required: false
     description: 'Project type for AST'
-    default: 'sast'
+    default: sast
   project_name:
     required: false
     default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
   preset_name:
-    required: true
-    default: 'Checkmarx Default' # default repo name
+    required: false
+    default: Checkmarx Default # default repo name
     description: 'Checkmarx scan preset value'
   github_token:
     required: false
@@ -44,7 +44,7 @@ inputs:
     description: 'Source for the project directory'
   filter:
     required: false
-    default: '.'
+    default: .
     description: 'Project scan filters for AST'
   additional_params:
     required: false
