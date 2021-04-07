@@ -4,6 +4,6 @@ printenv
 /app/bin/cx version
 ls -la /github/workspace/
 cp /github/workspace/*.zip ./cx.zip
-chmod 777 ./cx.zip
+#chmod 777 ./cx.zip
 pwd
 find .
