@@ -14,10 +14,6 @@ jobs:
       - name: Checkmarx AST CLI Action
         uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
         with:
-          project_name: ProjectDemo
           base_uri: http://demo.ast-cloud.com
           client_id: ${{ secrets.CLIENT_ID }}
           secret: ${{ secrets.SECRET }}
-          project_type: sast
-          additional_params: --incremental false --preset-name "Checkmarx Default"
-          filter: "!*.md"
