@@ -1,7 +1,8 @@
 # Checkmarx AST Github Action ![Checkmarx](images/checkmarx.png) <img src="images/github.png" alt="Github" width="40" height="40">
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL3.0-yellow.svg)](https://www.gnu.org/licenses)
-[![Latest Release](https://img.shields.io/github/v/release/checkmarxDev/ast-github-action)](https://github.com/checkmarxDev/ast-github-action/releases)
+
+[comment]: <> ([![Latest Release]&#40;https://img.shields.io/github/v/release/checkmarxDev/ast-github-action&#41;]&#40;https://github.com/checkmarxDev/ast-github-action/releases&#41;)
 [![Open Issues](https://img.shields.io/github/issues-raw/checkmarxDev/ast-github-action)](https://github.com/checkmarxDev/ast-github-action/issues)
 
 Checkmarx AST GitHub Action.
