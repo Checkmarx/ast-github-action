@@ -25,14 +25,15 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | token | ${{ secrets.TOKEN }} | AST OAuth Token | Secure String | No | N/A
 | project_type | SAST | Scan engine for AST portal | String | No | SAST |
 | project_name | ProjectName | Checkmarx Project | String | No | Github repository name |
-| additional_params | --incremental false --preset-name "Checkmarx Default" | Additional parameters and scan options | String | No | SampleApp |
+| preset_name | Checkmarx Default | Checkmarx Project preset name | String | No | Checkmarx Default |
+| additional_params | --incremental false  | Additional parameters and scan options | String | No | N/A |
 | github_token | ${{ secrets.GITHUB_TOKEN }} | GitHub API Token, used for PR Feedback or GitHub Issue Feedback | String | No | ${{ github.token }} |
 | filter | "!*.md" | Source code directory/File filters to submit for scanning | String | No | "."(Includes all files) |
 
 
 ## Secrets
 
-_Note: It is recommentded to leverage secrets for any sensitive inputs_
+_Note: It is recommended to leverage secrets for any sensitive inputs_
 * client_id: ${{ secrets.CLIENT_ID }}
 * secret: ${{ secrets.SECRET }}
 * token: ${{ secrets.TOKEN }}
@@ -49,13 +50,10 @@ _Note: It is recommentded to leverage secrets for any sensitive inputs_
     - name: Checkmarx AST CLI Action
         uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
         with:
-          project_name: ProjectDemo
           base_uri: http://demo.ast-cloud.com
           client_id: ${{ secrets.CLIENT_ID }}
           secret: ${{ secrets.SECRET }}
-          project_type: sast
-          additional_params: --incremental false --preset-name "Checkmarx Default"
-          filter: "!*.md"
+          
 ```
 
 ## Sample Workflow files
