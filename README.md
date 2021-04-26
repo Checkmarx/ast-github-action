@@ -60,7 +60,7 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
 ## Sample Workflow files
 
 * [Github PUSH workflow for AST](sample-yml/checkmarx-ast-scan-push.yml)
-
+* [Github PULL REQUEST workflow for AST](sample-yml/checkmarx-ast-scan-pull-request.yml)
 
 ## How To Contribute
 
