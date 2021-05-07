@@ -21,23 +21,23 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | Variable  | Example Value &nbsp;| Description &nbsp; | Type | Required | Default |
 | ------------- | ------------- | ------------- |------------- | ------------- | ------------- |
 | base_uri | http://demo.ast-cloud.com | AST Portal URL | String | Yes | http://demo.ast-cloud.com
-| client_id | ${{ secrets.CLIENT_ID }} | AST OAuth Client ID | String | No | N/A
-| secret | ${{ secrets.SECRET }} | AST OAuth Secret key | Secure String | No | N/A
-| token | ${{ secrets.TOKEN }} | AST OAuth Token | Secure String | No | N/A
-| scan_types | SAST | Scan engine for AST portal | String | No | SAST |
+| cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID | String | No | N/A
+| cx_secret | ${{ secrets.CX_SECRET }} | AST OAuth Secret key | Secure String | No | N/A
+| cx_token | ${{ secrets.CX_TOKEN }} | AST OAuth Token | Secure String | No | N/A
+| scan_types | sast,kics | Scan engine for AST portal | String | No | sast |
 | project_name | ProjectName | Checkmarx Project | String | No | Github repository name |
 | preset_name | Checkmarx Default | Checkmarx Project preset name | String | No | Checkmarx Default |
-| additional_params | --incremental false  | Additional parameters and scan options | String | No | N/A |
+| additional_params | --sast-incremental false  | Additional parameters and scan options | String | No | N/A |
 | github_token | ${{ secrets.GITHUB_TOKEN }} | GitHub API Token, used for PR Feedback or GitHub Issue Feedback | String | No | ${{ github.token }} |
-| filter | "!*.md" | Source code directory/File filters to submit for scanning | String | No | "."(Includes all files) |
+| filter | "!*.md,.git/" | Source code directory/File filters to submit for scanning | String | No | "."(Includes all files) |
 
 
 ## Secrets
 
 _Note: It is recommended to leverage secrets for any sensitive inputs_
-* client_id: ${{ secrets.CLIENT_ID }}
-* secret: ${{ secrets.SECRET }}
-* token: ${{ secrets.TOKEN }}
+* cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+* cx_secret: ${{ secrets.CX_SECRET }}
+* cx_token: ${{ secrets.CX_TOKEN }}
 
 
 ## Example usage
@@ -52,8 +52,8 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
         uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
         with:
           base_uri: http://demo.ast-cloud.com
-          client_id: ${{ secrets.CLIENT_ID }}
-          secret: ${{ secrets.SECRET }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_secret: ${{ secrets.CX_SECRET }}
           
 ```
 
@@ -70,7 +70,7 @@ We welcome [issues](https://github.com/checkmarxDev/ast-github-action/issues) to
 
 Checkmarx Github Action
 
-Copyright (C) 2020 Checkmarx
+Copyright (C) 2021 Checkmarx
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
