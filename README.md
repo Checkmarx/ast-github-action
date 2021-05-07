@@ -21,9 +21,9 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | Variable  | Example Value &nbsp;| Description &nbsp; | Type | Required | Default |
 | ------------- | ------------- | ------------- |------------- | ------------- | ------------- |
 | base_uri | http://demo.ast-cloud.com | AST Portal URL | String | Yes | http://demo.ast-cloud.com
-| checkmarx_client_id | ${{ secrets.CHECKMARX_CLIENT_ID }} | AST OAuth Client ID | String | No | N/A
-| checkmarx_secret | ${{ secrets.CHECKMARX_SECRET }} | AST OAuth Secret key | Secure String | No | N/A
-| checkmarx_token | ${{ secrets.CHECKMARX_TOKEN }} | AST OAuth Token | Secure String | No | N/A
+| cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID | String | No | N/A
+| cx_secret | ${{ secrets.CX_SECRET }} | AST OAuth Secret key | Secure String | No | N/A
+| cx_token | ${{ secrets.CX_TOKEN }} | AST OAuth Token | Secure String | No | N/A
 | scan_types | sast,kics | Scan engine for AST portal | String | No | sast |
 | project_name | ProjectName | Checkmarx Project | String | No | Github repository name |
 | preset_name | Checkmarx Default | Checkmarx Project preset name | String | No | Checkmarx Default |
@@ -35,9 +35,9 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 ## Secrets
 
 _Note: It is recommended to leverage secrets for any sensitive inputs_
-* checkmarx_client_id: ${{ secrets.CHECKMARX_CLIENT_ID }}
-* checkmarx_secret: ${{ secrets.CHECKMARX_SECRET }}
-* checkmarx_token: ${{ secrets.CHECKMARX_TOKEN }}
+* cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+* cx_secret: ${{ secrets.CX_SECRET }}
+* cx_token: ${{ secrets.CX_TOKEN }}
 
 
 ## Example usage
@@ -52,8 +52,8 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
         uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
         with:
           base_uri: http://demo.ast-cloud.com
-          checkmarx_client_id: ${{ secrets.CHECKMARX_CLIENT_ID }}
-          checkmarx_secret: ${{ secrets.CHECKMARX_SECRET }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_secret: ${{ secrets.CX_SECRET }}
           
 ```
 

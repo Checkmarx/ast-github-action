@@ -16,5 +16,5 @@ jobs:
         uses: checkmarxDev/ast-github-action@master #Github Action version
         with:
           base_uri: http://demo.ast-cloud.com
-          checkamrx_client_id: ${{ secrets.CHECKMARX_CLIENT_ID }}
-          checkmarx_secret: ${{ secrets.CHECKMARX_SECRET }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_secret: ${{ secrets.CX_SECRET }}
