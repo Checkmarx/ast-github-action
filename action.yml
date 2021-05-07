@@ -18,9 +18,9 @@ inputs:
     required: false
     description: 'Token for AST portal authentication'
     default: ''
-  project_type:
+  scan_types:
     required: false
-    description: 'Project type for AST'
+    description: 'Scan types to perform on AST'
     default: sast
   project_name:
     required: false

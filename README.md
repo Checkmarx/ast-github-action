@@ -24,7 +24,7 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | client_id | ${{ secrets.CLIENT_ID }} | AST OAuth Client ID | String | No | N/A
 | secret | ${{ secrets.SECRET }} | AST OAuth Secret key | Secure String | No | N/A
 | token | ${{ secrets.TOKEN }} | AST OAuth Token | Secure String | No | N/A
-| project_type | SAST | Scan engine for AST portal | String | No | SAST |
+| scan_types | SAST | Scan engine for AST portal | String | No | SAST |
 | project_name | ProjectName | Checkmarx Project | String | No | Github repository name |
 | preset_name | Checkmarx Default | Checkmarx Project preset name | String | No | Checkmarx Default |
 | additional_params | --incremental false  | Additional parameters and scan options | String | No | N/A |
