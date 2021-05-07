@@ -29,7 +29,7 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | preset_name | Checkmarx Default | Checkmarx Project preset name | String | No | Checkmarx Default |
 | additional_params | --sast-incremental false  | Additional parameters and scan options | String | No | N/A |
 | github_token | ${{ secrets.GITHUB_TOKEN }} | GitHub API Token, used for PR Feedback or GitHub Issue Feedback | String | No | ${{ github.token }} |
-| filter | "!*.md,*.git" | Source code directory/File filters to submit for scanning | String | No | "."(Includes all files) |
+| filter | "!*.md,.git/" | Source code directory/File filters to submit for scanning | String | No | "."(Includes all files) |
 
 
 ## Secrets
