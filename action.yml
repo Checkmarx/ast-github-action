@@ -59,7 +59,7 @@ runs:
     - ${{ inputs.secret }}
     - ${{ inputs.token }}
     - ${{ inputs.github_token }}
-    - ${{ inputs.project_type }}
+    - ${{ inputs.scan_types }}
     - ${{ inputs.project_name }}
     - ${{ inputs.archive_source }}
     - ${{ inputs.source_directory }}
@@ -73,7 +73,7 @@ runs:
     CX_AST_ACCESS_KEY_SECRET: ${{ inputs.secret }}
     CX_TOKEN: ${{ inputs.token }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
-    PROJECT_TYPE: ${{ inputs.project_type }}
+    SCAN_TYPES: ${{ inputs.scan_types }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ARCHIVE_SOURCE: ${{ inputs.archive_source }}
     SOURCE_DIRECTORY: ${{ inputs.source_directory }}
