@@ -46,10 +46,6 @@ inputs:
     required: false
     default: ''
     description: 'Additional parameters for AST scan'
-  preset_name:
-    required: false
-    default: Checkmarx Default # default repo name
-    description: 'Checkmarx scan preset value'
 outputs: 
   cxcli:
     description: output from cli
@@ -68,7 +64,6 @@ runs:
     - ${{ inputs.source_directory }}
     - ${{ inputs.additional_params }}
     - ${{ inputs.filter }}
-    - ${{ inputs.preset_name }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
@@ -82,7 +77,6 @@ runs:
     SOURCE_DIRECTORY: ${{ inputs.source_directory }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     FILTER: ${{ inputs.filter }}
-    PRESET_NAME: ${{ inputs.preset_name }}
 
 branding:
   icon: 'check'
