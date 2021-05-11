@@ -20,3 +20,4 @@ jobs:
           scan_types: sast
       - name: Check if failed authentication
         if: ${{ contains( steps.empty_client_secret.ouputs.output, 'Failed to authenticate')}}
+        run: echo "The authentication must fail if invalid client id or password is used"
