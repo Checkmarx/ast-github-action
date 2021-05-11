@@ -3,11 +3,8 @@ name: Test ast-github-action
 on: push
 
 jobs:
-  test:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-    runs-on: ${{ matrix.os }}
+  unittesting:
+    runs-on: ubuntu-latest
 
     name: Unit Testing
     steps:
@@ -38,7 +35,7 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast
-      - name: Check output contains completed
+      - name: Check output contains
         if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
         run: |
           echo "The cli failed"
