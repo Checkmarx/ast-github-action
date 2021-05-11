@@ -15,10 +15,10 @@ jobs:
         id: empty_client_secret
         uses: ./
         with:
-          project_name: 'test project'
-          base_uri: 'https://' 
-          cx_client_id: ''
-          cx_client_secret: ''
+          project_name: test project
+          base_uri: https:// 
+          cx_client_id: 
+          cx_client_secret: 
           scan_types: sast
       - name: Check if failed authentication
         if: ${{contains( steps.empty_client_secret.outputs.cxcli, 'Failed to authenticate') == false}}
@@ -39,4 +39,3 @@ jobs:
         if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
         run: |
           echo "The cli failed"
-          exit 1
