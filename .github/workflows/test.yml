@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Test if action is working 
     steps:
-    - name: Test with empty client and secret
-      uses: ./
-      with:
-        project_name: 'test project'
-        base_uri: 'https://' 
-        cx_client_id: ''
-        cx_client_secret: ''
-        scan_types: sast
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Test with empty client and secret
+        uses: ./
+        with:
+          project_name: 'test project'
+          base_uri: 'https://' 
+          cx_client_id: ''
+          cx_client_secret: ''
+          scan_types: sast
