@@ -64,8 +64,8 @@ runs:
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
-    CX_AST_ACCESS_KEY_ID: ${{ inputs.cx_client_id }}
-    CX_AST_ACCESS_KEY_SECRET: ${{ inputs.cx_client_secret }}
+    CX_AST_CLIENT_ID: ${{ inputs.cx_client_id }}
+    CX_AST_CLIENT_SECRET: ${{ inputs.cx_client_secret }}
     CX_TOKEN: ${{ inputs.cx_apikey }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
     SCAN_TYPES: ${{ inputs.scan_types }}
