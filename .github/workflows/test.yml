@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
-      - name: Test with empty client and secret
+      - name: Run with empty clien and secret
+        id: empty_client_secret
         uses: ./
         with:
           project_name: 'test project'
@@ -17,3 +18,5 @@ jobs:
           cx_client_id: ''
           cx_client_secret: ''
           scan_types: sast
+      - name: Check if failed authentication
+        if: ${{ contains( steps.empty_client_secret.ouputs.output, 'Failed to authenticate')}}
