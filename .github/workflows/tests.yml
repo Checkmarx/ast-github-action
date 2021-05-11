@@ -3,10 +3,10 @@ name: Test ast-github-action
 on: push
 
 jobs:
-  unittesting:
+  integrationtesting:
     runs-on: ubuntu-latest
 
-    name: Unit Testing
+    name: Integration Testing
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
@@ -35,7 +35,7 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast
-      - name: Check output contains
+      - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
         run: |
           echo "The cli failed"
