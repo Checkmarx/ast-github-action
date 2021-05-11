@@ -19,9 +19,9 @@ jobs:
           cx_client_secret: ''
           scan_types: sast
       - name: Get the output
-        run: echo "${{ steps.empty_client_secret.ouputs.output }}"
+        run: echo "${{ steps.empty_client_secret.outputs.cxcli }}"
       - name: Check if failed authentication
-        if: ${{ contains( steps.empty_client_secret.ouputs.output, 'Failed to authenticate')}}
+        if: ${{ contains( steps.empty_client_secret.outputs.cxcli, 'Failed to authenticate')}}
         run: echo "The authentication must fail if invalid client id or password is used"
       - name: Valid scenario 
         id: valid_scenario
@@ -33,5 +33,5 @@ jobs:
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast
       - name: Check if failed authentication
-        if: ${{ contains( steps.valid_scenario.ouputs.output, 'Completed')}}
+        if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed')}}
         run: echo "The cli failed"

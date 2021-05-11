@@ -51,7 +51,7 @@ inputs:
     default: Checkmarx Default # default repo name
     description: 'Checkmarx scan preset value'
 outputs: 
-  output:
+  cxcli:
     description: output from cli
 runs:
   using: 'docker'
