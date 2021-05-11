@@ -1,4 +1,4 @@
-name: Test github action 
+name: Test ast-github-action 
 
 on: push
 
@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
-      - name: Run with empty clien and secret
+      - name: Run with empty client and secret
         id: empty_client_secret
         uses: ./
         with:
@@ -21,3 +21,15 @@ jobs:
       - name: Check if failed authentication
         if: ${{ contains( steps.empty_client_secret.ouputs.output, 'Failed to authenticate')}}
         run: echo "The authentication must fail if invalid client id or password is used"
+      - name: Valid scenario 
+        id: valid_scenario
+        uses: ./
+        with:
+          project_name: Integration project
+          base_uri: https://master.cxast.com
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          scan_types: sast
+      - name: Check if failed authentication
+        if: ${{ contains( steps.valid_scenario.ouputs.output, 'Completed')}}
+        run: echo "The cli failed"
