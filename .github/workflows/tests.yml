@@ -39,3 +39,4 @@ jobs:
         if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
         run: |
           echo "The cli failed"
+          exit 1
