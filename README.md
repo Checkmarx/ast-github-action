@@ -18,26 +18,25 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 
 ## Inputs
 
-| Variable  | Example Value &nbsp;| Description &nbsp; | Type | Required | Default |
-| ------------- | ------------- | ------------- |------------- | ------------- | ------------- |
-| base_uri | http://demo.ast-cloud.com | AST Portal URL | String | Yes | http://demo.ast-cloud.com
-| cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID | String | No | N/A
-| cx_secret | ${{ secrets.CX_SECRET }} | AST OAuth Secret key | Secure String | No | N/A
-| cx_token | ${{ secrets.CX_TOKEN }} | AST OAuth Token | Secure String | No | N/A
-| scan_types | sast,kics | Scan engine for AST portal | String | No | sast |
-| project_name | ProjectName | Checkmarx Project | String | No | Github repository name |
-| preset_name | Checkmarx Default | Checkmarx Project preset name | String | No | Checkmarx Default |
-| additional_params | --sast-incremental false  | Additional parameters and scan options | String | No | N/A |
-| github_token | ${{ secrets.GITHUB_TOKEN }} | GitHub API Token, used for PR Feedback or GitHub Issue Feedback | String | No | ${{ github.token }} |
-| filter | "!*.md,.git/" | Source code directory/File filters to submit for scanning | String | No | "."(Includes all files) |
+| Variable  | Example Value &nbsp;| Description &nbsp; |
+| ------------- | ------------- | ------------- |
+| base_uri | http://demo.ast-cloud.com | AST Portal URL 
+| cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID 
+| cx_client_secret | ${{ secrets.CX_CLIENT_SECRET }} | AST OAuth Secret key 
+| cx_apikey | ${{ secrets.CX_APIKEY }} | AST OAuth API KEY 
+| scan_types | sast,kics | Scan engine for AST portal 
+| project_name | ProjectName | Checkmarx Project 
+| additional_params | --sast-incremental false  
+| github_token | ${{ secrets.GITHUB_TOKEN }} | GitHub API Token, used for PR Feedback or GitHub Issue Feedback 
+| filter | "!*.md,.git/" | Source code directories/Files that get zipped and sent to AST server for scanning 
 
 
 ## Secrets
 
 _Note: It is recommended to leverage secrets for any sensitive inputs_
 * cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-* cx_secret: ${{ secrets.CX_SECRET }}
-* cx_token: ${{ secrets.CX_TOKEN }}
+* cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+* cx_apikey: ${{ secrets.CX_APIKEY }}
 
 
 ## Example usage
@@ -53,7 +52,8 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
         with:
           base_uri: http://demo.ast-cloud.com
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_secret: ${{ secrets.CX_SECRET }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          scan_types: sast,kics
           
 ```
 

@@ -10,26 +10,22 @@ inputs:
     required: false
     description: 'Client ID for AST portal authentication'
     default: ''
-  cx_secret:
+  cx_client_secret:
     required: false
     description: 'Secret key for AST portal authentication'
     default: ''
-  cx_token:
+  cx_apikey:
     required: false
     description: 'Token for AST portal authentication'
     default: ''
   scan_types:
-    required: false
+    required: true
     description: 'Scan types to perform on AST'
-    default: sast
+    default: ''
   project_name:
     required: false
     default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
-  preset_name:
-    required: false
-    default: Checkmarx Default # default repo name
-    description: 'Checkmarx scan preset value'
   github_token:
     required: false
     default: ${{ github.token }}
@@ -56,8 +52,8 @@ runs:
   args:
     - ${{ inputs.base_uri }}
     - ${{ inputs.cx_client_id }}
-    - ${{ inputs.cx_secret }}
-    - ${{ inputs.cx_token }}
+    - ${{ inputs.cx_client_secret }}
+    - ${{ inputs.cx_apikey }}
     - ${{ inputs.github_token }}
     - ${{ inputs.scan_types }}
     - ${{ inputs.project_name }}
@@ -65,13 +61,12 @@ runs:
     - ${{ inputs.source_directory }}
     - ${{ inputs.additional_params }}
     - ${{ inputs.filter }}
-    - ${{ inputs.preset_name }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
     CX_AST_ACCESS_KEY_ID: ${{ inputs.cx_client_id }}
-    CX_AST_ACCESS_KEY_SECRET: ${{ inputs.cx_secret }}
-    CX_TOKEN: ${{ inputs.cx_token }}
+    CX_AST_ACCESS_KEY_SECRET: ${{ inputs.cx_client_secret }}
+    CX_TOKEN: ${{ inputs.cx_apikey }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
     SCAN_TYPES: ${{ inputs.scan_types }}
     PROJECT_NAME: ${{ inputs.project_name }}
@@ -79,7 +74,6 @@ runs:
     SOURCE_DIRECTORY: ${{ inputs.source_directory }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     FILTER: ${{ inputs.filter }}
-    PRESET_NAME: ${{ inputs.preset_name }}
 
 branding:
   icon: 'check'
