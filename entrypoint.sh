@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eval "ARR=(${ADDITIONAL_PARAMS})"
+eval "arr=(${ADDITIONAL_PARAMS})"
 echo "${arr[@]}"
 
 cxscan=""
