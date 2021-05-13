@@ -24,7 +24,6 @@ jobs:
         if: ${{contains( steps.empty_client_secret.outputs.cxcli, 'Failed to authenticate') == false}}
         run:  |
           echo "The authentication must fail if invalid client id or password is used"
-          exit 1
       
       - name: Valid scenario 
         id: valid_scenario
