@@ -62,7 +62,6 @@ runs:
     - ${{ inputs.project_name }}
     - ${{ inputs.archive_source }}
     - ${{ inputs.source_directory }}
-    - ${{ inputs.additional_params }}
     - ${{ inputs.filter }}
 
   env:
