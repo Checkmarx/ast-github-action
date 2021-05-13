@@ -1,10 +1,12 @@
 #!/bin/sh
 
-echo $ADDITIONAL_PARAMS
-echo "scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" "--sast-preset-name \"Jay Two\"""
+ADDR="--sast-preset-name \"Jay Two\""
+ARR=(${ADDR})
+
+echo "scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ARR[@]"
 #ADDITIONAL_PARAMS_ARR=($ADDITIONAL_PARAMS)
 
-cxscan="$(/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" "--sast-preset-name \"Jay Two\"")"
+cxscan="$(/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ARR[@])"
 
 echo "$cxscan"
 
