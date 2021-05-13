@@ -1,8 +1,7 @@
 #!/bin/sh
 
-IFS=' ' read -a ARR <<< $ADDITIONAL_PARAMS; echo "${ARR[@]}"
-echo "scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ARR[@]"
-#ADDITIONAL_PARAMS_ARR=($ADDITIONAL_PARAMS)
+ARR=( $ADDITIONAL_PARAMS )
+echo "scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${ARR[@]}"
 
 cxscan="$(/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${ARR[@]})"
 
