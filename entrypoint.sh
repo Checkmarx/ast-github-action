@@ -1,8 +1,10 @@
 #!/bin/bash
 
-declare -a "arr=( $(echo $string | tr '`$<>' '????') )"
+arr=($ADDITIONAL_PARAMS)
+echo ${arr[@]}
+
 cxscan=""
-/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${arr[@]}
+/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" "${arr[@]}"
 echo "$cxscan"
 
 cxscan="${cxscan//'%'/'%25'}"
