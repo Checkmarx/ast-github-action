@@ -1,10 +1,9 @@
 #!/bin/sh
 
-ARR[0]='--sast-preset-name'
-ARR[1]='\"Jay Two\"'
-echo "scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${ARR[@]}"
+arr = (${ADDITIONAL_PARAMS})
+echo "scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${arr[@]}"
 
-cxscan="$(/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${ARR[@]})"
+cxscan="$(/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${arr[@]})"
 
 echo "$cxscan"
 
