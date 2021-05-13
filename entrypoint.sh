@@ -1,8 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-OIFS=$IFS
-IFS=' '
-arr=$ADDITIONAL_PARAMS
+arr=($ADDITIONAL_PARAMS)
 cxscan="$(/app/bin/cx scan create -v --scan-types "${SCAN_TYPES}" --project-name "${PROJECT_NAME}" -d "." --filter "${FILTER}" --format json --agent "Github Action" ${arr[@]})"
 
 echo "$cxscan"
