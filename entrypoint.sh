@@ -1,6 +1,6 @@
 #!/bin/bash
-
-eval "arr=(${ADDITIONAL_PARAMS})"
+#param= echo "--sast-preset-name \"Jay\""|sed 's@\\@@g'
+#echo $param
 
 #param= "${ADDITIONAL_PARAMS}"|sed 's@\\@@g'
 #echo $param
