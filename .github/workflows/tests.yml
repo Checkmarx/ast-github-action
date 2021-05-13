@@ -39,3 +39,18 @@ jobs:
         if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
         run: |
           echo "The cli failed"
+          
+      - name: Test with preset name
+        id: preset_name_test
+        uses: ./
+        with:
+          project_name: Integration project
+          base_uri: https://master.cxast.com
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          scan_types: sast
+          additional_params: --sast-preset-name "Chekmarx Default Pedro" --sast-incremental false
+      - name: Check if preset name completed
+        if: ${{ contains( steps.preset_name_test.outputs.cxcli, 'Completed') == false}}
+        run: |
+          echo "The cli failed"
