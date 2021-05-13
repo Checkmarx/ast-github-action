@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 #param= echo "--sast-preset-name \"Jay\""|sed 's@\\@@g'
 #echo $param
 
