@@ -30,14 +30,6 @@ inputs:
     required: false
     default: ${{ github.token }}
     description: 'GitHub API Token'
-  archive_source:
-    required: false
-    default: ''
-    description: 'Source for the Zip file'
-  source_directory:
-    required: false
-    default: '.'
-    description: 'Source for the project directory'
   filter:
     required: false
     default: '*'
@@ -60,8 +52,6 @@ runs:
     - ${{ inputs.github_token }}
     - ${{ inputs.scan_types }}
     - ${{ inputs.project_name }}
-    - ${{ inputs.archive_source }}
-    - ${{ inputs.source_directory }}
     - ${{ inputs.additional_params }}
     - ${{ inputs.filter }}
 
@@ -73,8 +63,6 @@ runs:
     GITHUB_TOKEN: ${{ inputs.github_token }}
     SCAN_TYPES: ${{ inputs.scan_types }}
     PROJECT_NAME: ${{ inputs.project_name }}
-    ARCHIVE_SOURCE: ${{ inputs.archive_source }}
-    SOURCE_DIRECTORY: ${{ inputs.source_directory }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     FILTER: ${{ inputs.filter }}
 
