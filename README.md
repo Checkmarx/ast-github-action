@@ -21,6 +21,7 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | Variable  | Example Value &nbsp;| Description &nbsp; |
 | ------------- | ------------- | ------------- |
 | base_uri | http://demo.ast-cloud.com | AST Portal URL 
+| cx_tenant | Organization | Tenant for AST Portal
 | cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID 
 | cx_client_secret | ${{ secrets.CX_CLIENT_SECRET }} | AST OAuth Secret key 
 | cx_apikey | ${{ secrets.CX_APIKEY }} | AST OAuth API KEY 
@@ -50,6 +51,7 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
         uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
         with:
           base_uri: http://demo.ast-cloud.com
+          cx_tenant: Organization
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast,kics
