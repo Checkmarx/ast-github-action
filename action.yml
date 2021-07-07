@@ -9,7 +9,7 @@ inputs:
   cx_tenant:
     required: true
     description: 'Provide the Tenant for AST portal URL'
-    default: 'Organization'
+    default: 'organization'
   cx_client_id:
     required: false
     description: 'Client ID for AST portal authentication'
