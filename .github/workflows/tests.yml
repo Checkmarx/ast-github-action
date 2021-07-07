@@ -30,7 +30,7 @@ jobs:
         uses: ./
         with:
           project_name: Integration project
-          base_uri: https://master.cxast.com
+          base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast,kics,sca
@@ -44,7 +44,7 @@ jobs:
         uses: ./
         with:
           project_name: Integration project
-          base_uri: https://master.cxast.com
+          base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast
