@@ -30,6 +30,10 @@ inputs:
     required: false
     default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
+  branch:
+    required: false
+    default: ${{ github.ref }}
+    description: 'Branch name'
   github_token:
     required: false
     default: ${{ github.token }}
@@ -67,6 +71,7 @@ runs:
     CX_CLIENT_SECRET: ${{ inputs.cx_client_secret }}
     CX_TOKEN: ${{ inputs.cx_apikey }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
+    BRANCH: ${{ inputs.branch }}
     SCAN_TYPES: ${{ inputs.scan_types }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
