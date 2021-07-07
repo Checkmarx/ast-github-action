@@ -28,7 +28,7 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | scan_types | sast,kics | Scan engine for AST portal 
 | project_name | ProjectName | Checkmarx Project 
 | branch | Branch | Branch name - defaulted to ${{ github.ref }}
-| additional_params | --sast-incremental false --preset-name "Checkmarx Default"
+| additional_params | --sast-incremental false --sast-preset-name "Checkmarx Default"
 | filter | "!*.md,.git/" | Source code directories/Files that get zipped and sent to AST server for scanning 
 
 
