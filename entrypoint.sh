@@ -14,10 +14,11 @@ exec 5>&1
 #  echo "Scan Failed"
 #  exit 1
 #fi
-echo $?
 value=$?
 if [ $value -eq 0 ]
 then
   echo "Scan completed"
+else
+  echo "Scan Failed"
+  exit $?
 fi
-exit $value
