@@ -14,9 +14,9 @@ cxscan="${cxscan//$'\r'/'%0D'}"
 #  echo "Scan Failed"
 #  exit 1
 #fi
-if [ $? -eq 0 ]
+value=$?
+if [ $value -eq 0 ]
 then
   echo "Scan completed"
-else
-  echo "Scan Failed"
 fi
+exit $value
