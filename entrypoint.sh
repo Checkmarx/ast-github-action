@@ -20,5 +20,5 @@ then
   echo "Scan completed"
 else
   echo "Scan Failed"
-  exit $?
+  exit $value
 fi
