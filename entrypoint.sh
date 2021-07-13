@@ -20,6 +20,6 @@ then
   echo "Scan completed"
 else
   echo "Scan Failed"
-  echo $value
+  echo "Program exits with code: " $value
   exit $value
 fi
