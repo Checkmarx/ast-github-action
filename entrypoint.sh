@@ -9,8 +9,14 @@ cxscan="${cxscan//'%'/'%25'}"
 cxscan="${cxscan//$'\n'/'%0A'}"
 cxscan="${cxscan//$'\r'/'%0D'}"
 #echo "::set-output name=cxcli::$cxscan"
-value="Failed"
-if [[ $cxscan =~ .*"$value"*. ]]; then
+#value="Failed"
+#if [[ $cxscan =~ .*"$value"*. ]]; then
+#  echo "Scan Failed"
+#  exit 1
+#fi
+if [ $? -eq 0 ]
+then
+  echo "Scan completed"
+else
   echo "Scan Failed"
-  exit 1
 fi
