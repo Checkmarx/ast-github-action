@@ -15,6 +15,7 @@ exec 5>&1
 #  exit 1
 #fi
 value=$?
+echo $value
 if [ $value -eq 0 ]
 then
   echo "Scan completed"
