@@ -9,7 +9,10 @@ cxscan="${cxscan//'%'/'%25'}"
 cxscan="${cxscan//$'\n'/'%0A'}"
 cxscan="${cxscan//$'\r'/'%0D'}"
 #echo "::set-output name=cxcli::$cxscan"
-if [[ $cxscan == *"Scan Finished with status: Failed"* ]]; then
+# shellcheck disable=SC2209
+value=echo "${cxscan##*$'\n'}"
+echo "$value"
+if [[ $value == "Scan Finished with status: Failed" ]]; then
   echo "Scan Failed"
   exit 1
 fi
