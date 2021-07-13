@@ -20,5 +20,6 @@ then
   echo "Scan completed"
 else
   echo "Scan Failed"
+  echo $value
   exit $value
 fi
