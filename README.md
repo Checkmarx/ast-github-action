@@ -25,7 +25,6 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID 
 | cx_client_secret | ${{ secrets.CX_CLIENT_SECRET }} | AST OAuth Secret key 
 | cx_apikey | ${{ secrets.CX_APIKEY }} | AST OAuth API KEY 
-| scan_types | sast,kics | Scan engine for AST portal 
 | project_name | ProjectName | Checkmarx Project 
 | branch | Branch | Branch name - defaulted to ${{ github.ref }}
 | additional_params | --sast-incremental false --sast-preset-name "Checkmarx Default"
@@ -55,7 +54,6 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
           cx_tenant: Organization
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast,kics
           
 ```
 
