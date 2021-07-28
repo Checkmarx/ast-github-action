@@ -59,7 +59,6 @@ runs:
     - ${{ inputs.cx_client_secret }}
     - ${{ inputs.cx_apikey }}
     - ${{ inputs.github_token }}
-    - ${{ inputs.scan_types }}
     - ${{ inputs.project_name }}
     - ${{ inputs.additional_params }}
     - ${{ inputs.filter }}
@@ -72,7 +71,6 @@ runs:
     CX_TOKEN: ${{ inputs.cx_apikey }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
     BRANCH: ${{ inputs.branch }}
-    SCAN_TYPES: ${{ inputs.scan_types }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     FILTER: ${{ inputs.filter }}
