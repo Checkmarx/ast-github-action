@@ -64,13 +64,16 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
 * [Github PUSH workflow for AST](sample-yml/checkmarx-ast-scan-push.yml)
 * [Github PULL REQUEST workflow for AST](sample-yml/checkmarx-ast-scan-pull-request.yml)
 
-## How To Contribute
+## Contribution
 
-We welcome [issues](https://github.com/checkmarxDev/ast-github-action/issues) to and [pull requests](https://github.com/checkmarxDev/ast-github-action/pulls) against this repository!
+We appreciate feedback and contribution to the GitHub Action! Before you get started, please see the following:
+
+- [Checkmarx contribution guidelines](docs/contributing.md)
+- [Checkmarx Code of Conduct](docs/code_of_conduct.md)
 
 # License
 
-Checkmarx Github Action
+Checkmarx GitHub Action
 
 Copyright (C) 2021 Checkmarx
 
