@@ -18,10 +18,6 @@ inputs:
     required: false
     description: 'Secret key for AST portal authentication'
     default: ''
-  cx_apikey:
-    required: false
-    description: 'Token for AST portal authentication'
-    default: ''
   scan_types:
     required: true
     description: 'Scan types to perform on AST'
@@ -57,7 +53,6 @@ runs:
     - ${{ inputs.cx_tenant }}
     - ${{ inputs.cx_client_id }}
     - ${{ inputs.cx_client_secret }}
-    - ${{ inputs.cx_apikey }}
     - ${{ inputs.github_token }}
     - ${{ inputs.project_name }}
     - ${{ inputs.additional_params }}
@@ -68,7 +63,6 @@ runs:
     CX_TENANT: ${{ inputs.cx_tenant }}
     CX_CLIENT_ID: ${{ inputs.cx_client_id }}
     CX_CLIENT_SECRET: ${{ inputs.cx_client_secret }}
-    CX_TOKEN: ${{ inputs.cx_apikey }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
     BRANCH: ${{ inputs.branch }}
     PROJECT_NAME: ${{ inputs.project_name }}
