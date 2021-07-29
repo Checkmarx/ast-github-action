@@ -54,17 +54,17 @@ jobs:
         run: |
           echo "The cli failed"
 
-    - name: Test with apikey
-      id: apikey_test
-      uses: ./
-      with:
-        project_name: Integration project
-        base_uri: ${{ secrets.CX_BASE_URI }}
-        cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-        cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-        cx_apikey: ${{ secrets.CX_APIKEY }}
-        scan_types: sast
-      - name: Check if apikey completed
-        if: ${{ contains( steps.apikey_test.outputs.cxcli, 'Completed') == false}}
-        run: |
-          echo "The cli failed"
+      - name: Test with apikey
+        id: apikey_test
+        uses: ./
+        with:
+          project_name: Integration project
+          base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          cx_apikey: ${{ secrets.CX_APIKEY }}
+          scan_types: sast
+        - name: Check if apikey completed
+          if: ${{ contains( steps.apikey_test.outputs.cxcli, 'Completed') == false}}
+          run: |
+            echo "The cli failed"
