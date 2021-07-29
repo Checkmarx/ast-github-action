@@ -64,7 +64,7 @@ jobs:
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           cx_apikey: ${{ secrets.CX_APIKEY }}
           scan_types: sast
-        - name: Check if apikey completed
-          if: ${{ contains( steps.apikey_test.outputs.cxcli, 'Completed') == false}}
-          run: |
-            echo "The cli failed"
+      - name: Check if apikey completed
+        if: ${{ contains( steps.apikey_test.outputs.cxcli, 'Completed') == false}}
+        run: |
+          echo "The cli failed"
