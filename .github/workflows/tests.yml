@@ -18,8 +18,7 @@ jobs:
           project_name: test project
           base_uri: https:// 
           cx_client_id: 
-          cx_client_secret: 
-          scan_types: sast
+          cx_client_secret:
       - name: Check if failed authentication
         if: ${{contains( steps.empty_client_secret.outputs.cxcli, 'Failed to authenticate') == false}}
         run:  |
@@ -33,7 +32,6 @@ jobs:
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast,kics,sca
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
         run: |
@@ -47,7 +45,6 @@ jobs:
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast
           additional_params: --sast-preset-name "Chekmarx Default Pedro" --sast-incremental false
       - name: Check if preset name completed
         if: ${{ contains( steps.preset_name_test.outputs.cxcli, 'Completed') == false}}
@@ -63,8 +60,22 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           cx_apikey: ${{ secrets.CX_APIKEY }}
-          scan_types: sast
       - name: Check if apikey completed
         if: ${{ contains( steps.apikey_test.outputs.cxcli, 'Completed') == false}}
         run: |
           echo "The cli failed"
+
+
+      - name: Scenario with scan types
+        id: scan_types_test
+        uses: ./
+        with:
+          project_name: Integration project
+          base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          scan_types: sast,kics,sca
+      - name: Check if scan types completed
+        if: ${{ contains( steps.scan_types_test.outputs.cxcli, 'Completed') == false}}
+        run: |
+          echo "The test should fail. The scan types should be additional params"

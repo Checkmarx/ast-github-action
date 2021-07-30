@@ -18,10 +18,6 @@ inputs:
     required: false
     description: 'Secret key for AST portal authentication'
     default: ''
-  scan_types:
-    required: true
-    description: 'Scan types to perform on AST'
-    default: ''
   project_name:
     required: false
     default: ${{ github.repository }} # default repo name
