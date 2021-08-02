@@ -13,6 +13,7 @@ jobs:
       
       - name: Run with empty client and secret
         id: empty_client_secret
+        continue-on-error: true
         uses: ./
         with:
           project_name: test project
@@ -21,12 +22,14 @@ jobs:
           cx_client_secret: 
           scan_types: sast
       - name: Check if failed authentication
-        if: ${{contains( steps.empty_client_secret.outputs.cxcli, 'Failed to authenticate') == false}}
+        if: ${{contains( steps.empty_client_secret.conclusion, 'failure') == false}}
         run:  |
           echo "The authentication must fail if invalid client id or password is used"
+          exit 1
       
       - name: Valid scenario 
         id: valid_scenario
+        continue-on-error: true
         uses: ./
         with:
           project_name: Integration project
@@ -35,12 +38,14 @@ jobs:
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast
       - name: Check if completed
-        if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
+        if: ${{ contains( steps.valid_scenario.conclusion, 'success') == false}}
         run: |
           echo "The cli failed"
+          echo 1
           
       - name: Test with preset name
         id: preset_name_test
+        continue-on-error: true
         uses: ./
         with:
           project_name: Integration project
@@ -50,6 +55,7 @@ jobs:
           scan_types: sast
           additional_params: --sast-preset-name "Chekmarx Default Pedro" --sast-incremental false
       - name: Check if preset name completed
-        if: ${{ contains( steps.preset_name_test.outputs.cxcli, 'Completed') == false}}
+        if: ${{contains( steps.empty_client_secret.conclusion, 'failure') == false}}
         run: |
           echo "The cli failed"
+          exit 1
