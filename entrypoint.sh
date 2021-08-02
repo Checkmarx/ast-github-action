@@ -1,11 +1,14 @@
 #!/bin/bash
 
 eval "arr=(${ADDITIONAL_PARAMS})"
+/app/bin/cx scan create -v --project-name "${PROJECT_NAME}" -s "." --filter "${FILTER}" --branch "${BRANCH#refs/heads/}" --format json --agent "Github Action" "${arr[@]}"
+exitCode=$?
 
-exec 5>&1
-cxscan="$(/app/bin/cx scan create -v --project-name "${PROJECT_NAME}" -s "." --filter "${FILTER}" --branch "${BRANCH#refs/heads/}" --format json --agent "Github Action" "${arr[@]}" | tee >(cat - >&5))"
-
-cxscan="${cxscan//'%'/'%25'}"
-cxscan="${cxscan//$'\n'/'%0A'}"
-cxscan="${cxscan//$'\r'/'%0D'}"
-echo "::set-output name=cxcli::$cxscan"
+echo "Program exits with code: " $exitCode
+if [ $exitCode -eq 0 ]
+then
+  echo "Scan completed"
+else
+  echo "Scan Failed"
+  exit $exitCode
+fi

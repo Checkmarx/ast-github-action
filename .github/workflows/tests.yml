@@ -13,6 +13,7 @@ jobs:
       
       - name: Run with empty client and secret
         id: empty_client_secret
+        continue-on-error: true
         uses: ./
         with:
           project_name: test project
@@ -20,12 +21,14 @@ jobs:
           cx_client_id: 
           cx_client_secret:
       - name: Check if failed authentication
-        if: ${{contains( steps.empty_client_secret.outputs.cxcli, 'Failed to authenticate') == false}}
+        if: ${{contains( steps.empty_client_secret.outcome, 'success')}}
         run:  |
           echo "The authentication must fail if invalid client id or password is used"
+          echo "${{ steps.empty_client_secret.outcome}}"
       
       - name: Valid scenario 
         id: valid_scenario
+        continue-on-error: true
         uses: ./
         with:
           project_name: Integration project
@@ -33,49 +36,23 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
       - name: Check if completed
-        if: ${{ contains( steps.valid_scenario.outputs.cxcli, 'Completed') == false}}
+        if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
-          echo "The cli failed"
+          echo "The action outcome should be success."
+          echo "${{ steps.valid_scenario.outcome}}"
           
       - name: Test with preset name
         id: preset_name_test
+        continue-on-error: true
         uses: ./
         with:
           project_name: Integration project
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --sast-preset-name "Chekmarx Default Pedro" --sast-incremental false
+          additional_params: --sast-preset-name "Chekmarx Default Fake" --sast-incremental false
       - name: Check if preset name completed
-        if: ${{ contains( steps.preset_name_test.outputs.cxcli, 'Completed') == false}}
+        if: ${{contains( steps.preset_name_test.outcome, 'success')}}
         run: |
-          echo "The cli failed"
-
-      - name: Test with apikey
-        id: apikey_test
-        uses: ./
-        with:
-          project_name: Integration project
-          base_uri: ${{ secrets.CX_BASE_URI }}
-          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          cx_apikey: ${{ secrets.CX_APIKEY }}
-      - name: Check if apikey completed
-        if: ${{ contains( steps.apikey_test.outputs.cxcli, 'Completed') == false}}
-        run: |
-          echo "The cli failed"
-
-
-      - name: Scenario with scan types
-        id: scan_types_test
-        uses: ./
-        with:
-          project_name: Integration project
-          base_uri: ${{ secrets.CX_BASE_URI }}
-          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast,kics,sca
-      - name: Check if scan types completed
-        if: ${{ contains( steps.scan_types_test.outputs.cxcli, 'Completed') == false}}
-        run: |
-          echo "The test should fail. The scan types should be additional params"
+          echo "The cli should fail. Wrong preset name provided"
+          echo "${{ steps.preset_name_test.outcome}}"
