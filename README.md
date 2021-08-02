@@ -25,7 +25,6 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 | cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID 
 | cx_client_secret | ${{ secrets.CX_CLIENT_SECRET }} | AST OAuth Secret key 
 | cx_apikey | ${{ secrets.CX_APIKEY }} | AST OAuth API KEY 
-| scan_types | sast,kics | Scan engine for AST portal 
 | project_name | ProjectName | Checkmarx Project 
 | branch | Branch | Branch name - defaulted to ${{ github.ref }}
 | additional_params | --sast-incremental false --sast-preset-name "Checkmarx Default"
@@ -55,7 +54,6 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
           cx_tenant: Organization
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast,kics
           
 ```
 
@@ -64,13 +62,16 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
 * [Github PUSH workflow for AST](sample-yml/checkmarx-ast-scan-push.yml)
 * [Github PULL REQUEST workflow for AST](sample-yml/checkmarx-ast-scan-pull-request.yml)
 
-## How To Contribute
+## Contribution
 
-We welcome [issues](https://github.com/checkmarxDev/ast-github-action/issues) to and [pull requests](https://github.com/checkmarxDev/ast-github-action/pulls) against this repository!
+We appreciate feedback and contribution to the GitHub Action! Before you get started, please see the following:
+
+- [Checkmarx contribution guidelines](docs/contributing.md)
+- [Checkmarx Code of Conduct](docs/code_of_conduct.md)
 
 # License
 
-Checkmarx Github Action
+Checkmarx GitHub Action
 
 Copyright (C) 2021 Checkmarx
 
