@@ -42,7 +42,6 @@ jobs:
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario.outcome}}"
-          exit 1
           
       - name: Test with preset name
         id: preset_name_test
@@ -60,4 +59,3 @@ jobs:
         run: |
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
-          exit 1
