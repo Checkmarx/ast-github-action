@@ -19,8 +19,7 @@ jobs:
           project_name: test project
           base_uri: https:// 
           cx_client_id: 
-          cx_client_secret: 
-          scan_types: sast
+          cx_client_secret:
       - name: Check if failed authentication
         if: ${{contains( steps.empty_client_secret.outcome, 'success')}}
         run:  |
@@ -36,7 +35,6 @@ jobs:
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
@@ -52,7 +50,6 @@ jobs:
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          scan_types: sast
           additional_params: --sast-preset-name "Chekmarx Default Fake" --sast-incremental false
       - name: Check if preset name completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
