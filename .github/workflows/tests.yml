@@ -22,7 +22,7 @@ jobs:
           cx_client_secret: 
           scan_types: sast
       - name: Check if failed authentication
-        if: ${{contains( steps.empty_client_secret.conclusion, 'failure') == false}}
+        if: ${{contains( steps.empty_client_secret.outcome, 'failure') == false}}
         run:  |
           echo "The authentication must fail if invalid client id or password is used"
       
@@ -37,7 +37,7 @@ jobs:
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           scan_types: sast
       - name: Check if completed
-        if: ${{ contains( steps.valid_scenario.conclusion, 'success') == false}}
+        if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
           echo "The cli failed"
           echo 1
@@ -54,7 +54,7 @@ jobs:
           scan_types: sast
           additional_params: --sast-preset-name "Chekmarx Default Pedro" --sast-incremental false
       - name: Check if preset name completed
-        if: ${{contains( steps.empty_client_secret.conclusion, 'failure') == false}}
+        if: ${{contains( steps.empty_client_secret.outcome, 'failure') == false}}
         run: |
           echo "The cli failed"
           exit 1
