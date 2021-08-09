@@ -30,10 +30,6 @@ inputs:
     required: false
     default: ${{ github.token }}
     description: 'GitHub API Token'
-  filter:
-    required: false
-    default: '*'
-    description: 'Project scan filters for AST'
   additional_params:
     required: false
     default: ''
@@ -52,7 +48,6 @@ runs:
     - ${{ inputs.github_token }}
     - ${{ inputs.project_name }}
     - ${{ inputs.additional_params }}
-    - ${{ inputs.filter }}
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
@@ -63,7 +58,6 @@ runs:
     BRANCH: ${{ inputs.branch }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
-    FILTER: ${{ inputs.filter }}
 
 branding:
   icon: 'check'
