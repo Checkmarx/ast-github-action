@@ -1,6 +1,6 @@
-name: 'Checkmarx AST CLI Action'
+name: 'Checkmarx AST Github Action'
 description: 'Simplify Checkmarx Scanning of source code along with Result consumption leveraging Checkmarx AST solution.'
-author: 'Checkmarx Technical Services'
+author: 'Checkmarx'
 inputs:
   base_uri:
     required: true
