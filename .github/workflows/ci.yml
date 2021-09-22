@@ -17,7 +17,7 @@ jobs:
         uses: ./
         with:
           project_name: test project
-          base_uri: https:// 
+          base_uri: https://fake.com
           cx_client_id: 
           cx_client_secret:
       - name: Check if failed authentication
@@ -34,6 +34,7 @@ jobs:
         with:
           project_name: Integration project
           base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --file-include *.sh,Dockerfile --sast-incremental false
@@ -51,6 +52,7 @@ jobs:
         with:
           project_name: Integration project
           base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --sast-preset-name "Chekmarx Default Fake" --sast-incremental false
@@ -71,8 +73,8 @@ jobs:
         with:
           project_name: ast-github-action
           branch: master
-          base_uri: ${{ secrets.CX_BASEURI }}
+          base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --tags galactica-team
+          additional_params: --tags galactica-team --file-include *.sh,Dockerfile
