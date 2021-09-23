@@ -1,9 +1,9 @@
-name: Test ast-github-action 
+name: AST Github Action CI
 
-on: push
+on: [pull_request]
 
 jobs:
-  integrationtesting:
+  integration-tests:
     runs-on: ubuntu-latest
 
     name: Integration Testing
@@ -17,7 +17,7 @@ jobs:
         uses: ./
         with:
           project_name: test project
-          base_uri: https:// 
+          base_uri: https://fake.com
           cx_client_id: 
           cx_client_secret:
       - name: Check if failed authentication
@@ -25,6 +25,7 @@ jobs:
         run:  |
           echo "The authentication must fail if invalid client id or password is used"
           echo "${{ steps.empty_client_secret.outcome}}"
+          exit 1
       
       - name: Valid scenario 
         id: valid_scenario
@@ -33,13 +34,16 @@ jobs:
         with:
           project_name: Integration project
           base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          additional_params: --file-include *.sh,Dockerfile --sast-incremental false
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario.outcome}}"
+          exit 1
           
       - name: Test with preset name
         id: preset_name_test
@@ -48,6 +52,7 @@ jobs:
         with:
           project_name: Integration project
           base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --sast-preset-name "Chekmarx Default Fake" --sast-incremental false
@@ -56,3 +61,20 @@ jobs:
         run: |
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
+          exit 1
+
+  cx-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkmarx AST CLI Action
+        uses: checkmarx/ast-github-action@master
+        with:
+          project_name: ast-github-action
+          branch: master
+          base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          additional_params: --tags galactica-team --file-include *.sh,Dockerfile

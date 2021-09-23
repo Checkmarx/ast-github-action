@@ -20,7 +20,7 @@ Please find more info in the official website: <a href="www.checkmarx.com">Check
 
 | Variable  | Example Value &nbsp;| Description &nbsp; |
 | ------------- | ------------- | ------------- |
-| base_uri | http://demo.ast-cloud.com | AST Portal URL 
+| base_uri | https://ast.checkmarx.net/ | AST Portal URL 
 | cx_tenant | Organization | Tenant for AST Portal
 | cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID 
 | cx_client_secret | ${{ secrets.CX_CLIENT_SECRET }} | AST OAuth Secret key 
@@ -47,7 +47,7 @@ _Note: It is recommended to leverage secrets for any sensitive inputs_
     - name: Checkmarx AST CLI Action
         uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
         with:
-          base_uri: http://demo.ast-cloud.com
+          base_uri: https://ast.checkmarx.net/
           cx_tenant: Organization
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
