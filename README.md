@@ -61,7 +61,6 @@ This is a Wrapper to trigger scans to the latest version of AST through Docker t
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Installing the CLI tool is very simple.
 
 ### Prerequisites
 
