@@ -16,7 +16,6 @@
 <h3 align="center">AST-CLI</h3>
 
 <p align="center">
-    Checkmarx CLI is a standalone Checkmarx tool.
 <br />
     <a href="https://checkmarx.atlassian.net/wiki/spaces/AST/pages/3080454799/Quick+Start+Guide+-+CxAST+GitHub+Action"><strong>Explore the docs »</strong></a>
     <br />
