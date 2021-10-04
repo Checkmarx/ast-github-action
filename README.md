@@ -111,7 +111,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 Checkmarx - AST Integrations Team
 
-Project Link: [https://github.com/Checkmarx/ast-cli](https://github.com/Checkmarx/ast-github-action)
+Project Link: [https://github.com/Checkmarx/ast-github-action](https://github.com/Checkmarx/ast-github-action)
 
 
 © 2021 Checkmarx Ltd. All Rights Reserved.
