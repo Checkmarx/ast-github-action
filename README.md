@@ -118,14 +118,14 @@ Project Link: [https://github.com/Checkmarx/ast-github-action](https://github.co
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Checkmarx/ast-cli.svg?style=flat-square
-[contributors-url]: https://github.com/Checkmarx/ast-cli/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Checkmarx/ast-cli.svg?style=flat-square
-[forks-url]: https://github.com/Checkmarx/ast-cli/network/members
-[stars-shield]: https://img.shields.io/github/stars/Checkmarx/ast-cli.svg?style=flat-square
-[stars-url]: https://github.com/Checkmarx/ast-cli/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Checkmarx/ast-cli.svg?style=flat-square
-[issues-url]: https://github.com/Checkmarx/ast-cli/issues
-[license-shield]: https://img.shields.io/github/license/Checkmarx/ast-cli.svg?style=flat-square
-[license-url]: https://github.com/Checkmarx/ast-cli/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Checkmarx/ast-github-action.svg?style=flat-square
+[contributors-url]: https://github.com/Checkmarx/ast-github-action/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Checkmarx/ast-github-action.svg?style=flat-square
+[forks-url]: https://github.com/Checkmarx/ast-github-action/network/members
+[stars-shield]: https://img.shields.io/github/stars/Checkmarx/ast-github-action.svg?style=flat-square
+[stars-url]: https://github.com/Checkmarx/ast-github-action/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Checkmarx/ast-github-action.svg?style=flat-square
+[issues-url]: https://github.com/Checkmarx/ast-github-action/issues
+[license-shield]: https://img.shields.io/badge/License-GPL3.0-yellow.svg
+[license-url]: https://github.com/Checkmarx/ast-github-action/blob/master/LICENSE
 [product-screenshot]: images/screenshot.png
