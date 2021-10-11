@@ -1,72 +1,98 @@
-# Checkmarx AST Github Action ![Checkmarx](images/checkmarx.png) <img src="images/github.png" alt="Github" width="40" height="40">
-
-[![License: GPL-3.0](https://img.shields.io/badge/License-GPL3.0-yellow.svg)](https://www.gnu.org/licenses)
-
-[comment]: <> ([![Latest Release]&#40;https://img.shields.io/github/v/release/checkmarxDev/ast-github-action&#41;]&#40;https://github.com/checkmarxDev/ast-github-action/releases&#41;)
-[![Open Issues](https://img.shields.io/github/issues-raw/checkmarxDev/ast-github-action)](https://github.com/checkmarxDev/ast-github-action/issues)
-
-Checkmarx AST GitHub Action.
-
-This is a Wrapper to trigger scans to the latest version of AST through Docker to launch Checkmarx SAST scans.
-
-![Checkmarx](images/checkmarx-big.png)
-
-* Checkmarx SAST (**CxSAST**) is an enterprise-grade flexible and accurate static analysis solution used to identify hundreds of security vulnerabilities in custom code. It is used by development, DevOps, and security teams to scan source code early in the SDLC, identify vulnerabilities and provide actionable insights to remediate them.
-* Checkmarx AST (**AST**) is a SAST, SCA, KICS scan initiation and results manangement portal.
-
-Please find more info in the official website: <a href="www.checkmarx.com">Checkmarx.com</a>
-
-## Inputs
-
-| Variable  | Example Value &nbsp;| Description &nbsp; |
-| ------------- | ------------- | ------------- |
-| base_uri | https://ast.checkmarx.net/ | AST Portal URL 
-| cx_tenant | Organization | Tenant for AST Portal
-| cx_client_id | ${{ secrets.CX_CLIENT_ID }} | AST OAuth Client ID 
-| cx_client_secret | ${{ secrets.CX_CLIENT_SECRET }} | AST OAuth Secret key 
-| project_name | ProjectName | Checkmarx Project 
-| branch | Branch | Branch name - defaulted to ${{ github.ref }}
-| additional_params | --sast-incremental false --sast-preset-name "Checkmarx Default" 
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
 
-## Secrets
 
-_Note: It is recommended to leverage secrets for any sensitive inputs_
-* cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-* cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="">
+    <img src="./logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">AST-GITHUB-ACTIONS</h3>
+
+<p align="center">
+<br />
+    <a href="https://checkmarx.atlassian.net/wiki/spaces/AST/pages/3080454799/Quick+Start+Guide+-+CxAST+GitHub+Action"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Checkmarx/ast-github-action/issues/new/choose">Report Bug</a>
+    ·
+    <a href="https://github.com/Checkmarx/ast-github-action/issues/new/choose">Request Feature</a>
+  </p>
+</p>
 
 
-## Example usage
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#setting-up">Setting Up</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+This is a Wrapper to trigger scans to the latest version of AST through Docker to launch Checkmarx scans.
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+
+### Prerequisites
+
+There are no prerequisites, however we advise you to understand how Github Actions work
+
+### Setting Up
+
+
+Copy and paste the following snippet into your .yml file:
 ```
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    # Scan code with Checkmarx AST
-    - name: Checkmarx AST CLI Action
-        uses: checkmarxDev/ast-github-action@v0.26-alpha #Github Action version
-        with:
-          base_uri: https://ast.checkmarx.net/
-          cx_tenant: Organization
-          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          
+- name: Checkmarx AST Github Action
+  uses: Checkmarx/ast-github-action@v0.28
 ```
 
-## Sample Workflow files
 
-* [Github PUSH workflow for AST](sample-yml/checkmarx-ast-scan-push.yml)
-* [Github PULL REQUEST workflow for AST](sample-yml/checkmarx-ast-scan-pull-request.yml)
+
+## Usage
+
+To see how you can use our tool, please refer to the [Documentation](https://checkmarx.atlassian.net/wiki/spaces/AST/pages/3080454799/Quick+Start+Guide+-+CxAST+GitHub+Action)
+
 
 ## Contribution
 
-We appreciate feedback and contribution to the GitHub Action! Before you get started, please see the following:
+We appreciate feedback and contribution to the Github Action! Before you get started, please see the following:
 
 - [Checkmarx contribution guidelines](docs/contributing.md)
 - [Checkmarx Code of Conduct](docs/code_of_conduct.md)
 
-# License
+** **
+
+<!-- LICENSE -->
+## License
+
 
 Checkmarx GitHub Action
 
@@ -77,3 +103,27 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
+
+<!-- CONTACT -->
+## Contact
+
+Checkmarx - AST Integrations Team
+
+Project Link: [https://github.com/Checkmarx/ast-github-action](https://github.com/Checkmarx/ast-github-action)
+
+
+© 2021 Checkmarx Ltd. All Rights Reserved.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Checkmarx/ast-github-action.svg?style=flat-square
+[contributors-url]: https://github.com/Checkmarx/ast-github-action/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Checkmarx/ast-github-action.svg?style=flat-square
+[forks-url]: https://github.com/Checkmarx/ast-github-action/network/members
+[stars-shield]: https://img.shields.io/github/stars/Checkmarx/ast-github-action.svg?style=flat-square
+[stars-url]: https://github.com/Checkmarx/ast-github-action/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Checkmarx/ast-github-action.svg?style=flat-square
+[issues-url]: https://github.com/Checkmarx/ast-github-action/issues
+[license-shield]: https://img.shields.io/badge/License-GPL3.0-yellow.svg
+[license-url]: https://github.com/Checkmarx/ast-github-action/blob/master/LICENSE
+[product-screenshot]: images/screenshot.png
