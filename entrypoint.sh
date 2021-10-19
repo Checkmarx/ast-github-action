@@ -7,7 +7,7 @@ exitCode=$?
 echo "Program exits with code: " $exitCode
 if [ $exitCode -eq 0 ]
 then
-  echo "Scan completed"
+  echo "Scan completedv2"
 else
   echo "Scan Failed"
   exit $exitCode
