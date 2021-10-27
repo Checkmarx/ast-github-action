@@ -5,26 +5,21 @@ inputs:
   base_uri:
     required: true
     description: 'Provide the AST portal URL'
-    default: 'http://demo.ast-cloud.com'
   cx_tenant:
     required: true
     description: 'Provide the Tenant for AST portal URL'
-    default: 'organization'
   cx_client_id:
-    required: false
+    required: true
     description: 'Client ID for AST portal authentication'
-    default: ''
   cx_client_secret:
-    required: false
+    required: true
     description: 'Secret key for AST portal authentication'
-    default: ''
   project_name:
     required: false
     default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
   branch:
-    required: false
-    default: ${{ github.ref }}
+    required: true
     description: 'Branch name'
   github_token:
     required: false
