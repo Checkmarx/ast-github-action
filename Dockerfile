@@ -1,5 +1,5 @@
 #Use AST Base image
-FROM checkmarx/ast-cli
+FROM checkmarx/ast-cli:2.0.9
 
 #Copy the entrypoint script and properties used for the action
 COPY entrypoint.sh /app/entrypoint.sh
