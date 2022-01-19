@@ -37,7 +37,7 @@ jobs:
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --file-include *.sh,Dockerfile --sast-incremental false
+          additional_params: --file-include *.sh,Dockerfile
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
@@ -55,7 +55,8 @@ jobs:
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --sast-preset-name "Chekmarx Default Fake" --sast-incremental false
+          additional_params: --sast-preset-name ChekmarxDefaultFake
+          
       - name: Check if preset name completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
         run: |
