@@ -37,7 +37,8 @@ jobs:
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: \"--file-include *.sh,Dockerfile\" \"--sast-incremental false\"
+          additional_params: --file-include *.sh,Dockerfile
+                             --sast-incremental false
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
