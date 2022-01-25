@@ -70,7 +70,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Checkmarx AST CLI Action
-        uses: checkmarx/ast-github-action@master
+        uses: checkmarx/ast-github-action@main
         with:
           project_name: ast-github-action
           branch: master
