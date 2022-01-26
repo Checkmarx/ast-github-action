@@ -92,17 +92,7 @@ We appreciate feedback and contribution to the Github Action! Before you get sta
 
 <!-- LICENSE -->
 ## License
-
-
-Checkmarx GitHub Action
-
-Copyright (C) 2021 Checkmarx
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.
+Distributed under the [Apache 2.0](LICENSE). See `LICENSE` for more information.
 
 <!-- CONTACT -->
 ## Contact
@@ -124,6 +114,5 @@ Project Link: [https://github.com/Checkmarx/ast-github-action](https://github.co
 [stars-url]: https://github.com/Checkmarx/ast-github-action/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Checkmarx/ast-github-action.svg?style=flat-square
 [issues-url]: https://github.com/Checkmarx/ast-github-action/issues
-[license-shield]: https://img.shields.io/badge/License-GPL3.0-yellow.svg
+[license-shield]: https://img.shields.io/github/license/Checkmarx/ast-github-action.svg?style=flat-square
 [license-url]: https://github.com/Checkmarx/ast-github-action/blob/master/LICENSE
-[product-screenshot]: images/screenshot.png
