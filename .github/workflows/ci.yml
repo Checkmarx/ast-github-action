@@ -17,6 +17,7 @@ jobs:
         uses: ./
         with:
           project_name: test project
+          branch: ${{ github.ref_name }}
           base_uri: https://fake.com
           cx_client_id: ""
           cx_client_secret: ""
@@ -33,6 +34,7 @@ jobs:
         uses: ./
         with:
           project_name: AST-GitHub-Action-Integration-Test
+          branch: ${{ github.ref_name }}
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
@@ -51,11 +53,12 @@ jobs:
         uses: ./
         with:
           project_name: AST-GitHub-Action-Integration-Test
+          branch: ${{ github.ref_name }}
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --sast-preset-name ChekmarxDefaultFake
+          additional_params: --sast-preset-name ChekmarxDefaultFake --scan-types sast
           
       - name: Check if preset name completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
