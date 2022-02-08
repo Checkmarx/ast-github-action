@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
-      - name: Checkmarx AST CLI Action
-        uses: checkmarx/ast-github-action@main
       
       - name: Run with empty client and secret
         id: empty_client_secret
