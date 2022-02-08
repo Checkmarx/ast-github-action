@@ -16,8 +16,8 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          project_name: test project
-          branch: ${{ github.ref_name }}
+          project_name: ${{ github.event.repository.name }}-tests
+          branch: ${{ github.head_ref }}
           base_uri: https://fake.com
           cx_client_id: ""
           cx_client_secret: ""
@@ -33,8 +33,8 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          project_name: AST-GitHub-Action-Integration-Test
-          branch: ${{ github.ref_name }}
+          project_name: ${{ github.event.repository.name }}-tests
+          branch: ${{ github.head_ref }}
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
@@ -52,8 +52,8 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          project_name: AST-GitHub-Action-Integration-Test
-          branch: ${{ github.ref_name }}
+          project_name: ${{ github.event.repository.name }}-tests
+          branch: ${{ github.head_ref }}
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
@@ -75,7 +75,7 @@ jobs:
       - name: Checkmarx AST CLI Action
         uses: checkmarx/ast-github-action@main
         with:
-          project_name: AST-GitHub-Action
+          project_name: ${{ github.repository }}
           branch: master
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
