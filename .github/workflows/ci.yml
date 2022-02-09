@@ -9,17 +9,18 @@ jobs:
     name: Integration Testing
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       
       - name: Run with empty client and secret
         id: empty_client_secret
         continue-on-error: true
         uses: ./
         with:
-          project_name: test project
+          project_name: ${{ github.event.repository.name }}-tests
+          branch: ${{ github.head_ref }}
           base_uri: https://fake.com
-          cx_client_id: 
-          cx_client_secret:
+          cx_client_id: ""
+          cx_client_secret: ""
       - name: Check if failed authentication
         if: ${{contains( steps.empty_client_secret.outcome, 'success')}}
         run:  |
@@ -32,12 +33,13 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          project_name: Integration project
+          project_name: ${{ github.event.repository.name }}-tests
+          branch: ${{ github.head_ref }}
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --file-include *.sh,Dockerfile
+          additional_params: --file-include *.sh,Dockerfile --scan-types kics,sca
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
@@ -50,12 +52,13 @@ jobs:
         continue-on-error: true
         uses: ./
         with:
-          project_name: Integration project
+          project_name: ${{ github.event.repository.name }}-tests
+          branch: ${{ github.head_ref }}
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --sast-preset-name ChekmarxDefaultFake
+          additional_params: --sast-preset-name ChekmarxDefaultFake --scan-types sast
           
       - name: Check if preset name completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
@@ -72,10 +75,10 @@ jobs:
       - name: Checkmarx AST CLI Action
         uses: checkmarx/ast-github-action@main
         with:
-          project_name: ast-github-action
+          project_name: ${{ github.repository }}
           branch: master
           base_uri: ${{ secrets.CX_BASE_URI }}
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --tags galactica-team --file-include *.sh,Dockerfile
+          additional_params: --tags galactica-team --file-include *.sh,Dockerfile --scan-types kics,sca

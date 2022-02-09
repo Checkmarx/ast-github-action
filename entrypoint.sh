@@ -1,7 +1,7 @@
 #!/bin/bash
 
 eval "arr=(${ADDITIONAL_PARAMS})"
-/app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --format json --agent "Github Action" "${arr[@]}"
+/app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}"
 exitCode=$?
 
 echo "Program exits with code: " $exitCode
