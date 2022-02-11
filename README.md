@@ -70,8 +70,13 @@ There are no prerequisites, however we advise you to understand how Github Actio
 
 Copy and paste the following snippet into your .yml file:
 ```
-- name: Checkmarx AST Github Action
-  uses: Checkmarx/ast-github-action@v0.28
+      - name: Checkmarx AST CLI Action
+        uses: checkmarx/ast-github-action@main #Github Action version
+        with:
+          base_uri: https://ast.checkmarx.net/
+          cx_tenant: your_tenant
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
 ```
 
 
