@@ -44,9 +44,9 @@ runs:
     - ${{ inputs.github_token }}
     - ${{ inputs.project_name }}
     - ${{ inputs.additional_params }}
-  entrypoint: 'entrypoint.sh'
+  entrypoint: '/app/entrypoint.sh'
   post-if: cancelled()
-  post-entrypoint: 'cleanup.sh'
+  post-entrypoint: '/app/cleanup.sh'
 
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
