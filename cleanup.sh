@@ -1,6 +1,6 @@
 #!/bin/bash
 
-eval "arr=(${ADDITIONAL_PARAMS})"
+cat /tmp/output.file
 /app/bin/cx scan cancel --scan-id
 exitCode=$?
 
