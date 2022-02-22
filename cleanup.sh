@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat /tmp/output.file
+cat ./output.log
 /app/bin/cx scan cancel --scan-id
 exitCode=$?
 
