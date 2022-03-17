@@ -63,18 +63,3 @@ jobs:
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
           exit 1
-
-  cx-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Checkmarx AST CLI Action
-        uses: checkmarx/ast-github-action@main
-        with:
-          project_name: ${{ github.repository }}
-          base_uri: ${{ secrets.CX_BASE_URI }}
-          cx_tenant: ${{ secrets.CX_TENANT }}
-          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --tags galactica-team --file-include *.sh,Dockerfile --scan-types kics,sca
