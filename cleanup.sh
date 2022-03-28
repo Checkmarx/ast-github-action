@@ -1,18 +1,25 @@
 #!/bin/bash
 
 cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' ./output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
-echo "Cancelling scan with ID:" $cancelId
 
-/app/bin/cx scan cancel --scan-id "${cancelId}" --debug
+if [ -z "$cancelId" ]
+then 
+  echo "Scan not created. Terminating job."
+  
+else 
+  echo "Canceling scan with ID:" $cancelId
+  /app/bin/cx scan cancel --scan-id "${cancelId}" --debug
+fi
+
 
 exitCode=$?
 echo "Program exits with code: " $exitCode
 
 if [ $exitCode -eq 0 ]
 then
-  echo "Scan cancelled successfully"
+  echo "Job terminated successfully"
 
 else
-  echo "Scan cancelation Failed"
+  echo "Job terminated Failed"
   exit $exitCode
 fi
