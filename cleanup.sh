@@ -20,6 +20,6 @@ then
   echo "Job terminated successfully"
 
 else
-  echo "Job terminated Failed"
+  echo "Job Failed"
   exit $exitCode
 fi
