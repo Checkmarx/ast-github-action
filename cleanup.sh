@@ -8,7 +8,7 @@ then
   
 else 
   echo "Canceling scan with ID:" $cancelId
-  /app/bin/cx scan cancel --scan-id "${cancelId}" --debug
+  /app/bin/cx scan cancel --scan-id "${cancelId}"
 fi
 
 
