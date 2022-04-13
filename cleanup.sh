@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' ./output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
