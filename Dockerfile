@@ -9,6 +9,6 @@ FROM mithileshpawar/ast-cli:latest
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
 
-RUN chmod a+x /app/entrypoint.sh
-RUN chmod a+x /app/cleanup.sh
+RUN /app/entrypoint.sh
+RUN /app/cleanup.sh
 
