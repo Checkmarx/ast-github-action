@@ -5,7 +5,7 @@ FROM mithileshpawar/ast-cli:latest
 # RUN adduser -S -D cxuser
 # RUN useradd -m -r cxuser
 # USER cxuser && chown -R cxuser /app
-USER root
+#USER root
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
 
