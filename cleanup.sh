@@ -11,7 +11,7 @@ else
   /app/bin/cx scan cancel --scan-id "${cancelId}"
 fi
 
-
+#comment
 exitCode=$?
 echo "Program exits with code: " $exitCode
 
