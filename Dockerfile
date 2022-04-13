@@ -2,7 +2,7 @@
 FROM mithileshpawar/ast-cli:latest
 
 #Copy the entrypoint script and properties used for the action
-# RUN adduser -S -D cxuser
+## RUN adduser -S -D cxuser
 # USER cxuser && chown -R cxuser /app
 USER root
 COPY entrypoint.sh /app/entrypoint.sh
