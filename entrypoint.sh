@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${GITHUB_HEAD_REF:-${BRANCH#refs/heads/}}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i ./output.log
