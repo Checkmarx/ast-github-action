@@ -2,7 +2,6 @@
 FROM checkmarx/ast-cli:2.0.18
 
 USER root
-RUN adduser --system --disabled-password cxuser
 
 #Copy the entrypoint script and properties used for the action
 COPY entrypoint.sh /app/entrypoint.sh
