@@ -8,3 +8,6 @@ COPY cleanup.sh /app/cleanup.sh
 
 RUN chmod +x /app/entrypoint.sh
 RUN chmod +x /app/cleanup.sh
+
+RUN adduser --system --disabled-password cxuser
+USER cxuser
