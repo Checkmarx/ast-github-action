@@ -1,11 +1,13 @@
 #!/bin/bash
 
-BRANCH_VAL = ${BRANCH}
+BRANCH_VAL = "${BRANCH}"
 if [ -z "$BRANCH_VAL" ]
   then
     BRANCH_VAL = ${GITHUB_HEAD_REF}
+    echo "BRANCH_VAL is empty, using GITHUB_HEAD_REF: $BRANCH_VAL"
   ELSE
     BRANCH_VAL = ${BRANCH}
+    echo "BRANCH_VAL is not empty, using BRANCH: $BRANCH_VAL"
 fi
 
 eval "arr=(${ADDITIONAL_PARAMS})"
