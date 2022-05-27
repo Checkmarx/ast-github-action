@@ -20,7 +20,7 @@ inputs:
     description: 'Select a Checkmarx Project Name'
   branch:
     required: false
-    default: ${{ github.ref }}
+    default: ${{ github.head_ref }} # default branch name
     description: 'Branch name'
   github_token:
     required: false
