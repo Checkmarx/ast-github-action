@@ -12,4 +12,6 @@ RUN chmod +x /app/cleanup.sh
 
 RUN addgroup -S cx && adduser -S -G cx cx 
 USER cx
-WORKDIR /home/cx
+
+RUN mkdir ./cxworker
+WORKDIR ./cxworker
