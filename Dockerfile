@@ -11,7 +11,7 @@ RUN adduser \
     --disabled-password \
     --gecos "" \
     --home "$(pwd)" \
-    --ingroup "$USER" \
+    --ingroup "cxuser" \
     --no-create-home \
     --uid "12345" \
     "cxuser"
