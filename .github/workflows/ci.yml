@@ -40,30 +40,12 @@ jobs:
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --file-include *.sh,Dockerfile --scan-types kics,sca
+          additional_params: --file-include *.sh,Dockerfile --scan-types kics,sca --report-format summaryJSON
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario.outcome}}"
-          exit 1
-
-      - name: Test if create report
-        id: valid_scenario_create_report
-        continue-on-error: true
-        uses: ./
-        with:
-          project_name: ${{ github.event.repository.name }}-tests
-          base_uri: ${{ secrets.CX_BASE_URI }}
-          cx_tenant: ${{ secrets.CX_TENANT }}
-          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --file-include *.sh,Dockerfile --report-format summaryJSON
-      - name: Check if completed
-        if: ${{ contains( steps.valid_scenario_create_report.outcome, 'success') == false}}
-        run: |
-          echo "The action outcome should be success."
-          echo "${{ steps.valid_scenario_create_report.outcome}}"
           exit 1
 
       - name: Test with preset name
