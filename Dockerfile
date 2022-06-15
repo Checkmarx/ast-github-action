@@ -10,5 +10,7 @@ COPY cleanup.sh /app/cleanup.sh
 RUN chmod +x /app/entrypoint.sh
 RUN chmod +x /app/cleanup.sh
 
-USER cxuser
+RUN useradd -m cxuser
 RUN chown -R cxuser:cxuser /app
+
+USER cxuser
