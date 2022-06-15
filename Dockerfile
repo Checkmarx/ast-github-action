@@ -7,10 +7,5 @@ USER root
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
 
-RUN chmod +x /app/entrypoint.sh
-RUN chmod +x /app/cleanup.sh
-RUN mkdir ./cxworker
-
-RUN addgroup -S cx && adduser -S -G cx cx 
-RUN chown cx:cx -R /github/workspace
-USER cx
+RUN chmod +x /app/entrypoint.sh \
+    && chmod +x /app/cleanup.sh
