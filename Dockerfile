@@ -10,7 +10,7 @@ COPY cleanup.sh /app/cleanup.sh
 RUN chmod +x /app/entrypoint.sh
 RUN chmod +x /app/cleanup.sh
 
-RUN useradd -m cxuser
-RUN chown -R cxuser:cxuser /app
+RUN addgroup -S cxgroup && adduser -S cxuser -G cxgroup
+RUN chown -R cxuser:cxgroup /app
 
 USER cxuser
