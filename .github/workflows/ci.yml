@@ -40,14 +40,14 @@ jobs:
           cx_tenant: ${{ secrets.CX_TENANT }}
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          additional_params: --file-include *.sh,Dockerfile --scan-types kics,sca
+          additional_params: --file-include *.sh,Dockerfile --scan-types kics --report-format summaryJSON
       - name: Check if completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario.outcome}}"
           exit 1
-          
+
       - name: Test with preset name
         id: preset_name_test
         continue-on-error: true
