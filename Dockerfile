@@ -5,10 +5,6 @@ FROM checkmarx/ast-cli:2.0.19
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
 
-RUN chmod +x /app/entrypoint.sh \
-    && chmod +x /app/cleanup.sh
-
-RUN chown -R docker:docker /app
 
 ENV USER=docker
 ENV UID=12345
@@ -22,3 +18,8 @@ RUN adduser \
     --uid "$UID" \
     "$USER"
 USER docker
+
+RUN chmod +x /app/entrypoint.sh \
+    && chmod +x /app/cleanup.sh
+
+RUN chown -R docker:docker /app
