@@ -12,7 +12,5 @@ RUN chmod +x /app/cleanup.sh
 RUN mkdir ./cxworker
 
 RUN addgroup -S cx && adduser -S -G cx cx 
-RUN chown cx:cx -R ./cxworker
+RUN chown cx:cx -R /github/workspace
 USER cx
-
-WORKDIR ./cxworker
