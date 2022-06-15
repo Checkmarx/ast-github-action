@@ -12,5 +12,6 @@ RUN chmod +x /app/cleanup.sh
 
 RUN addgroup -S cx && adduser -S -G cx cx 
 RUN chown -R cx:cx /app
+RUN chown -R cx:cx .
 
 USER cx
