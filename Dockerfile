@@ -1,5 +1,5 @@
 #Use AST Base image
-FROM jprannoyn474/ast-cli-t:latest
+FROM jprannoyn474/ast-docker-cli
 
 USER root
 
