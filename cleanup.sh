@@ -8,7 +8,7 @@ then
   
 else 
   echo "Canceling scan with ID:" $cancelId
-  /app/go/src/app/ast-cli/bin/cx scan cancel --scan-id "${cancelId}"
+  /app/bin/cx scan cancel --scan-id "${cancelId}"
 fi
 
 
