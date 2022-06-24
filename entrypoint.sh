@@ -1,6 +1,14 @@
 #!/bin/bash
 
 eval "arr=(${ADDITIONAL_PARAMS})"
+
+search_dir=/app/bin
+for entry in "$search_dir"/*
+do
+  echo "$entry"
+done
+
+
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i /tmp/output.log
 exitCode=${PIPESTATUS[0]}
 
