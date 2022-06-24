@@ -1,3 +1,5 @@
+#!/bin/bash
+
 eval "arr=(${ADDITIONAL_PARAMS})"
 /go/src/app/ast-cli/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i /tmp/output.log
 exitCode=${PIPESTATUS[0]}
