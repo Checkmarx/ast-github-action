@@ -30,6 +30,18 @@ inputs:
     required: false
     default: ''
     description: 'Additional parameters for AST scan'
+  repo_name:
+    required: false
+    default:  ${{ github.event.repository.name }}
+    description: "Repository name for PR decoration"
+  namespace:
+    required: false
+    default: ${{ github.repository_owner }}
+    description: "Organization name to create the Pr comment"
+  pr_number:
+    required: false
+    default: ${{ github.event.number }}
+    description: "Pr Number of the pull request that needs the decoration"
 outputs: 
   cxcli:
     description: output from cli
@@ -44,6 +56,9 @@ runs:
     - ${{ inputs.github_token }}
     - ${{ inputs.project_name }}
     - ${{ inputs.additional_params }}
+    - ${{ input.repo_name }}
+    - ${{ input.namespace }}
+    - ${{ input.pr_number }}
   entrypoint: '/app/entrypoint.sh'
   post-if: cancelled()
   post-entrypoint: '/app/cleanup.sh'
@@ -57,9 +72,9 @@ runs:
     BRANCH: ${{ inputs.branch }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
-    REPO_NAME: ${{ github.event.repository.name }}
-    NAMESPACE: ${{ github.repository_owner }}
-    PR_NUMBER: ${{ github.event.number }}
+    REPO_NAME: ${{ inputs.repo_name }}
+    NAMESPACE: ${{ inputs.namespace }}
+    PR_NUMBER: ${{ inputs.pr_number }}
 
 branding:
   icon: 'check'
