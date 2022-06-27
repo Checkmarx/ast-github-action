@@ -5,9 +5,6 @@ eval "arr=(${ADDITIONAL_PARAMS})"
 exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' /tmp/output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
-echo ${REPO_NAME}
-echo ${NAMESPACE}
-echo ${PR_NUMBER}
 if [ -z "$scanId" ]
 then
   echo "Scan not created. Terminating PR decoration job."
