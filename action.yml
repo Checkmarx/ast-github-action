@@ -57,6 +57,9 @@ runs:
     BRANCH: ${{ inputs.branch }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
+    REPO_NAME: ${{ github.event.repository.name }}
+    NAMESPACE: ${{ github.repository_owner }}
+    PR_NUMBER: ${{ github.event.number }}
 
 branding:
   icon: 'check'
