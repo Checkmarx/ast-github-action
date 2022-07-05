@@ -26,7 +26,7 @@ jobs:
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            body_release="$(gh api -H "Accept: application/vnd.github.v3+json" /repos/Checkmarx/ast-vscode-extension/releases/latest | jq -r '.body' )"
+            body_release="$(gh api -H "Accept: application/vnd.github.v3+json" /repos/Checkmarx/ast-github-action/releases/latest | jq -r '.body' )"
             body_release="${body_release//$'\n'/'%0A'}"
             echo "::set-output name=body_release::$body_release"
         - name: Converts Markdown to HTML
@@ -46,4 +46,4 @@ jobs:
           uses: thechetantalwar/teams-notify@v2
           with:
             teams_webhook_url: ${{ secrets.TEAMS_WEBHOOK_URI }}
-            message: "<h1>AST Github Action ${{ github.ref }}</h1>${{ steps.clean.outputs.clean }}"
+            message: "<h1>AST Github Action ${{ github.ref#refs/heads/ }}</h1>${{ steps.clean.outputs.clean }}"
