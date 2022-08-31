@@ -14,7 +14,7 @@ else
       echo "PR NUMBER not received to create decoration."
     else
       echo "Creating PR decoration for scan ID:" $scanId
-      /app/bin/cx utils pr --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
+      /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
   fi
 fi
 
