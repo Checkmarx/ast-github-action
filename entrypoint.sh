@@ -6,7 +6,7 @@ eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
 
-scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' /tmp/output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
+scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 if [ -z "$scanId" ]
 then
   echo "Scan not created. Terminating PR decoration job."
