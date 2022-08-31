@@ -9,7 +9,7 @@ exitCode=${PIPESTATUS[0]}
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 projectId=(`grep -E '"(ProjectID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
-if [ -n "$scanId"] && [-n "${PR_NUMBER}"]; then
+if [ -n "$scanId"] && [ -n "${PR_NUMBER}" ]; then
   echo "Creating PR decoration for scan ID:" $scanId
   /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
 else
