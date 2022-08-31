@@ -9,8 +9,7 @@ exitCode=${PIPESTATUS[0]}
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 projectId=(`grep -E '"(ProjectID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
-if [ -n "$scanId" & -n "${PR_NUMBER}"]
-then
+if [ -n "$scanId"] && [-n "${PR_NUMBER}"]; then
   echo "Creating PR decoration for scan ID:" $scanId
   /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
 else
@@ -18,14 +17,19 @@ else
 fi
 
 echo "# Checkmarx scan 🔒" >> $GITHUB_STEP_SUMMARY
-
 echo "Program exits with code: " $exitCode >> $GITHUB_STEP_SUMMARY
+
+if [ -n "$scanId" ]; then
+  echo "🔗 ScanId: $scanId" >> $GITHUB_STEP_SUMMARY
+fi
+
+if [ -n "$projectId" ]; then
+  echo "🔗 ProjectId: $projectId" >> $GITHUB_STEP_SUMMARY
+fi 
 
 if [ $exitCode -eq 0 ]
 then
   echo "Scan completed" >> $GITHUB_STEP_SUMMARY
-  scan_url="${CX_BASE_URI}/projects/$projectId/scans?id=$scanId&branch=${BRANCH#refs/heads/}"
-  echo "🔗 [View results]($scan_url)" >> $GITHUB_STEP_SUMMARY
 else
   echo "Scan Failed" >> $GITHUB_STEP_SUMMARY
   exit $exitCode
