@@ -24,7 +24,7 @@ echo "Program exits with code: " $exitCode >> $GITHUB_STEP_SUMMARY
 if [ $exitCode -eq 0 ]
 then
   echo "Scan completed" >> $GITHUB_STEP_SUMMARY
-  scan_url="${BASE_URI}/projects/$projectId/scans?id=$scanId&branch=${BRANCH#refs/heads/}"
+  scan_url="${CX_BASE_URI}/projects/$projectId/scans?id=$scanId&branch=${BRANCH#refs/heads/}"
   echo "🔗 [View results]($scan_url)" >> $GITHUB_STEP_SUMMARY
 else
   echo "Scan Failed" >> $GITHUB_STEP_SUMMARY
