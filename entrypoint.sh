@@ -7,29 +7,27 @@ eval "arr=(${ADDITIONAL_PARAMS})"
 exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
-if [ -z "$scanId" ]
+projectId=(`grep -E '"(ProjectID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
+
+if [ -n "$scanId" & -n "${PR_NUMBER}"]
 then
-  echo "Scan not created. Terminating PR decoration job."
+  echo "Creating PR decoration for scan ID:" $scanId
+  /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
 else
-  if [ -z "${PR_NUMBER}" ]
-    then
-      echo "PR NUMBER not received to create decoration."
-    else
-      echo "Creating PR decoration for scan ID:" $scanId
-      /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
-  fi
+  echo "PR decoration not created."
 fi
 
-echo "Program exits with code: " $exitCode
+echo "# Checkmarx scan 🔒" >> $GITHUB_STEP_SUMMARY
+
+echo "Program exits with code: " $exitCode >> $GITHUB_STEP_SUMMARY
+
 if [ $exitCode -eq 0 ]
 then
-  echo "Scan completed"
+  echo "Scan completed" >> $GITHUB_STEP_SUMMARY
+  scan_url="${BASE_URI}/projects/$projectId/scans?id=$scanId&branch=${BRANCH#refs/heads/}"
+  echo "🔗 [View results]($scan_url)" >> $GITHUB_STEP_SUMMARY
 else
-  echo "Scan Failed"
+  echo "Scan Failed" >> $GITHUB_STEP_SUMMARY
   exit $exitCode
 fi
 
-scan_url=$(grep -oE 'https://(.+)' < $output_file)
-
-echo "# Checkmarx scan 🔒" >> $GITHUB_STEP_SUMMARY
-echo "🔗 [View results]($scan_url)" >> $GITHUB_STEP_SUMMARY
