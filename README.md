@@ -21,7 +21,7 @@
 
 <p align="center">
 <br />
-    <a href="https://checkmarx.atlassian.net/wiki/spaces/AST/pages/3080454799/Quick+Start+Guide+-+CxAST+GitHub+Action"><strong>Explore the docs »</strong></a>
+    <a href="https://checkmarx.com/resource/documents/en/34965-68702-checkmarx-one-github-actions.html"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/Checkmarx/ast-github-action/issues/new/choose">Report Bug</a>
@@ -87,7 +87,7 @@ Copy and paste the following snippet into your .yml file:
 
 ## Usage
 
-To see how you can use our tool, please refer to the [Documentation](https://checkmarx.atlassian.net/wiki/spaces/AST/pages/3080454799/Quick+Start+Guide+-+CxAST+GitHub+Action)
+To see how you can use our tool, please refer to the [Documentation](https://checkmarx.com/resource/documents/en/34965-68702-checkmarx-one-github-actions.html)
 
 
 ## Contribution
