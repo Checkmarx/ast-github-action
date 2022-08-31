@@ -1,7 +1,7 @@
 #!/bin/bash
 
 eval "arr=(${ADDITIONAL_PARAMS})"
-/app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i /tmp/output.log
+/app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i ./output.log
 exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' /tmp/output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)

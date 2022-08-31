@@ -1,5 +1,5 @@
 #Use AST Base image
-FROM jprannoyn474/ast-docker-cli-test
+FROM checkmarx/ast-cli:2.0.26
 
 USER root
 
