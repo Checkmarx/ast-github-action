@@ -1,5 +1,5 @@
 #Use AST Base image
-FROM checkmarx/ast-cli:2.0.26
+FROM checkmarx/ast-cli:2.0.27
 
 USER root
 
