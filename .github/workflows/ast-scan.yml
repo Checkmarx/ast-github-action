@@ -9,15 +9,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.0.2
       - name: Checkmarx AST CLI Action
-        uses: checkmarx/ast-github-action@main
+        id: cx-scan
+        uses: checkmarx/ast-github-action@AST-15921
         with:
           base_uri: ${{ secrets.BASE_URI }}
           cx_tenant: ${{ secrets.TENANT }}
           cx_client_id: ${{ secrets.CLIENT_ID }}
           cx_client_secret: ${{ secrets.CLIENT_SECRET }}
           additional_params: --tags galactica-team --threshold "sast-high=1"
-  outputs:
-    cxScanID: ${{ steps.cx-scan.outputs.cxScanID }}
   echo-scan-id:
     runs-on: ubuntu-latest
     needs: cx-scan
