@@ -16,6 +16,3 @@ jobs:
           cx_client_id: ${{ secrets.CLIENT_ID }}
           cx_client_secret: ${{ secrets.CLIENT_SECRET }}
           additional_params: --tags galactica-team --threshold "sast-high=1"
-      - name: Echo Scan ID step
-        run: |
-          echo "${{ jobs.cx-scan.outputs.cxScanID }}"
