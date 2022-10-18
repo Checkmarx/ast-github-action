@@ -18,4 +18,4 @@ jobs:
           additional_params: --tags galactica-team --threshold "sast-high=1"
       - name: Echo Scan ID step
         run: |
-          echo "${{ steps.cx-scan.outputs.cxScanID }}"
+          echo "${{ jobs.cx-scan.outputs.cxScanID }}"
