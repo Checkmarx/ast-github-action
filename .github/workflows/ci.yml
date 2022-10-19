@@ -48,6 +48,16 @@ jobs:
           echo "${{ steps.valid_scenario.outcome}}"
           exit 1
 
+      - name: Check if output scan ID is not empty
+        if: steps.valid_scenario.outputs.cxScanID == ''
+        run: |
+          echo "Scan ID empty."
+          exit 1
+
+      - name: Printing output Scan ID
+        run: |
+          echo "${{ steps.valid_scenario.outputs.cxScanID }}"
+
       - name: Test with preset name
         id: preset_name_test
         continue-on-error: true
@@ -66,12 +76,3 @@ jobs:
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
           exit 1
-
-      - name: Check if output is filled
-        if: (steps.valid_scenario.outputs.cxScanID == '') == false
-        run: |
-          echo "The action outcome should be success."
-          echo "${{ steps.valid_scenario.outputs.cxScanID }}"
-          exit 1
-#    outputs:
-#      cxScanID: ${{ steps.valid_scenario.outputs.cxScanID }}
