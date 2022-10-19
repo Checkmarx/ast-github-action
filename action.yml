@@ -45,6 +45,8 @@ inputs:
 outputs: 
   cxcli:
     description: output from cli
+  cxScanID:
+    description: scan ID output from cli
 runs:
   using: 'docker'
   image: 'Dockerfile'
