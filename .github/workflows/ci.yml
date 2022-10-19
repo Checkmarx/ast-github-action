@@ -66,15 +66,12 @@ jobs:
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
           exit 1
+
+      - name: Check if output is filled
+        if: (needs.valid_scenario.outputs == "") == false
+        run: |
+          echo "The action outcome should be success."
+          echo "${{ needs.valid_scenario.outputs.cxScanID }}"
+          exit 1
     outputs:
       cxScanID: ${{ steps.integration-tests.outputs.cxScanID }}
-    echo-scan-id:
-      runs-on: ubuntu-latest
-      needs: valid_scenario
-      steps:
-        - name: Check if output is filled
-          if: (needs.valid_scenario.outputs == "") == false
-          run: |
-            echo "The action outcome should be success."
-            echo "${{ needs.valid_scenario.outputs.cxScanID }}"
-            exit 1
