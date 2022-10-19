@@ -1,6 +1,6 @@
 name: AST Github Action CI
 
-on: [pull_request]
+on: [ pull_request ]
 
 jobs:
   integration-tests:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3.0.2
-      
+
       - name: Create source file
         run: |
           echo "testcode"> source.py
@@ -25,12 +25,12 @@ jobs:
           cx_client_secret: ""
       - name: Check if failed authentication
         if: ${{contains( steps.empty_client_secret.outcome, 'success')}}
-        run:  |
+        run: |
           echo "The authentication must fail if invalid client id or password is used"
           echo "${{ steps.empty_client_secret.outcome}}"
           exit 1
-      
-      - name: Valid scenario 
+
+      - name: Valid scenario
         id: valid_scenario
         continue-on-error: true
         uses: ./
@@ -59,10 +59,30 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --sast-preset-name ChekmarxDefaultFake --scan-types sast
-          
+
       - name: Check if preset name completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
         run: |
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
+          exit 1
+
+      - name: Validate scan ID output
+        id: scan_id_output
+        continue-on-error: true
+        uses: ./
+        with:
+          project_name: ${{ github.event.repository.name }}-tests
+          base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          additional_params: --file-include *.sh,Dockerfile --scan-types kics --report-format summaryJSON
+        outputs:
+          cxScanID: ${{ steps.scan_id_output.outputs.cxScanID }}
+      - name: Check if output is filled
+        if: ${{ (steps.scan_id_output.outputs == "") == false}}
+        run: |
+          echo "The action outcome should be success."
+          echo "${{ needs.scan_id_output.outputs.cxScanID }}"
           exit 1
