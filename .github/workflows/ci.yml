@@ -11,10 +11,6 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3.1.0
 
-      - name: PrintScanID
-        run: |
-          echo "${{ steps.integration-tests.outputs.cxScanID }}"
-          exit 1
       - name: Create source file
         run: |
           echo "testcode"> source.py
@@ -83,10 +79,11 @@ jobs:
           cx_client_secret: ${{ secrets.CLIENT_SECRET }}
           additional_params: --tags galactica-team --threshold "sast-high=1"
       - name: Check if output is filled
-        if: (needs.cx_scan.outputs.cxScanID == '') == true
+        needs: cx_scan
+        if: (steps.cx_scan.outputs.cxScanID == '') == true
         run: |
           echo "The action outcome should be success."
-          echo "${{ needs.cx_scan.outputs.cxScanID }}"
+          echo "${{ steps.cx_scan.outputs.cxScanID }}"
           exit 1
     outputs:
-      cxScanID: ${{ steps.integration-tests.outputs.cxScanID }}
+      cxScanID: ${{ steps.cx_scan.outputs.cxScanID }}
