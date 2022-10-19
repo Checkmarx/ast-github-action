@@ -1,6 +1,6 @@
 name: AST Github Action CI
 
-on: [ pull_request ]
+on: [pull_request]
 
 jobs:
   integration-tests:
@@ -9,8 +9,8 @@ jobs:
     name: Integration Testing
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3.0.2
-
+        uses: actions/checkout@v3.1.0
+      
       - name: Create source file
         run: |
           echo "testcode"> source.py
@@ -25,12 +25,12 @@ jobs:
           cx_client_secret: ""
       - name: Check if failed authentication
         if: ${{contains( steps.empty_client_secret.outcome, 'success')}}
-        run: |
+        run:  |
           echo "The authentication must fail if invalid client id or password is used"
           echo "${{ steps.empty_client_secret.outcome}}"
           exit 1
-
-      - name: Valid scenario
+      
+      - name: Valid scenario 
         id: valid_scenario
         continue-on-error: true
         uses: ./
@@ -59,7 +59,7 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --sast-preset-name ChekmarxDefaultFake --scan-types sast
-
+          
       - name: Check if preset name completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
         run: |
