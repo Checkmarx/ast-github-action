@@ -79,7 +79,7 @@ jobs:
           cx_client_secret: ${{ secrets.CLIENT_SECRET }}
           additional_params: --tags galactica-team --threshold "sast-high=1"
       - name: Check if output is filled
-        if: (steps.cx_scan.outputs.cxScanID == '') == true
+        if: (steps.cx_scan.outputs.cxScanID == '') == false
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.cx_scan.outputs.cxScanID }}"
