@@ -11,6 +11,10 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3.1.0
 
+      - name: PrintScanID
+        run: |
+          echo "${{ steps.integration-tests.outputs.cxScanID }}"
+          exit 1
       - name: Create source file
         run: |
           echo "testcode"> source.py
