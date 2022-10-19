@@ -67,6 +67,8 @@ jobs:
           echo "${{ steps.preset_name_test.outcome}}"
           exit 1
 
+      - name: Checkout
+        uses: actions/checkout@v3.0.2
       - name: Checkmarx AST CLI Action
         continue-on-error: true
         id: scan_id_output
