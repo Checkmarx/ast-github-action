@@ -81,7 +81,7 @@ jobs:
         outputs:
           cxScanID: ${{ steps.scan_id_output.outputs.cxScanID }}
       - name: Check if output is filled
-        if: ${{ (steps.scan_id_output.outputs == "") == false}}
+        if: (needs.scan_id_output.outputs == "") == false
         run: |
           echo "The action outcome should be success."
           echo "${{ needs.scan_id_output.outputs.cxScanID }}"
