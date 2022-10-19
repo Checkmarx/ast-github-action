@@ -68,7 +68,7 @@ jobs:
           exit 1
 
       - name: Check if output is filled
-        if: (needs.valid_scenario.outputs == "") == false
+        if: (needs.valid_scenario.outputs == '') == false
         run: |
           echo "The action outcome should be success."
           echo "${{ needs.valid_scenario.outputs.cxScanID }}"
