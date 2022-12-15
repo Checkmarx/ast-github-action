@@ -1,4 +1,4 @@
-name: AST Github Action CI
+name: Checkmarx One Github Action CI
 
 on: [ pull_request ]
 
