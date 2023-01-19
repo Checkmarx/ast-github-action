@@ -20,7 +20,7 @@ echo "Program exits with code: " $exitCode >> $GITHUB_STEP_SUMMARY
 
 if [ -n "$scanId" ]; then
   echo "🔗 ScanId: $scanId" >> $GITHUB_STEP_SUMMARY
-  echo "::set-output name=cxScanID::$scanId"
+  echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
 
 if [ $exitCode -eq 0 ]
