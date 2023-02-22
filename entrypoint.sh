@@ -15,11 +15,11 @@ else
   echo "PR decoration not created."
 fi
 
-echo "# Checkmarx scan 🔒" >> $GITHUB_STEP_SUMMARY
-echo "Program exits with code: " $exitCode >> $GITHUB_STEP_SUMMARY
 
 if [ -n "$scanId" ]; then
-  echo "🔗 ScanId: $scanId" >> $GITHUB_STEP_SUMMARY
+  /app/bin/cx results show --scan-id "${scanId}" --report-format markdown 
+  cat ./cx_result.md >$GITHUB_STEP_SUMMARY
+  rm ./cx_result.md
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
 
