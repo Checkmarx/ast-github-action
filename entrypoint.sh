@@ -25,9 +25,9 @@ fi
 
 if [ $exitCode -eq 0 ]
 then
-  echo "Scan completed" >> $GITHUB_OUTPUT
+  echo "Scan completed"
 else
-  echo "Scan Failed" >> $GITHUB_OUTPUT
+  echo "Scan Failed" 
   exit $exitCode
 fi
 
