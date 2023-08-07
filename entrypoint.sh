@@ -8,6 +8,8 @@ exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
+scanStatus=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f4 | cut -d':' -f2 | tr -d '"'`)
+
 if [ -n "$scanId" ] && [ -n "${PR_NUMBER}" ]; then
   echo "Creating PR decoration for scan ID:" $scanId
   /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
@@ -15,8 +17,8 @@ else
   echo "PR decoration not created."
 fi
 
-
-if [ -n "$scanId" ]; then
+# only generate step summary if scan is no longer running
+if [ -n "$scanId" ] && [ "$scanStatus" != "Running" ]; then
   /app/bin/cx results show --scan-id "${scanId}" --report-format markdown 
   cat ./cx_result.md >$GITHUB_STEP_SUMMARY
   rm ./cx_result.md
