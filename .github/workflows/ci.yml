@@ -9,7 +9,7 @@ jobs:
     name: Integration Testing
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
 
       - name: Create source file
         run: |
