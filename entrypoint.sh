@@ -17,9 +17,10 @@ fi
 
 
 if [ -n "$scanId" ]; then
-  /app/bin/cx results show --scan-id "${scanId}" --report-format markdown 
+  /app/bin/cx results show --scan-id "${scanId}" --report-format markdown
   cat ./cx_result.md >$GITHUB_STEP_SUMMARY
   rm ./cx_result.md
+  rm ./output.log
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
 
@@ -27,7 +28,7 @@ if [ $exitCode -eq 0 ]
 then
   echo "Scan completed"
 else
-  echo "Scan Failed" 
+  echo "Scan Failed"
   exit $exitCode
 fi
 
