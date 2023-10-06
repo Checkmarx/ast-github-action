@@ -18,6 +18,10 @@ inputs:
     required: false
     default: ${{ github.repository }} # default repo name
     description: 'Select a Checkmarx Project Name'
+  project_groups:
+    required: false
+    description: 'A comma separated list of groups the project belongs to'
+    default: ''
   branch:
     required: false
     default: ${{ github.head_ref || github.ref }} # default branch name
@@ -73,6 +77,7 @@ runs:
     GITHUB_TOKEN: ${{ inputs.github_token }}
     BRANCH: ${{ inputs.branch }}
     PROJECT_NAME: ${{ inputs.project_name }}
+    PROJECT_GROUPS: ${{ inputs.project_groups }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
     REPO_NAME: ${{ inputs.repo_name }}
     NAMESPACE: ${{ inputs.namespace }}

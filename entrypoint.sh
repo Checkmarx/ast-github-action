@@ -3,6 +3,8 @@
 output_file=./output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
+[ "${PROJECT_GROUPS}" ] && arr+=("--project-groups" "${PROJECT_GROUPS}")
+
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
 
