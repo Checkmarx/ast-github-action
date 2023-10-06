@@ -3,6 +3,8 @@
 output_file=./output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
+[ "${SCAN_ASYNC}" == "true" ] && arr+=("--async")
+
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
 
@@ -16,7 +18,7 @@ else
 fi
 
 
-if [ -n "$scanId" ]; then
+if [ "${SCAN_ASYNC}" != "true" -a -n "$scanId" ]; then
   /app/bin/cx results show --scan-id "${scanId}" --report-format markdown 
   cat ./cx_result.md >$GITHUB_STEP_SUMMARY
   rm ./cx_result.md

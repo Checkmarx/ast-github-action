@@ -42,6 +42,10 @@ inputs:
     required: false
     default: ${{ github.event.number }}
     description: "Pr Number of the pull request that needs the decoration"
+  scan_async:
+    required: false
+    default: ${{ false }}
+    description: "Do not wait for scan completion"
 outputs: 
   cxcli:
     description: output from cli
@@ -77,6 +81,7 @@ runs:
     REPO_NAME: ${{ inputs.repo_name }}
     NAMESPACE: ${{ inputs.namespace }}
     PR_NUMBER: ${{ inputs.pr_number }}
+    SCAN_ASYNC: ${{ inputs.scan_async }}
 
 branding:
   icon: 'check'
