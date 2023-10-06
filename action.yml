@@ -42,6 +42,10 @@ inputs:
     required: false
     default: ${{ github.event.number }}
     description: "Pr Number of the pull request that needs the decoration"
+  cx_agent:
+    required: false
+    default: "Github Action"
+    description: "A name for the origin of the scan"
 outputs: 
   cxcli:
     description: output from cli
@@ -66,6 +70,7 @@ runs:
   post-entrypoint: '/app/cleanup.sh'
 
   env:
+    CX_AGENT: "${{ inputs.cx_agent }}"
     CX_BASE_URI: "${{ inputs.base_uri }}"
     CX_TENANT: ${{ inputs.cx_tenant }}
     CX_CLIENT_ID: ${{ inputs.cx_client_id }}
