@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.0.0
+        uses: actions/checkout@v4.1.0
       - name: Checkmarx One CLI Action
         uses: checkmarx/ast-github-action@main
         with:
@@ -15,4 +15,4 @@ jobs:
           cx_tenant: ${{ secrets.TENANT }}
           cx_client_id: ${{ secrets.CLIENT_ID }}
           cx_client_secret: ${{ secrets.CLIENT_SECRET }}
-          additional_params: --tags galactica-team --threshold "sast-high=1" --scan-types kics
+          additional_params: --tags galactica-team --threshold "sast-high=1" --debug
