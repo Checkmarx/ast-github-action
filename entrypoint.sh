@@ -8,6 +8,8 @@ exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
+echo "cxcli=$(cat $output_file)" >> $GITHUB_OUTPUT
+
 if [ -n "$scanId" ] && [ -n "${PR_NUMBER}" ]; then
   echo "Creating PR decoration for scan ID:" $scanId
   /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
@@ -27,7 +29,7 @@ if [ $exitCode -eq 0 ]
 then
   echo "Scan completed"
 else
-  echo "Scan Failed" 
+  echo "Scan failed" 
   exit $exitCode
 fi
 
