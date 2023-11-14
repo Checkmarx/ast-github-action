@@ -58,6 +58,16 @@ jobs:
         run: |
           echo "${{ steps.valid_scenario.outputs.cxScanID }}"
 
+      - name: Check if output log is not empty
+        if: steps.valid_scenario.outputs.cxcli == ''
+        run: |
+          echo "Output log empty."
+          exit 1
+
+      - name: Printing cli output 
+        run: |
+          echo "${{ steps.valid_scenario.outputs.cxcli }}"
+
       - name: Test with preset name
         id: preset_name_test
         continue-on-error: true
