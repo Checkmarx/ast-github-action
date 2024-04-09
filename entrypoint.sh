@@ -3,6 +3,10 @@
 output_file=./output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
+if [ "${USE_SCARESOLVER}" == "true" ]; then
+  arr+=("--sca-resolver" "/app/bin/ScaResolver")
+fi
+
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
 
