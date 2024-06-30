@@ -110,7 +110,7 @@ Project Link: [https://github.com/Checkmarx/ast-github-action](https://github.co
 
 Find more integrations from our team [here](https://github.com/Checkmarx/ci-cd-integrations#checkmarx-ast-integrations)
 
-© 2022 Checkmarx Ltd. All Rights Reserved.
+© 2024 Checkmarx Ltd. All Rights Reserved.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
