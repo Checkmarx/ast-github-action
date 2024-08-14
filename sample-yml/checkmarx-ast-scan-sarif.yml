@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Checkmarx scan
-        uses: checkmarx/ast-github-action@main
+        uses: checkmarx/ast-github-action@1fe318de2993222574e6249750ba9000a4e2a6cd #main
         with:
           base_uri: https://ast.checkmarx.net
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
