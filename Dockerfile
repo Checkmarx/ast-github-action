@@ -1,12 +1,19 @@
+# Use the base image
 FROM checkmarx/ast-cli:2.2.3
 
-USER root
+# Create a new user
+RUN adduser --disabled-password --gecos '' cxuser \
+    && usermod -aG sudo cxuser \
+    && echo 'cxuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Use a non-root user
-RUN adduser --disabled-password --gecos '' cxuser
+# Switch to the new user
 USER cxuser
 
+# Copy scripts to the /app directory
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
 
-RUN chmod +x /app/entrypoint.sh && chmod +x /app/cleanup.sh
+# Grant execution permissions to the scripts
+RUN chmod +x /app/entrypoint.sh \
+    && chmod +x /app/cleanup.sh
+
