@@ -10,7 +10,7 @@ COPY cleanup.sh /app/cleanup.sh
 # Ensure the non-root user has the necessary permissions for all directories
 RUN chmod +x /app/entrypoint.sh \
     && chmod +x /app/cleanup.sh \
-    && chmod -R 777 /app /github /workspace /home/runner
+    && chmod -R 777 /app 
 
 # Change user to non-root after setting up permissions
 USER nonroot
