@@ -1,6 +1,7 @@
 # Use AST Base image
 FROM checkmarx/ast-cli:2.2.3
 
+USER root
 # Create a non-root user and group
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 
