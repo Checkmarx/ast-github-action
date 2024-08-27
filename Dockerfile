@@ -1,6 +1,9 @@
 # Use the base image
 FROM checkmarx/ast-cli:2.2.3
 
+# Ensure the following commands run as root
+USER root
+
 # Create a new user
 RUN adduser --disabled-password --gecos '' cxuser \
     && usermod -aG sudo cxuser \
