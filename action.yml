@@ -42,6 +42,10 @@ inputs:
     required: false
     default: ${{ github.event.number }}
     description: "Pr Number of the pull request that needs the decoration"
+  use_scaresolver:
+    required: false
+    default: ${{ false }}
+    description: "Use Checkmarx SCA Resolver to locally resolve project dependencies"
 outputs: 
   cxcli:
     description: output from cli
@@ -77,6 +81,7 @@ runs:
     REPO_NAME: ${{ inputs.repo_name }}
     NAMESPACE: ${{ inputs.namespace }}
     PR_NUMBER: ${{ inputs.pr_number }}
+    USE_SCARESOLVER: ${{ inputs.use_scaresolver }}
 
 branding:
   icon: 'check'
