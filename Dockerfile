@@ -6,7 +6,6 @@ RUN chmod -R u+w /app && \
     chmod -R o+w /github/file_commands || true # Conditional to avoid errors if the directory doesn't exist
 
 # Switch back to the nonroot user provided by the base image
-USER nonroot
 
 # Define working directory and copy necessary scripts
 WORKDIR /app
@@ -17,3 +16,5 @@ COPY cleanup.sh /app/cleanup.sh
 RUN chmod +x /app/entrypoint.sh /app/cleanup.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
+USER nonroot
+
