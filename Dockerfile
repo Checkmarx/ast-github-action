@@ -1,18 +1,19 @@
 FROM checkmarx/ast-cli:2.2.3
 
+# Adjust permissions for any directories or files before switching to nonroot
 USER root
-# Set up application user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN chmod -R u+w /app && \
+    chmod -R o+w /github/file_commands || true # Conditional to avoid errors if the directory doesn't exist
 
-# Set working directory and copy scripts
+# Switch back to the nonroot user provided by the base image
+USER nonroot
+
+# Define working directory and copy necessary scripts
 WORKDIR /app
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
 
-# Adjust permissions for app directory
-RUN chown -R appuser:appgroup /app && chmod +x /app/entrypoint.sh && chmod +x /app/cleanup.sh
+# Ensure scripts have execute permissions
+RUN chmod +x /app/entrypoint.sh /app/cleanup.sh
 
-USER appuser
-
-# Entrypoint
 ENTRYPOINT ["/app/entrypoint.sh"]

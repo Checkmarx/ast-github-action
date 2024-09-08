@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Adjust permissions for GitHub file commands at runtime
+# No need for sudo, as permission should have been handled during the Docker build
 if [ -d "/github/file_commands" ]; then
     chmod -R u+w /github/file_commands
 fi
