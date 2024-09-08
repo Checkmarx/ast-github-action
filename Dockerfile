@@ -1,5 +1,6 @@
 FROM checkmarx/ast-cli:2.2.3
 
+USER root
 # Set up application user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
