@@ -1,6 +1,7 @@
 #!/bin/bash
 
-output_file=./output.log
+# Define output file path inside /app, which is writable by non-root user
+output_file=/app/output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
@@ -17,11 +18,10 @@ else
   echo "PR decoration not created."
 fi
 
-
 if [ -n "$scanId" ]; then
   /app/bin/cx results show --scan-id "${scanId}" --report-format markdown 
-  cat ./cx_result.md >$GITHUB_STEP_SUMMARY
-  rm ./cx_result.md
+  cat /app/cx_result.md >$GITHUB_STEP_SUMMARY
+  rm /app/cx_result.md
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
 
@@ -32,4 +32,3 @@ else
   echo "Scan failed" 
   exit $exitCode
 fi
-
