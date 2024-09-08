@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Adjust permissions for GitHub file commands at runtime
+if [ -d "/github/file_commands" ]; then
+    sudo chmod -R u+w /github/file_commands
+fi
+
 # Define output file path inside /app, which is writable by non-root user
 output_file=/app/output.log
 
@@ -20,7 +25,7 @@ fi
 
 if [ -n "$scanId" ]; then
   /app/bin/cx results show --scan-id "${scanId}" --report-format markdown --output /app/cx_result.md
-  cat /app/cx_result.md >$GITHUB_STEP_SUMMARY
+  cat /app/cx_result.md > $GITHUB_STEP_SUMMARY
   rm /app/cx_result.md
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
@@ -28,6 +33,6 @@ fi
 if [ $exitCode -eq 0 ]; then
   echo "Scan completed"
 else
-  echo "Scan failed" 
+  echo "Scan failed"
   exit $exitCode
 fi
