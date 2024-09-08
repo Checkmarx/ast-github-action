@@ -16,9 +16,6 @@ COPY cleanup.sh /app/cleanup.sh
 # Set the ownership of the /app directory to the non-root user
 RUN chown -R appuser:appgroup /app
 
-# Give write permissions to GitHub Actions file command directories
-RUN chmod -R o+w /github/file_commands
-
 # Ensure scripts are executable
 RUN chmod +x /app/entrypoint.sh \
     && chmod +x /app/cleanup.sh
