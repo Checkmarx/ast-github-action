@@ -2,7 +2,7 @@
 
 # Adjust permissions for GitHub file commands at runtime
 if [ -d "/github/file_commands" ]; then
-    sudo chmod -R u+w /github/file_commands
+    chmod -R u+w /github/file_commands
 fi
 
 # Define output file path inside /app, which is writable by non-root user
