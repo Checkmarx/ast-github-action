@@ -1,12 +1,6 @@
 #!/bin/bash
 
-# No need for sudo, as permission should have been handled during the Docker build
-if [ -d "/github/file_commands" ]; then
-    chmod -R u+w /github/file_commands
-fi
-
-# Define output file path inside /app, which is writable by non-root user
-output_file=/app/output.log
+output_file=./output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
@@ -23,14 +17,16 @@ else
   echo "PR decoration not created."
 fi
 
+
 if [ -n "$scanId" ]; then
-  /app/bin/cx results show --scan-id "${scanId}" --report-format markdown --output /app/cx_result.md
-  cat /app/cx_result.md > $GITHUB_STEP_SUMMARY
-  rm /app/cx_result.md
+  /app/bin/cx results show --scan-id "${scanId}" --report-format markdown
+  cat ./cx_result.md >$GITHUB_STEP_SUMMARY
+  rm ./cx_result.md
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
 
-if [ $exitCode -eq 0 ]; then
+if [ $exitCode -eq 0 ]
+then
   echo "Scan completed"
 else
   echo "Scan failed"
