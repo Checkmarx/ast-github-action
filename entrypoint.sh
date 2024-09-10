@@ -1,10 +1,10 @@
 #!/bin/bash
 
-output_file=./output.log
+output_file=./var/log/output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
-exitCode=${PIPESTATUS[0]}
+exitCode=${PIPESTATUS[0]}``
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
