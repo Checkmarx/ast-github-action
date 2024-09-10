@@ -19,7 +19,7 @@
 
 <h3 align="center">AST-GITHUB-ACTIONS</h3>
 
-<p align="cdenter">
+<p align="center">
 <br />
     <a href="https://checkmarx.com/resource/documents/en/34965-68702-checkmarx-one-github-actions.html"><strong>Explore the docs »</strong></a>
     <br />
