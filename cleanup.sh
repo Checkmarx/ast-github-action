@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' ./output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
+cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' ./log/output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
 if [ -z "$cancelId" ]
 then 
