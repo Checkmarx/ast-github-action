@@ -3,7 +3,7 @@ FROM checkmarx/ast-cli:2.2.3
 
 USER root
 
-RUN mkdir -p /var
+RUN mkdir -p /log
 
 USER nonroot
 
