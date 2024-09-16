@@ -2,7 +2,7 @@
 
 output_file=/app/output.log
 
-# Create file and add permissions
+# Create file
 touch $output_file
 
 cd /app
@@ -10,6 +10,8 @@ cd /app
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
+
+chown nonroot:nonroot $output_file
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
@@ -25,6 +27,9 @@ fi
 
 if [ -n "$scanId" ]; then
   /app/bin/cx results show --scan-id "${scanId}" --report-format markdown
+  
+  chown nonroot:nonroot cx_result.md
+  
   cat ./cx_result.md >$GITHUB_STEP_SUMMARY
   rm ./cx_result.md
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
