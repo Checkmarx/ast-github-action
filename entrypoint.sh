@@ -2,6 +2,8 @@
 
 output_file=./output.log
 
+chown nonroot:nonroot /output.log
+
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
