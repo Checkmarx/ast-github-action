@@ -1,6 +1,8 @@
 #!/bin/bash
 
-cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' ./output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
+output_file=/app/output.log
+
+cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
 if [ -z "$cancelId" ]
 then
