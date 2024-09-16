@@ -5,7 +5,7 @@ WORKDIR /app
 
 USER nonroot
 
-RUN chmod -R nonroot:nonroot /app
+RUN chown -R nonroot:nonroot /app
 
 #Copy the entrypoint script and properties used for the action
 COPY --chown=nonroot:nonroot --chmod=555 entrypoint.sh /app/entrypoint.sh
