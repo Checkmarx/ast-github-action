@@ -1,6 +1,6 @@
 #!/bin/bash
 
-output_file=./output.log
+output_file=./app/output.log
 
 # Create file and add permissions
 touch $output_file && chown nonroot:nonroot $output_file
