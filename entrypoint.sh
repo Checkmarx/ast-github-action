@@ -32,4 +32,3 @@ else
   echo "Scan failed"
   exit $exitCode
 fi
-
