@@ -1,6 +1,6 @@
 #!/bin/bash
 
-output_file=./output.log
+output_file=./app/output.log
 pwd
 ls -la /
 eval "arr=(${ADDITIONAL_PARAMS})"
