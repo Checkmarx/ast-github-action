@@ -3,7 +3,7 @@ FROM checkmarx/ast-cli:2.2.7
 
 USER root
 
-RUN touch /output.log && chmod 555 /output.log
+RUN touch /output.log && chown 65532:65532 /output.log /output.log
 #Copy the entrypoint script and properties used for the action
 COPY entrypoint.sh /app/entrypoint.sh
 COPY cleanup.sh /app/cleanup.sh
