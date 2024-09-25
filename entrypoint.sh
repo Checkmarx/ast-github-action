@@ -1,5 +1,6 @@
 #!/bin/bash
 
+touch /app/output.log
 output_file=./app/output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
