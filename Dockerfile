@@ -2,7 +2,7 @@
 FROM checkmarx/dev-tests:latest
 
 # Copy the entrypoint script and properties used for the action
-COPY entrypoint.sh /app/entrypoint.sh
-COPY cleanup.sh /app/cleanup.sh
+COPY --chmod=555 entrypoint.sh /app/entrypoint.sh
+COPY --chmod=555 cleanup.sh /app/cleanup.sh
 
 USER root
