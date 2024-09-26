@@ -14,6 +14,8 @@ scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d'
 
 echo "cxcli=$(cat $output_file | tr -d '\r\n')" >> $GITHUB_OUTPUT
 
+ls -la /github/
+
 if [ -n "$scanId" ] && [ -n "${PR_NUMBER}" ]; then
   echo "Creating PR decoration for scan ID:" $scanId
   /app/bin/cx utils pr github --scan-id "${scanId}" --namespace "${NAMESPACE}" --repo-name "${REPO_NAME}" --pr-number "${PR_NUMBER}" --token "${GITHUB_TOKEN}"
