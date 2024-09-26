@@ -4,7 +4,7 @@ output_file=./app/output.log
 
 cd /app
 
-touch output.log && chmod 555 output.log
+touch output.log && chmod 666 output.log
 
 ls -la /app
 
