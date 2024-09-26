@@ -1,16 +1,6 @@
 #!/bin/bash
 
-output_file=output.log
-
-cd /app
-
-touch output.log && chmod 660 output.log
-
-id
-cat /etc/passwd
-
-ls -la /github/
-
+output_file=./app/output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
@@ -18,11 +8,7 @@ exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
-ls -la /app
-
 echo "cxcli=$(cat $output_file | tr -d '\r\n')" >> $GITHUB_OUTPUT
-
-
 
 if [ -n "$scanId" ] && [ -n "${PR_NUMBER}" ]; then
   echo "Creating PR decoration for scan ID:" $scanId
