@@ -4,7 +4,7 @@ FROM checkmarx/dev-tests:latest
 WORKDIR /app
 
 USER root
-RUN mkdir -p -m 660 /github/
+RUN mkdir -p -m 666 /github/
 
 # Copy the entrypoint script and properties used for the action
 COPY --chmod=555 entrypoint.sh /app/entrypoint.sh
