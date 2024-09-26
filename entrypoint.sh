@@ -8,7 +8,7 @@ touch output.log && chmod 660 output.log
 
 id
 cat /etc/passwd
-ls -la /
+
 ls -la /github/
 
 
@@ -17,6 +17,8 @@ eval "arr=(${ADDITIONAL_PARAMS})"
 exitCode=${PIPESTATUS[0]}
 
 scanId=(`grep -E '"(ID)":"((\\"|[^"])*)"' $output_file | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
+
+ls -la /app
 
 echo "cxcli=$(cat $output_file | tr -d '\r\n')" >> $GITHUB_OUTPUT
 
