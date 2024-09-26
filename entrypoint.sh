@@ -2,7 +2,11 @@
 
 output_file=output.log
 
+pwd
+ls -la
+
 cd /app
+ls -la
 
 touch output.log && chmod 660 output.log
 
