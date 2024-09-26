@@ -7,6 +7,7 @@ cd /app
 touch output.log && chmod 660 output.log
 
 id
+ls -la /
 ls -la /github/
 
 
