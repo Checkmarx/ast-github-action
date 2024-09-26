@@ -1,7 +1,9 @@
 #!/bin/bash
 
 output_file=output.log
-    
+
+cd /app
+
 touch output.log && chmod 660 output.log
 
 eval "arr=(${ADDITIONAL_PARAMS})"
