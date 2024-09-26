@@ -2,15 +2,7 @@
 
 output_file=output.log
     
-pwd
-ls -la
-
-cd /app
-ls -la
-
-touch output.log && chmod 660 output.log
-
-ls -la /app
+chmod 660 -R /github/file_commands
 
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
