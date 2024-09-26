@@ -2,7 +2,12 @@
 
 output_file=./app/output.log
 
+cd /app
+
+touch output.log
+
 ls -la /app
+
 eval "arr=(${ADDITIONAL_PARAMS})"
 /app/bin/cx scan create --project-name "${PROJECT_NAME}" -s "." --branch "${BRANCH#refs/heads/}" --scan-info-format json --agent "Github Action" "${arr[@]}" | tee -i $output_file
 exitCode=${PIPESTATUS[0]}
