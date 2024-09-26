@@ -3,6 +3,7 @@ FROM checkmarx/dev-tests:latest
 
 WORKDIR /app
 
+USER root
 RUN touch output.log && chmod=555 output.log
 
 # Copy the entrypoint script and properties used for the action
