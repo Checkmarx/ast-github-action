@@ -1,7 +1,7 @@
 #!/bin/bash
 
 output_file=output.log
- 
+    
 pwd
 ls -la
 
