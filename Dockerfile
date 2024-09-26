@@ -3,7 +3,8 @@ FROM checkmarx/dev-tests:latest
 
 WORKDIR /app
 
-RUN chmod -R 660 /github/file_commands
+USER root
+RUN mkdir /github/file_commands && chmod -R 660 /github/file_commands
 
 # Copy the entrypoint script and properties used for the action
 COPY --chmod=555 entrypoint.sh /app/entrypoint.sh
