@@ -1,10 +1,10 @@
 #!/bin/bash
 
-output_file=./app/output.log
+output_file=output.log
 
 cd /app
 
-touch output.log && chmod 666 output.log
+touch output.log && chmod 660 output.log
 
 ls -la /app
 
