@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Checkmarx scan
-        uses: checkmarx/ast-github-action@main
+        uses: checkmarx/ast-github-action@1fe318de2993222574e6249750ba9000a4e2a6cd #main
         with:
           base_uri: https://ast.checkmarx.net
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
@@ -31,7 +31,7 @@ jobs:
           cx_tenant: ${{ secrets.CX_TENANT }} # This should be replaced by users' tenant name
           additional_params: --report-format sarif --output-path .
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@404b712ccd1b4eeea961470c9187609bd64e5db4 #v2
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: cx_result.sarif

@@ -3,10 +3,10 @@
 cancelId=(`grep -E '"(ID)":"((\\"|[^"])*)"' ./output.log | cut -d',' -f1 | cut -d':' -f2 | tr -d '"'`)
 
 if [ -z "$cancelId" ]
-then 
+then
   echo "Scan not created. Terminating job."
-  
-else 
+
+else
   echo "Canceling scan with ID:" $cancelId
   /app/bin/cx scan cancel --scan-id "${cancelId}"
 fi
