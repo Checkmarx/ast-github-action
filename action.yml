@@ -42,6 +42,10 @@ inputs:
     required: false
     default: ${{ github.event.number }}
     description: "Pr Number of the pull request that needs the decoration"
+  source_dir:
+    required: false
+    default: .
+    description: "Source directory"
 outputs: 
   cxcli:
     description: output from cli
@@ -61,6 +65,7 @@ runs:
     - ${{ inputs.repo_name }}
     - ${{ inputs.namespace }}
     - ${{ inputs.pr_number }}
+    - ${{ inputs.source_dir }}
   entrypoint: '/app/entrypoint.sh'
   post-if: cancelled()
   post-entrypoint: '/app/cleanup.sh'
@@ -77,6 +82,7 @@ runs:
     REPO_NAME: ${{ inputs.repo_name }}
     NAMESPACE: ${{ inputs.namespace }}
     PR_NUMBER: ${{ inputs.pr_number }}
+    SOURCE_DIR: ${{ inputs.source_dir }}
 
 branding:
   icon: 'check'
