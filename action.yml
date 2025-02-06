@@ -42,7 +42,7 @@ inputs:
     required: false
     default: ${{ github.event.number }}
     description: "Pr Number of the pull request that needs the decoration"
-outputs:
+outputs: 
   cxcli:
     description: output from cli
   cxScanID:
@@ -64,9 +64,6 @@ runs:
   entrypoint: '/app/entrypoint.sh'
   post-if: cancelled()
   post-entrypoint: '/app/cleanup.sh'
-  options: >-
-    --volume /var/run/docker.sock:/var/run/docker.sock
-
   env:
     CX_BASE_URI: "${{ inputs.base_uri }}"
     CX_TENANT: ${{ inputs.cx_tenant }}
@@ -79,7 +76,6 @@ runs:
     REPO_NAME: ${{ inputs.repo_name }}
     NAMESPACE: ${{ inputs.namespace }}
     PR_NUMBER: ${{ inputs.pr_number }}
-
 
 branding:
   icon: 'check'
