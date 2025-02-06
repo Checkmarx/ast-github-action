@@ -14,7 +14,9 @@ jobs:
       - name: Create source file
         run: |
           echo "testcode"> source.py
-      - name: Run with empty client and secret
+      
+      # Test Failure on missing client-id and secret
+      - name: Run With Empty Client And Secret
         id: empty_client_secret
         continue-on-error: true
         uses: ./
@@ -23,14 +25,15 @@ jobs:
           base_uri: https://fake.com
           cx_client_id: ""
           cx_client_secret: ""
-      - name: Check if failed authentication
+      - name: Check If Authentication Failed
         if: ${{contains( steps.empty_client_secret.outcome, 'success')}}
         run: |
           echo "The authentication must fail if invalid client id or password is used"
           echo "${{ steps.empty_client_secret.outcome}}"
           exit 1
-
-      - name: Valid scenario
+      
+      # Test valid input
+      - name: Valid Scenario
         id: valid_scenario
         continue-on-error: true
         uses: ./
@@ -41,34 +44,31 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --file-include *.sh,Dockerfile --scan-types kics --report-format summaryJSON
-      - name: Check if completed
+      - name: Check If Scan Completed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario.outcome}}"
           exit 1
-
-      - name: Check if output scan ID is not empty
+      - name: Check If Output Scan ID Is Not Empty
         if: steps.valid_scenario.outputs.cxScanID == ''
         run: |
           echo "Scan ID empty."
           exit 1
-
-      - name: Printing output Scan ID
+      - name: Print Output Scan ID
         run: |
           echo "${{ steps.valid_scenario.outputs.cxScanID }}"
-
-      - name: Check if output log is not empty
+      - name: Check If Output Log Is Not Empty
         if: steps.valid_scenario.outputs.cxcli == ''
         run: |
           echo "Output log empty."
           exit 1
-
-      - name: Printing cli output 
+      - name: Print CLI Output 
         run: |
           echo "${{ steps.valid_scenario.outputs.cxcli }}"
-
-      - name: Test with preset name
+      
+      # Test failure when wrong preset name
+      - name: Test With Wrong Preset Name
         id: preset_name_test
         continue-on-error: true
         uses: ./
@@ -79,10 +79,56 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --sast-preset-name ChekmarxDefaultFake --scan-types sast
-
-      - name: Check if preset name completed
+      - name: Check If Preset Name Scan Completed
         if: ${{contains( steps.preset_name_test.outcome, 'success')}}
         run: |
           echo "The cli should fail. Wrong preset name provided"
           echo "${{ steps.preset_name_test.outcome}}"
           exit 1
+
+      # Test source path input
+      - name: Create subfolder and add file
+        run: |
+          mkdir -p my_source_dir
+          echo "This is a test file for Checkmarx scanning" > my_source_dir/test-file.sh
+          echo "FROM alpine:latest" > my_source_dir/Dockerfile
+
+      - name: Valid Scenario With Source Path
+        id: valid_scenario_source_path
+        continue-on-error: true
+        uses: ./
+        with:
+          project_name: ${{ github.event.repository.name }}-tests
+          base_uri: ${{ secrets.CX_BASE_URI }}
+          cx_tenant: ${{ secrets.CX_TENANT }}
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          source_dir: ""
+          additional_params: --file-include *.sh,Dockerfile --scan-types kics --report-format summaryJSON
+      
+      - name: Check if completed
+        if: ${{ contains( steps.valid_scenario_source_path.outcome, 'success') == false}}
+        run: |
+          echo "The action outcome should be success."
+          echo "${{ steps.valid_scenario_source_path.outcome}}"
+          exit 1
+
+      - name: Check if output scan ID is not empty
+        if: steps.valid_scenario_source_path.outputs.cxScanID == ''
+        run: |
+          echo "Scan ID empty."
+          exit 1
+
+      - name: Printing output Scan ID
+        run: |
+          echo "${{ steps.valid_scenario_source_path.outputs.cxScanID }}"
+
+      - name: Check if output log is not empty
+        if: steps.valid_scenario_source_path.outputs.cxcli == ''
+        run: |
+          echo "Output log empty."
+          exit 1
+
+      - name: Printing cli output 
+        run: |
+          echo "${{ steps.valid_scenario_source_path.outputs.cxcli }}"
