@@ -44,13 +44,13 @@ jobs:
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
           additional_params: --file-include *.sh,Dockerfile --scan-types kics --report-format summaryJSON
-      - name: Check If Scan Completed
+      - name: Check If Scan Failed
         if: ${{ contains( steps.valid_scenario.outcome, 'success') == false}}
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario.outcome}}"
           exit 1
-      - name: Check If Output Scan ID Is Not Empty
+      - name: Check If Output Scan ID Is Empty
         if: steps.valid_scenario.outputs.cxScanID == ''
         run: |
           echo "Scan ID empty."
@@ -58,7 +58,7 @@ jobs:
       - name: Print Output Scan ID
         run: |
           echo "${{ steps.valid_scenario.outputs.cxScanID }}"
-      - name: Check If Output Log Is Not Empty
+      - name: Check If Output Log Is Empty
         if: steps.valid_scenario.outputs.cxcli == ''
         run: |
           echo "Output log empty."
@@ -106,29 +106,29 @@ jobs:
           source_dir: "./my_source_dir"
           additional_params: --file-include *.sh,Dockerfile --scan-types kics --report-format summaryJSON
       
-      - name: Check if completed
+      - name: Check If Scan Failed
         if: ${{ contains( steps.valid_scenario_source_path.outcome, 'success') == false}}
         run: |
           echo "The action outcome should be success."
           echo "${{ steps.valid_scenario_source_path.outcome}}"
           exit 1
 
-      - name: Check if output scan ID is not empty
+      - name: Check If Output Scan ID Is empty
         if: steps.valid_scenario_source_path.outputs.cxScanID == ''
         run: |
           echo "Scan ID empty."
           exit 1
 
-      - name: Printing output Scan ID
+      - name: Print Output Scan ID
         run: |
           echo "${{ steps.valid_scenario_source_path.outputs.cxScanID }}"
 
-      - name: Check if output log is not empty
+      - name: Check If Output Log Is Empty
         if: steps.valid_scenario_source_path.outputs.cxcli == ''
         run: |
           echo "Output log empty."
           exit 1
 
-      - name: Printing cli output 
+      - name: Print cCLI Output 
         run: |
           echo "${{ steps.valid_scenario_source_path.outputs.cxcli }}"
