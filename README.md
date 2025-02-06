@@ -81,6 +81,7 @@ Copy and paste the following snippet into your .yml file:
           cx_tenant: your_tenant
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          source_dir: "path-to-scan" (dafault is ".")
 ```
 
 
