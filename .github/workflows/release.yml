@@ -2,11 +2,11 @@
 name: Publish Checkmarx One CLI GitHub Action
 
 on:
-  workflow_dispatch:
-  inputs:
-    tag:
-      description: 'Next release tag'
-      required: true
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Next release tag'
+        required: true
 
 jobs:
   release:
