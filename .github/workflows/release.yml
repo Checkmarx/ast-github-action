@@ -23,8 +23,8 @@ jobs:
       - name: Extract full CLI version from Dockerfile
         id: extract_cli_version
         run: |
-          IMAGE_LINE=$(grep -m 1 '^FROM' Dockerfile)
-          IMAGE_TAG=$(echo "$IMAGE_LINE" | awk -F':' '{print $2}')
+          IMAGE_LINE=$(grep -m 1 '^FROM' Dockerfile | awk '{print $2}')  # Extract the full image reference
+          IMAGE_TAG=$(echo "$IMAGE_LINE" | cut -d':' -f2-)  # Get everything after the first colon
 
           echo "Extracted CLI version: $IMAGE_TAG"
 
