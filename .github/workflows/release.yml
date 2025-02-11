@@ -20,16 +20,17 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Extract CLI version from Dockerfile
+      - name: Extract full CLI version from Dockerfile
         id: extract_cli_version
         run: |
-          IMAGE_LINE=$(grep -m 1 '^FROM' Dockerfile)
-          CLI_VERSION=$(echo "$IMAGE_LINE" | awk -F':' '{print $2}')
+          IMAGE_LINE=$(grep -m 1 '^FROM' Dockerfile | awk '{print $2}')  # Extract the full image reference
+          IMAGE_TAG=$(echo "$IMAGE_LINE" | cut -d':' -f2-)  # Get everything after the first colon
 
-          echo "Extracted CLI version: $CLI_VERSION"
+          echo "Extracted CLI version: $IMAGE_TAG"
 
-          echo "CLI_VERSION=$CLI_VERSION" >> $GITHUB_ENV
-          echo "::set-output name=CLI_VERSION::$CLI_VERSION"
+          echo "CLI_VERSION=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "::set-output name=CLI_VERSION::$IMAGE_TAG"
+
 
       - name: Tag
         run: |
