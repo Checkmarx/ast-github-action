@@ -33,9 +33,11 @@ jobs:
               jq -r '.tags | map(select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))) | sort_by(split(".") | map(tonumber)) | .[-1]')
           fi
 
-          # Get the correct SHA256 manifest digest (NOT config digest)
-          DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
-            "https://registry.hub.docker.com/v2/${REPO}/manifests/${VERSION}" | grep "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
+          # Fetch the correct manifest digest
+          DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+            "https://registry.hub.docker.com/v2/${REPO}/manifests/${VERSION}" | \
+            grep -i "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
 
           if [[ -z "$DIGEST" || "$DIGEST" == "null" ]]; then
             echo "Failed to fetch manifest digest for version $VERSION"
