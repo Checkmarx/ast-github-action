@@ -13,81 +13,68 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write  # Required to create PRs
+      pull-requests: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Get Default Branch
+        id: get_branch
+        run: |
+          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          echo "DEFAULT_BRANCH=${DEFAULT_BRANCH}" >> $GITHUB_ENV
+
       - name: Get Version and SHA256 Manifest Digest
-        id: get_latest
+        id: checkmarx-ast-cli
         run: |
           REPO="checkmarx/ast-cli"
           TOKEN=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${REPO}:pull" | jq -r .token)
 
-          # If a version is provided, use it. Otherwise, fetch the latest official version.
+          # Fetch the latest version if not provided
           if [[ -n "${{ github.event.inputs.version }}" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+            RELEASE_TAG="${{ github.event.inputs.version }}"
           else
-            VERSION=$(curl -s -H "Authorization: Bearer $TOKEN" "https://registry.hub.docker.com/v2/${REPO}/tags/list" | \
+            RELEASE_TAG=$(curl -s -H "Authorization: Bearer $TOKEN" "https://registry.hub.docker.com/v2/${REPO}/tags/list" | \
               jq -r '.tags | map(select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))) | sort_by(split(".") | map(tonumber)) | .[-1]')
           fi
 
-          # Fetch the correct manifest digest
-          DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" \
-            -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
-            "https://registry.hub.docker.com/v2/${REPO}/manifests/${VERSION}" | \
-            grep -i "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
+          DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+            "https://registry.hub.docker.com/v2/${REPO}/manifests/${RELEASE_TAG}" | grep -i "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
 
-          if [[ -z "$DIGEST" || "$DIGEST" == "null" ]]; then
-            echo "Failed to fetch manifest digest for version $VERSION"
-            exit 1
-          fi
+          # Get the current tag from the Dockerfile
+          CURRENT_TAG=$(grep -oP '(?<=FROM checkmarx/ast-cli:)[^@]+' Dockerfile)
 
-          echo "Selected Version: $VERSION"
-          echo "SHA256 Digest: $DIGEST"
-
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "SHA=$DIGEST" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+          echo "DIGEST=$DIGEST" >> $GITHUB_ENV
+          echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
 
       - name: Update Dockerfile
+        if: env.CURRENT_TAG != env.RELEASE_TAG
         run: |
-          sed -i "s|FROM checkmarx/ast-cli:.*@sha256:[a-f0-9]*|FROM checkmarx/ast-cli:${VERSION}@${SHA}|" Dockerfile
+          sed -i "s|FROM checkmarx/ast-cli:.*@sha256:[a-f0-9]*|FROM checkmarx/ast-cli:${RELEASE_TAG}@${DIGEST}|" Dockerfile
 
-      - name: Check for Changes
-        id: check_changes
+      - name: Commit Changes
+        if: env.CURRENT_TAG != env.RELEASE_TAG
         run: |
-          if git diff --quiet; then
-            echo "No changes detected."
-            echo "changes=false" >> $GITHUB_ENV
-          else
-            echo "Changes detected."
-            echo "changes=true" >> $GITHUB_ENV
-          fi
-
-      - name: Create Branch
-        if: env.changes == 'true'
-        run: |
-          BRANCH_NAME="update-base-image-${VERSION}"
-          git checkout -b $BRANCH_NAME
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add Dockerfile
-          git commit -m "Update base image to checkmarx/ast-cli:${VERSION}"
-          git push origin $BRANCH_NAME
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          git commit -m "Update checkmarx-ast-cli to ${RELEASE_TAG}"
+          git push origin feature/update_cli
 
       - name: Create Pull Request
-        if: env.changes == 'true'
-        uses: peter-evans/create-pull-request@v6
+        if: env.CURRENT_TAG != env.RELEASE_TAG
+        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c
         with:
-          branch: ${{ env.BRANCH_NAME }}
-          title: "Update base image to checkmarx/ast-cli:${{ env.VERSION }}"
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          commit-message: Update checkmarx-ast-cli to ${{ env.RELEASE_TAG }}
+          title: Update checkmarx-ast-cli binaries with ${{ env.RELEASE_TAG }}
           body: |
-            This PR updates the base image in the Dockerfile to:
-            - Version: `${{ env.VERSION }}`
-            - SHA256: `${{ env.SHA }}`
+            Updates [checkmarx-ast-cli][1] to ${{ env.RELEASE_TAG }}
 
-            Please review and merge if everything looks good.
-          labels: "dependencies"
-          draft: false
+            Auto-generated by [create-pull-request][2]
+
+            [1]: https://github.com/Checkmarx/checkmarx-ast-cli
+          labels: cxone
+          branch: feature/update_cli
