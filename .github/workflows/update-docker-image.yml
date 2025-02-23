@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Get Version and SHA256 Digest
+      - name: Get Version and SHA256 Manifest Digest
         id: get_latest
         run: |
           REPO="checkmarx/ast-cli"
@@ -33,20 +33,20 @@ jobs:
               jq -r '.tags | map(select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))) | sort_by(split(".") | map(tonumber)) | .[-1]')
           fi
 
-          # Fetch the manifest for the selected version and extract the correct SHA256 digest
-          SHA=$(curl -s -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
-            "https://registry.hub.docker.com/v2/${REPO}/manifests/${VERSION}" | jq -r '.config.digest')
+          # Get the correct SHA256 manifest digest (NOT config digest)
+          DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+            "https://registry.hub.docker.com/v2/${REPO}/manifests/${VERSION}" | grep "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
 
-          if [[ -z "$SHA" || "$SHA" == "null" ]]; then
-            echo "Failed to fetch SHA256 digest for version $VERSION"
+          if [[ -z "$DIGEST" || "$DIGEST" == "null" ]]; then
+            echo "Failed to fetch manifest digest for version $VERSION"
             exit 1
           fi
 
           echo "Selected Version: $VERSION"
-          echo "SHA256: $SHA"
+          echo "SHA256 Digest: $DIGEST"
 
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "SHA=$SHA" >> $GITHUB_ENV
+          echo "SHA=$DIGEST" >> $GITHUB_ENV
 
       - name: Update Dockerfile
         run: |
