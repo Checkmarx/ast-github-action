@@ -33,9 +33,14 @@ jobs:
               jq -r '.tags | map(select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))) | sort_by(split(".") | map(tonumber)) | .[-1]')
           fi
 
-          # Get SHA256 digest for the specified version
+          # Fetch the manifest for the selected version and extract the correct SHA256 digest
           SHA=$(curl -s -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
-            "https://registry.hub.docker.com/v2/${REPO}/manifests/$VERSION" | jq -r '.config.digest')
+            "https://registry.hub.docker.com/v2/${REPO}/manifests/${VERSION}" | jq -r '.config.digest')
+
+          if [[ -z "$SHA" || "$SHA" == "null" ]]; then
+            echo "Failed to fetch SHA256 digest for version $VERSION"
+            exit 1
+          fi
 
           echo "Selected Version: $VERSION"
           echo "SHA256: $SHA"
