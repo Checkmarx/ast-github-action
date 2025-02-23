@@ -70,4 +70,4 @@ jobs:
 
             [1]: https://github.com/Checkmarx/checkmarx-ast-cli
           labels: cxone
-          branch: other/update_cli
+          branch: other/update_cli_${{ env.RELEASE_TAG }}
