@@ -1,0 +1,86 @@
+name: Update Dockerfile Base Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Specify a version (e.g., 2.3.14). Leave empty for the latest official version."
+        required: false
+        default: ""
+
+jobs:
+  update-base-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write  # Required to create PRs
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Version and SHA256 Digest
+        id: get_latest
+        run: |
+          REPO="checkmarx/ast-cli"
+          TOKEN=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${REPO}:pull" | jq -r .token)
+
+          # If a version is provided, use it. Otherwise, fetch the latest official version.
+          if [[ -n "${{ github.event.inputs.version }}" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION=$(curl -s -H "Authorization: Bearer $TOKEN" "https://registry.hub.docker.com/v2/${REPO}/tags/list" | \
+              jq -r '.tags | map(select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))) | sort_by(split(".") | map(tonumber)) | .[-1]')
+          fi
+
+          # Get SHA256 digest for the specified version
+          SHA=$(curl -s -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+            "https://registry.hub.docker.com/v2/${REPO}/manifests/$VERSION" | jq -r '.config.digest')
+
+          echo "Selected Version: $VERSION"
+          echo "SHA256: $SHA"
+
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "SHA=$SHA" >> $GITHUB_ENV
+
+      - name: Update Dockerfile
+        run: |
+          sed -i "s|FROM checkmarx/ast-cli:.*@sha256:[a-f0-9]*|FROM checkmarx/ast-cli:${VERSION}@${SHA}|" Dockerfile
+
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes detected."
+            echo "changes=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected."
+            echo "changes=true" >> $GITHUB_ENV
+          fi
+
+      - name: Create Branch
+        if: env.changes == 'true'
+        run: |
+          BRANCH_NAME="update-base-image-${VERSION}"
+          git checkout -b $BRANCH_NAME
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add Dockerfile
+          git commit -m "Update base image to checkmarx/ast-cli:${VERSION}"
+          git push origin $BRANCH_NAME
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        if: env.changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ env.BRANCH_NAME }}
+          title: "Update base image to checkmarx/ast-cli:${{ env.VERSION }}"
+          body: |
+            This PR updates the base image in the Dockerfile to:
+            - Version: `${{ env.VERSION }}`
+            - SHA256: `${{ env.SHA }}`
+
+            Please review and merge if everything looks good.
+          labels: "dependencies"
+          draft: false
