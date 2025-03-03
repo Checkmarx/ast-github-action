@@ -3,7 +3,7 @@ name: Update Dockerfile Base Image
 on:
   workflow_dispatch:
     inputs:
-      version:
+      cli_version:
         description: "Specify a version (e.g., 2.3.14). Leave empty for the latest official version."
         required: false
         default: ""
@@ -28,8 +28,8 @@ jobs:
           TOKEN=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${REPO}:pull" | jq -r .token)
 
           # Fetch the latest version if not provided
-          if [[ -n "${{ github.event.inputs.version }}" ]]; then
-            RELEASE_TAG="${{ github.event.inputs.version }}"
+          if [[ -n "${{ github.event.inputs.cli_version }}" ]]; then
+            RELEASE_TAG="${{ github.event.inputs.cli_version }}"
           else
             RELEASE_TAG=$(curl -s -H "Authorization: Bearer $TOKEN" "https://registry.hub.docker.com/v2/${REPO}/tags/list" | \
               jq -r '.tags | map(select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))) | sort_by(split(".") | map(tonumber)) | .[-1]')
