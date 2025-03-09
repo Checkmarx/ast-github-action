@@ -59,6 +59,7 @@ jobs:
           git commit -m "Update checkmarx-ast-cli to ${RELEASE_TAG}"
 
       - name: Create Pull Request
+        id: cretae_pull_request
         if: env.CURRENT_TAG != env.RELEASE_TAG
         uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c
         with:
@@ -73,3 +74,11 @@ jobs:
             [1]: https://github.com/Checkmarx/checkmarx-ast-cli
           labels: cxone
           branch: other/update_cli_${{ env.RELEASE_TAG }}
+
+      - name: Enable Pull Request Automerge
+        if: ${{ github.event_name == 'repository_dispatch' && steps.cretae_pull_request.outputs.pull-request-operation == 'created' }}
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          pull-request-number: ${{ steps.cretae_pull_request.outputs.pull-request-number }}
+          merge-method: squash
