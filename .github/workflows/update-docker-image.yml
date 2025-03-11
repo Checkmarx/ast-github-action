@@ -73,7 +73,7 @@ jobs:
 
             [1]: https://github.com/Checkmarx/checkmarx-ast-cli
           labels: cxone
-          branch: other/update_cli_${{ env.RELEASE_TAG }}
+          branch: feature/update_cli_${{ env.RELEASE_TAG }}
 
       - name: Enable Pull Request Automerge
         if: ${{ github.event_name == 'repository_dispatch' && steps.cretae_pull_request.outputs.pull-request-operation == 'created' }}
