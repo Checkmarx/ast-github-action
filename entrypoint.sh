@@ -20,8 +20,8 @@ fi
 
 if [ -n "$scanId" ]; then
   /app/bin/cx results show --scan-id "${scanId}" --report-format markdown
-  cat ./cx_result.md >$GITHUB_STEP_SUMMARY
-  rm ./cx_result.md
+  cat ./cx_result.yaml >$GITHUB_STEP_SUMMARY
+  rm ./cx_result.yaml
   echo "cxScanID=$scanId" >> $GITHUB_OUTPUT
 fi
 
