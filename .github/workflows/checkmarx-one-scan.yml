@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - other/amolmane/CLItask
   schedule:
     - cron: '00 7 * * *' # Every day at 07:00
 
