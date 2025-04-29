@@ -65,7 +65,7 @@ This is a Wrapper to trigger scans to the latest version of AST through Docker t
 ## Getting Started
 
 
-### Prerequisites are
+### Prerequisites
 
 There are no prerequisites, however we advise you to understand how Github Actions work
 
