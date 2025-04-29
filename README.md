@@ -69,7 +69,7 @@ This is a Wrapper to trigger scans to the latest version of AST through Docker t
 
 There are no prerequisites, however we advise you to understand how Github Actions work
 
-### Setting Up
+### Setting Up things
 
 
 Copy and paste the following snippet into your .yml file:
