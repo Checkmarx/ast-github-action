@@ -2,7 +2,7 @@
 # FROM anjalideore/checkmarx-test:latest@sha256:715e817a00fcfc4cc5c4ed72debb4a6f9b38b22348e36f190e4a1f985cc7661e
 # Docker actions must be run by the default Docker user (root).
 
-FROM checkmarx/ast-cli:2.3.19@sha256:e6c50b070ac33e3476dcf221f8ec6903461f9003d8cb0b8b07f71f0107b5f5e2
+FROM checkmarx/ast-cli:2.3.19@sha256:9901f01ac2c703553b80cc35f31ad0b55a119b613a5abfc0c30a23d42694456d
 
 USER root
 
