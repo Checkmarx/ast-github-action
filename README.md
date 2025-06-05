@@ -96,7 +96,7 @@ Cloud](https---checkmarx-com-resource-documents-en-34965-68678-github-cloud.html
 
 -   The source code for your project is hosted on a GitHub repo (public or private)
 
--   You have a Checkmarx One account and you have an OAuth **Client ID** and **Client Secret** for that account. To create an OAuth client, see [Creating an OAuth Client for Checkmarx One Integrations](https://checkmarx.com/resource/documents/en/34965-68619-creating-an-oauth2-client-for-checkmarx-one-integrations.html).
+-   You have a Checkmarx One account and you have an OAuth **Client ID** and **Client Secret** for that account. To create an OAuth client, see [Creating an OAuth Client for Checkmarx One Integrations](https://checkmarx.com/resource/documents/en/34965-118315-authentication-for-checkmarx-one-cli.html#UUID-a4e31a96-1f36-6293-e95a-97b4b9189060_UUID-4123a2ff-32d0-2287-8dd2-3c36947f675e).
 
 
 ## Getting Started
