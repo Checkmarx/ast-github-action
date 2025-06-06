@@ -1,4 +1,4 @@
-<img src="images/banner.jpg">
+<img src="https://raw.githubusercontent.com/Checkmarx/ci-cd-integrations/main/.images/PluginBanner.jpg">
 <br />
 <div align="center">
 
@@ -14,7 +14,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Checkmarx/ast-github-action">
-    <img src="images/checkmarx_logo.jpg" alt="Logo" width="80" height="80" />
+    <img src="https://raw.githubusercontent.com/Checkmarx/ci-cd-integrations/main/.images/xIcon.jpg" alt="Logo" width="80" height="80" />
   </a>
 
 <h3 align="center">AST-GITHUB-ACTIONS</h3>
