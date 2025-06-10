@@ -9,4 +9,6 @@ COPY cleanup.sh /app/cleanup.sh
 RUN chmod +x /app/entrypoint.sh \
     && chmod +x /app/cleanup.sh
 
+USER nonroot
+
 HEALTHCHECK NONE
