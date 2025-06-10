@@ -9,14 +9,17 @@ COPY cleanup.sh /app/cleanup.sh
 RUN chmod +x /app/entrypoint.sh \
     && chmod +x /app/cleanup.sh
 
-RUN chown -R nonroot:nonroot /app
+#RUN chown -R nonroot:nonroot /app
 
-RUN chmod -R u+w /app
+#RUN chmod -R u+w /app
 
-RUN chown -R nonroot:nonroot /home/runner/work
+#RUN chown -R nonroot:nonroot /home/runner/work
 
-RUN chmod -R u+w /home/runner/work
+#RUN chmod -R u+w /home/runner/work
 
-USER nonroot
+#USER nonroot
+#Copy the entrypoint script and properties used for the action
+
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 HEALTHCHECK NONE
