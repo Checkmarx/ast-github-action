@@ -11,7 +11,7 @@ RUN chmod +x /app/entrypoint.sh \
 
 RUN chown -R nonroot:nonroot /app
 
-RUN chmod -R u+w /app
+RUN chmod -R u+x /app
 
 USER nonroot
 
