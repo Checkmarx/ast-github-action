@@ -9,7 +9,9 @@ COPY cleanup.sh /app/cleanup.sh
 RUN chmod +x /app/entrypoint.sh \
     && chmod +x /app/cleanup.sh
 
-RUN chown -R -W nonroot:nonroot /app
+RUN chown -R nonroot:nonroot /app
+
+RUN chmod -R u+w /app
 
 USER nonroot
 
