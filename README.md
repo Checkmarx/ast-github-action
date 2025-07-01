@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/Checkmarx/ci-cd-integrations/main/.images/banner.png">
+<img src="https://raw.githubusercontent.com/Checkmarx/ci-cd-integrations/main/.images/PluginBanner.jpg">
 <br />
 <div align="center">
 
@@ -14,7 +14,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Checkmarx/ast-github-action">
-    <img src="https://raw.githubusercontent.com/Checkmarx/ci-cd-integrations/main/.images/logo.png" alt="Logo" width="80" height="80" />
+    <img src="https://raw.githubusercontent.com/Checkmarx/ci-cd-integrations/main/.images/cx_logo.svg" alt="Logo" width="80" height="80" />
   </a>
 
 <h3 align="center">AST-GITHUB-ACTIONS</h3>
@@ -37,17 +37,15 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#overview">Overview</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#setting-up">Setting Up</a></li>
-      </ul>
+      <a href="#main-features">Main Features</a>
     </li>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contribution">Contribution</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -55,35 +53,63 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- Overview -->
+# Overview
 
-This is a Wrapper to trigger scans to the latest version of AST through Docker to launch Checkmarx scans.
+The **Checkmarx One** **GitHub Action** enables you to trigger Checkmarx One scans directly from the GitHub workflow. It provides a wrapper around the [Checkmarx One CLI Tool](https://checkmarx.com/resource/documents/en/34965-68620-checkmarx-one-cli-tool.html) which creates a zip archive from your source code repository and uploads it to Checkmarx One for scanning. The Github Action provides easy integration with GitHub while enabling scan customization using the full functionality and flexibility of the CLI tool.
 
 
-<!-- GETTING STARTED -->
+The GitHub Action can be customized to trigger scans when particular actions (e.g., push, or pull request) occur on specific branches of your repo. You can also add pre and post scan steps to your workflow. For example, you can add a step to screen commits to verify if the changes
+made warrant running a new scan.
+
+The plugin code can be found [here](https://github.com/CheckmarxDev/ast-github-action).
+
+
+> There is an alternative method for integrating GitHub with Checkmarx One which is done directly from Checkmarx One, see [GitHub
+Cloud](https---checkmarx-com-resource-documents-en-34965-68678-github-cloud.html). That method is easier to implement but doesn’t enable full customization of the process.
+
+## Main Features
+-   Automatically trigger scans from the GitHub workflow, running all Checkmarx One scanners: CxSAST, CxSCA, IaC Security, Container Security, API Security, Secret Detection and Repository Health (OSSF Scorecard).
+
+
+-   Supports use of CLI arguments to customize scan configuration, enabling you to:
+
+    -   Customize filters to specify which folders and files are scanned
+
+    -   Apply preset query configurations
+
+    -   Customize SCA scans using [SCA Resolver](https://checkmarx.com/resource/documents/en/34965-19196-checkmarx-sca-resolver.html)
+
+    -   Set thresholds to break build
+
+-   Shows scan results summary in the GitHub build logs
+
+-   Break build upon policy violation
+
+-   Supports generating reports that are integrated into the GitHub
+    Security alerts
+
+-   Decorates pull requests with info about new vulnerabilities that were identified as well as vulnerabilities that were fixed by the code changes
+
+
+## Prerequisites
+
+-   The source code for your project is hosted on a GitHub repo (public or private)
+
+-   You have a Checkmarx One account and you have an OAuth **Client ID** and **Client Secret** for that account. To create an OAuth client, see [Creating an OAuth Client for Checkmarx One Integrations](https://checkmarx.com/resource/documents/en/34965-118315-authentication-for-checkmarx-one-cli.html#UUID-a4e31a96-1f36-6293-e95a-97b4b9189060_UUID-4123a2ff-32d0-2287-8dd2-3c36947f675e).
+
+
 ## Getting Started
 
+1.   Verify that all prerequisites are in place.
 
-### Prerequisites
+2.   Configure GitHub secrets for Checkmarx One authentication, as described [here](https://checkmarx.com/resource/documents/en/34965-68703-checkmarx-one-github-actions-initial-setup.html).
 
-There are no prerequisites, however we advise you to understand how Github Actions work
-
-### Setting Up
+3.   Configure a GitHub Action with a Checkmarx One workflow, as described [here](https://checkmarx.com/resource/documents/en/34965-68704-configuring-a-github-action-with-a-checkmarx-one-workflow.html).
 
 
-Copy and paste the following snippet into your .yml file:
-```
-      - name: Checkmarx AST CLI Action
-        uses: checkmarx/ast-github-action@main #Github Action version
-        with:
-          base_uri: https://ast.checkmarx.net/
-          cx_tenant: your_tenant
-          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
-          source_dir: "path-to-scan" (dafault is ".")
-```
-
+## Feedback
+We’d love to hear your feedback! If you come across a bug or have a feature request, please let us know by submitting an issue in [GitHub Issues](https://github.com/Checkmarx/ast-github-action/issues).
 
 
 ## Usage
