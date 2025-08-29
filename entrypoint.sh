@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 output_file=./output.log
 
