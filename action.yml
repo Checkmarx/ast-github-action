@@ -26,10 +26,26 @@ inputs:
     required: false
     default: ${{ github.token }}
     description: 'GitHub API Token'
+  global_params:
+    required: false
+    default: ''
+    description: 'Global parameters applied to all cx commands'
+  scan_params:
+    required: false
+    default: ''
+    description: 'Additional parameters for cx scan command only'
+  utils_params:
+    required: false
+    default: ''
+    description: 'Additional parameters for cx utils pr command only'
+  results_params:
+    required: false
+    default: ''
+    description: 'Additional parameters for cx results show command only'
   additional_params:
     required: false
     default: ''
-    description: 'Additional parameters for AST scan'
+    description: '[DEPRECATED] Use scan_params instead. Additional parameters for AST scan'
   repo_name:
     required: false
     default:  ${{ github.event.repository.name }}
@@ -62,6 +78,10 @@ runs:
     - ${{ inputs.github_token }}
     - ${{ inputs.project_name }}
     - ${{ inputs.additional_params }}
+    - ${{ inputs.global_params }}
+    - ${{ inputs.scan_params }}
+    - ${{ inputs.utils_params }}
+    - ${{ inputs.results_params }}
     - ${{ inputs.repo_name }}
     - ${{ inputs.namespace }}
     - ${{ inputs.pr_number }}
@@ -79,6 +99,10 @@ runs:
     BRANCH: ${{ inputs.branch }}
     PROJECT_NAME: ${{ inputs.project_name }}
     ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
+    GLOBAL_PARAMS: ${{ inputs.global_params }}
+    SCAN_PARAMS: ${{ inputs.scan_params }}
+    UTILS_PARAMS: ${{ inputs.utils_params }}
+    RESULTS_PARAMS: ${{ inputs.results_params }}
     REPO_NAME: ${{ inputs.repo_name }}
     NAMESPACE: ${{ inputs.namespace }}
     PR_NUMBER: ${{ inputs.pr_number }}
