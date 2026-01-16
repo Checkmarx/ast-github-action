@@ -143,7 +143,9 @@ runs:
         SUMMARY_FILE=$(mktemp)
 
         # Run the Docker container with --rm flag for automatic cleanup
+        # Use --entrypoint to override the base image's entrypoint (cx)
         docker run --rm \
+          --entrypoint /app/entrypoint.sh \
           -e CX_BASE_URI="${CX_BASE_URI}" \
           -e CX_TENANT="${CX_TENANT}" \
           -e CX_CLIENT_ID="${CX_CLIENT_ID}" \
@@ -167,8 +169,7 @@ runs:
           -v "${SUMMARY_FILE}:/github/file_commands/summary" \
           -v "${GITHUB_WORKSPACE}:/github/workspace" \
           -w /github/workspace \
-          checkmarx-ast-action:local \
-          /app/entrypoint.sh
+          checkmarx-ast-action:local
 
         EXIT_CODE=$?
 
