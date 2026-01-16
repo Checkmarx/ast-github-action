@@ -1,6 +1,9 @@
 name: Test Custom Registry Feature
 
 on:
+  push:
+    branches:
+      - feature/configurable-base-registry
   workflow_dispatch:
     inputs:
       base_registry:
