@@ -2,6 +2,18 @@ name: 'Checkmarx AST Github Action'
 description: 'Simplify Checkmarx Scanning of source code along with Result consumption leveraging Checkmarx AST solution.'
 author: 'Checkmarx'
 inputs:
+  base_registry:
+    required: false
+    default: ''
+    description: 'Base container registry for pulling checkmarx/ast-cli image (e.g., my-registry.example.com). If not provided, defaults to Docker Hub (docker.io).'
+  base_registry_username:
+    required: false
+    default: ''
+    description: 'Username for authenticating with the base container registry'
+  base_registry_password:
+    required: false
+    default: ''
+    description: 'Password/token for authenticating with the base container registry'
   base_uri:
     required: true
     description: 'Provide the AST portal URL'
@@ -62,51 +74,119 @@ inputs:
     required: false
     default: .
     description: "Source directory"
-outputs: 
+outputs:
   cxcli:
     description: output from cli
+    value: ${{ steps.run-scan.outputs.cxcli }}
   cxScanID:
     description: scan ID output from cli
+    value: ${{ steps.run-scan.outputs.cxScanID }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.base_uri }}
-    - ${{ inputs.cx_tenant }}
-    - ${{ inputs.cx_client_id }}
-    - ${{ inputs.cx_client_secret }}
-    - ${{ inputs.github_token }}
-    - ${{ inputs.project_name }}
-    - ${{ inputs.additional_params }}
-    - ${{ inputs.global_params }}
-    - ${{ inputs.scan_params }}
-    - ${{ inputs.utils_params }}
-    - ${{ inputs.results_params }}
-    - ${{ inputs.repo_name }}
-    - ${{ inputs.namespace }}
-    - ${{ inputs.pr_number }}
-    - ${{ inputs.source_dir }}
-  entrypoint: '/app/entrypoint.sh'
-  post-if: cancelled()
-  post-entrypoint: '/app/cleanup.sh'
+  using: 'composite'
+  steps:
+    # Step 1: Login to base registry if credentials are provided
+    - name: Login to base registry
+      if: ${{ inputs.base_registry != '' && inputs.base_registry_username != '' && inputs.base_registry_password != '' }}
+      shell: bash
+      run: |
+        echo "Logging into base registry: ${{ inputs.base_registry }}"
+        echo "${{ inputs.base_registry_password }}" | docker login "${{ inputs.base_registry }}" -u "${{ inputs.base_registry_username }}" --password-stdin
 
-  env:
-    CX_BASE_URI: "${{ inputs.base_uri }}"
-    CX_TENANT: ${{ inputs.cx_tenant }}
-    CX_CLIENT_ID: ${{ inputs.cx_client_id }}
-    CX_CLIENT_SECRET: ${{ inputs.cx_client_secret }}
-    GITHUB_TOKEN: ${{ inputs.github_token }}
-    BRANCH: ${{ inputs.branch }}
-    PROJECT_NAME: ${{ inputs.project_name }}
-    ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
-    GLOBAL_PARAMS: ${{ inputs.global_params }}
-    SCAN_PARAMS: ${{ inputs.scan_params }}
-    UTILS_PARAMS: ${{ inputs.utils_params }}
-    RESULTS_PARAMS: ${{ inputs.results_params }}
-    REPO_NAME: ${{ inputs.repo_name }}
-    NAMESPACE: ${{ inputs.namespace }}
-    PR_NUMBER: ${{ inputs.pr_number }}
-    SOURCE_DIR: ${{ inputs.source_dir }}
+    # Step 2: Build Docker image with custom base registry
+    - name: Build Docker image
+      shell: bash
+      run: |
+        # Prepare the base registry argument
+        BASE_REGISTRY_ARG=""
+        if [ -n "${{ inputs.base_registry }}" ]; then
+          # Ensure registry ends with a slash
+          REGISTRY="${{ inputs.base_registry }}"
+          if [[ ! "$REGISTRY" == */ ]]; then
+            REGISTRY="${REGISTRY}/"
+          fi
+          BASE_REGISTRY_ARG="$REGISTRY"
+          echo "Using custom base registry: ${BASE_REGISTRY_ARG}"
+        else
+          echo "Using default Docker Hub registry"
+        fi
+
+        # Build the Docker image
+        docker build \
+          --build-arg BASE_REGISTRY="${BASE_REGISTRY_ARG}" \
+          -t checkmarx-ast-action:local \
+          "${{ github.action_path }}"
+
+    # Step 3: Run the scan
+    - name: Run Checkmarx scan
+      id: run-scan
+      shell: bash
+      env:
+        CX_BASE_URI: ${{ inputs.base_uri }}
+        CX_TENANT: ${{ inputs.cx_tenant }}
+        CX_CLIENT_ID: ${{ inputs.cx_client_id }}
+        CX_CLIENT_SECRET: ${{ inputs.cx_client_secret }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        BRANCH: ${{ inputs.branch }}
+        PROJECT_NAME: ${{ inputs.project_name }}
+        ADDITIONAL_PARAMS: ${{ inputs.additional_params }}
+        GLOBAL_PARAMS: ${{ inputs.global_params }}
+        SCAN_PARAMS: ${{ inputs.scan_params }}
+        UTILS_PARAMS: ${{ inputs.utils_params }}
+        RESULTS_PARAMS: ${{ inputs.results_params }}
+        REPO_NAME: ${{ inputs.repo_name }}
+        NAMESPACE: ${{ inputs.namespace }}
+        PR_NUMBER: ${{ inputs.pr_number }}
+        SOURCE_DIR: ${{ inputs.source_dir }}
+      run: |
+        # Create temporary files for outputs
+        OUTPUT_FILE=$(mktemp)
+        SUMMARY_FILE=$(mktemp)
+
+        # Run the Docker container with --rm flag for automatic cleanup
+        docker run --rm \
+          -e CX_BASE_URI="${CX_BASE_URI}" \
+          -e CX_TENANT="${CX_TENANT}" \
+          -e CX_CLIENT_ID="${CX_CLIENT_ID}" \
+          -e CX_CLIENT_SECRET="${CX_CLIENT_SECRET}" \
+          -e GITHUB_TOKEN="${GITHUB_TOKEN}" \
+          -e BRANCH="${BRANCH}" \
+          -e PROJECT_NAME="${PROJECT_NAME}" \
+          -e ADDITIONAL_PARAMS="${ADDITIONAL_PARAMS}" \
+          -e GLOBAL_PARAMS="${GLOBAL_PARAMS}" \
+          -e SCAN_PARAMS="${SCAN_PARAMS}" \
+          -e UTILS_PARAMS="${UTILS_PARAMS}" \
+          -e RESULTS_PARAMS="${RESULTS_PARAMS}" \
+          -e REPO_NAME="${REPO_NAME}" \
+          -e NAMESPACE="${NAMESPACE}" \
+          -e PR_NUMBER="${PR_NUMBER}" \
+          -e SOURCE_DIR="${SOURCE_DIR}" \
+          -e GITHUB_SERVER_URL="${GITHUB_SERVER_URL}" \
+          -e GITHUB_OUTPUT="/github/file_commands/output" \
+          -e GITHUB_STEP_SUMMARY="/github/file_commands/summary" \
+          -v "${OUTPUT_FILE}:/github/file_commands/output" \
+          -v "${SUMMARY_FILE}:/github/file_commands/summary" \
+          -v "${GITHUB_WORKSPACE}:/github/workspace" \
+          -w /github/workspace \
+          checkmarx-ast-action:local \
+          /app/entrypoint.sh
+
+        EXIT_CODE=$?
+
+        # Copy outputs to GitHub outputs file
+        if [ -f "${OUTPUT_FILE}" ]; then
+          cat "${OUTPUT_FILE}" >> $GITHUB_OUTPUT
+        fi
+
+        # Copy summary to GitHub step summary
+        if [ -f "${SUMMARY_FILE}" ]; then
+          cat "${SUMMARY_FILE}" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        # Cleanup temp files
+        rm -f "${OUTPUT_FILE}" "${SUMMARY_FILE}"
+
+        exit $EXIT_CODE
+
 branding:
   icon: 'check'
   color: 'green'

@@ -1,0 +1,28 @@
+name: Checkmarx AST Scan with Custom Registry
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Checkmarx AST CLI Action
+        uses: checkmarx/ast-github-action@main
+        with:
+          # Custom base registry for environments with restricted access to public Docker Hub
+          # The action will pull checkmarx/ast-cli image from this registry instead of docker.io
+          base_registry: my-enterprise-registry.example.com
+          base_registry_username: ${{ secrets.REGISTRY_USERNAME }}
+          base_registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+          
+          # Standard Checkmarx One configuration
+          base_uri: https://ast.checkmarx.net/
+          cx_tenant: your_tenant
+          cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+

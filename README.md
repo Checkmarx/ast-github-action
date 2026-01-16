@@ -98,6 +98,46 @@ Cloud](https---checkmarx-com-resource-documents-en-34965-68678-github-cloud.html
 
 -   You have a Checkmarx One account and you have an OAuth **Client ID** and **Client Secret** for that account. To create an OAuth client, see [Creating an OAuth Client for Checkmarx One Integrations](https://checkmarx.com/resource/documents/en/34965-118315-authentication-for-checkmarx-one-cli.html#UUID-a4e31a96-1f36-6293-e95a-97b4b9189060_UUID-4123a2ff-32d0-2287-8dd2-3c36947f675e).
 
+## Custom Base Registry
+
+For environments with restricted access to public Docker registries (e.g., Docker Hub), you can configure the action to pull the `checkmarx/ast-cli` base image from an internal/enterprise registry.
+
+### Configuration
+
+Use the following input parameters:
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `base_registry` | No | Base container registry URL (e.g., `my-registry.example.com`). If not provided, defaults to Docker Hub. |
+| `base_registry_username` | No | Username for authenticating with the base container registry. |
+| `base_registry_password` | No | Password/token for authenticating with the base container registry. |
+
+### Example Usage
+
+```yaml
+- name: Checkmarx AST CLI Action
+  uses: checkmarx/ast-github-action@main
+  with:
+    # Custom base registry configuration
+    base_registry: my-enterprise-registry.example.com
+    base_registry_username: ${{ secrets.REGISTRY_USERNAME }}
+    base_registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    # Standard Checkmarx One configuration
+    base_uri: https://ast.checkmarx.net/
+    cx_tenant: your_tenant
+    cx_client_id: ${{ secrets.CX_CLIENT_ID }}
+    cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+```
+
+### Setting Up Your Enterprise Registry
+
+1. Mirror or proxy the `checkmarx/ast-cli` image from Docker Hub to your internal registry
+2. Ensure the image is available at `<your-registry>/checkmarx/ast-cli:<tag>`
+3. Configure the action with your registry URL and credentials
+
+For a complete example workflow, see [`sample-yml/checkmarx-ast-scan-custom-registry.yml`](sample-yml/checkmarx-ast-scan-custom-registry.yml).
+
 
 ## Getting Started
 

@@ -38,8 +38,8 @@ jobs:
           DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
             "https://registry.hub.docker.com/v2/${REPO}/manifests/${RELEASE_TAG}" | grep -i "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
 
-          # Get the current tag from the Dockerfile
-          CURRENT_TAG=$(grep -oP '(?<=FROM checkmarx/ast-cli:)[^@]+' Dockerfile)
+          # Get the current tag from the Dockerfile (supports optional BASE_REGISTRY variable)
+          CURRENT_TAG=$(grep -oP '(?<=checkmarx/ast-cli:)[^@]+' Dockerfile)
 
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
           echo "DIGEST=$DIGEST" >> $GITHUB_ENV
@@ -48,7 +48,8 @@ jobs:
       - name: Update Dockerfile
         if: env.CURRENT_TAG != env.RELEASE_TAG
         run: |
-          sed -i "s|FROM checkmarx/ast-cli:.*@sha256:[a-f0-9]*|FROM checkmarx/ast-cli:${RELEASE_TAG}@${DIGEST}|" Dockerfile
+          # Update the base image tag (supports optional BASE_REGISTRY variable in FROM)
+          sed -i "s|checkmarx/ast-cli:.*@sha256:[a-f0-9]*|checkmarx/ast-cli:${RELEASE_TAG}@${DIGEST}|" Dockerfile
 
       - name: Commit Changes
         if: env.CURRENT_TAG != env.RELEASE_TAG
