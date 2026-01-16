@@ -6,14 +6,10 @@ on:
       - feature/configurable-base-registry
   workflow_dispatch:
     inputs:
-      base_registry:
-        description: 'Custom registry URL (e.g., your-artifactory.jfrog.io)'
-        required: true
-        default: ''
       skip_scan:
         description: 'Skip actual scan (just test Docker build)'
         type: boolean
-        default: false
+        default: true
 
 jobs:
   test-custom-registry:
@@ -36,24 +32,24 @@ jobs:
       # Step 2: Test registry login (standalone test)
       - name: Test Registry Login
         run: |
-          echo "Testing login to: ${{ inputs.base_registry }}"
-          echo "${{ secrets.ARTIFACTORY_PASSWORD }}" | docker login "${{ inputs.base_registry }}" -u "${{ secrets.ARTIFACTORY_USERNAME }}" --password-stdin
+          echo "Testing login to: ${{ secrets.ARTIFACTORY_URL }}"
+          echo "${{ secrets.ARTIFACTORY_PASSWORD }}" | docker login "${{ secrets.ARTIFACTORY_URL }}" -u "${{ secrets.ARTIFACTORY_USERNAME }}" --password-stdin
           echo "✅ Registry login successful!"
 
       # Step 3: Test image pull (standalone test)
       - name: Test Image Pull
         run: |
           echo "Testing image pull from custom registry..."
-          REGISTRY="${{ inputs.base_registry }}"
+          REGISTRY="${{ secrets.ARTIFACTORY_URL }}"
           # Ensure registry ends with /
           [[ "$REGISTRY" != */ ]] && REGISTRY="${REGISTRY}/"
-          
+
           IMAGE="${REGISTRY}checkmarx/ast-cli:2.3.41"
           echo "Pulling: $IMAGE"
-          
+
           docker pull "$IMAGE"
           echo "✅ Image pull successful!"
-          
+
           echo ""
           echo "Image details:"
           docker inspect "$IMAGE" | jq '.[0].RepoTags, .[0].Created, .[0].Size'
@@ -62,18 +58,18 @@ jobs:
       - name: Test Docker Build
         run: |
           echo "Testing Docker build with custom base registry..."
-          REGISTRY="${{ inputs.base_registry }}"
+          REGISTRY="${{ secrets.ARTIFACTORY_URL }}"
           [[ "$REGISTRY" != */ ]] && REGISTRY="${REGISTRY}/"
-          
+
           echo "Building with BASE_REGISTRY=${REGISTRY}"
-          
+
           docker build \
             --build-arg BASE_REGISTRY="${REGISTRY}" \
             -t checkmarx-ast-action:test \
             .
-          
+
           echo "✅ Docker build successful!"
-          
+
           echo ""
           echo "Built image details:"
           docker images checkmarx-ast-action:test
@@ -83,7 +79,7 @@ jobs:
         if: ${{ inputs.skip_scan == false }}
         uses: ./
         with:
-          base_registry: ${{ inputs.base_registry }}
+          base_registry: ${{ secrets.ARTIFACTORY_URL }}
           base_registry_username: ${{ secrets.ARTIFACTORY_USERNAME }}
           base_registry_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
           base_uri: ${{ secrets.CX_BASE_URI }}
@@ -109,5 +105,5 @@ jobs:
             echo "| Full Scan | ⏭️ Skipped |" >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Registry Used:** \`${{ inputs.base_registry }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Registry Used:** \`${{ secrets.ARTIFACTORY_URL }}\`" >> $GITHUB_STEP_SUMMARY
 
