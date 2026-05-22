@@ -4,9 +4,15 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   release-draft:
-    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # for release-drafter/release-drafter to create a github release
+      pull-requests: write  # for release-drafter/release-drafter to add label to PR
+    runs-on: cx-public-ubuntu-x64
     
     steps:
       - name: Create Release
