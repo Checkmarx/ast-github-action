@@ -64,7 +64,7 @@ jobs:
       - name: Create Pull Request
         id: cretae_pull_request
         if: env.CURRENT_TAG != env.RELEASE_TAG
-        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c
+        uses: step-security/create-pull-request@50c103da2b9ca12cd5bc013fc6931051a5aa872b # v8.1.1
         with:
           token: ${{ secrets.AUTOMATION_TOKEN }}
           commit-message: Update checkmarx-ast-cli to ${{ env.RELEASE_TAG }}
