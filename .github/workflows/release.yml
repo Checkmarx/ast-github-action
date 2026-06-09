@@ -8,20 +8,19 @@ on:
         description: 'Next release tag'
         required: true
 
-permissions:
-  contents: write
-  
 jobs:
   release:
     runs-on: cx-public-ubuntu-x64
+    permissions:
+      contents: write
     outputs:
       CLI_VERSION: ${{ steps.extract_cli_version.outputs.CLI_VERSION }}
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
-      #  with:
-      #    token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract full CLI version from Dockerfile
         id: extract_cli_version
