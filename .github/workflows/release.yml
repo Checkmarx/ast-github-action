@@ -11,8 +11,8 @@ on:
 jobs:
   release:
     runs-on: cx-public-ubuntu-x64
-    # permissions:
-    #   contents: write
+    permissions:
+      contents: write
     outputs:
       CLI_VERSION: ${{ steps.extract_cli_version.outputs.CLI_VERSION }}
 
