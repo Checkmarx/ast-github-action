@@ -55,6 +55,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.tag }}
           generate_release_notes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   notify:
     needs: release
