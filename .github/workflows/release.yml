@@ -57,14 +57,14 @@ jobs:
           generate_release_notes: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  notify:
-    needs: release
-    uses: Checkmarx/plugins-release-workflow/.github/workflows/release-notify.yml@main
-    with:
-      product_name: Github Action
-      release_version: ${{ github.event.inputs.tag }}
-      cli_release_version: ${{ needs.release.outputs.CLI_VERSION }}
-      release_author: "Phoenix Team"
-      release_url: https://github.com/Checkmarx/ast-github-action/releases/tag/${{ github.event.inputs.tag }}
-      jira_product_name: GITHUB_ACTION
-    secrets: inherit
+  # notify:
+  #   needs: release
+  #   uses: Checkmarx/plugins-release-workflow/.github/workflows/release-notify.yml@main
+  #   with:
+  #     product_name: Github Action
+  #     release_version: ${{ github.event.inputs.tag }}
+  #     cli_release_version: ${{ needs.release.outputs.CLI_VERSION }}
+  #     release_author: "Phoenix Team"
+  #     release_url: https://github.com/Checkmarx/ast-github-action/releases/tag/${{ github.event.inputs.tag }}
+  #     jira_product_name: GITHUB_ACTION
+  #   secrets: inherit
