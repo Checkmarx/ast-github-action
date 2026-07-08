@@ -24,8 +24,8 @@ jobs:
           api-key: ${{ secrets.STEP_SECURITY_API_KEY }}
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
-        # with:
-        #   token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          persist-credentials: false
 
       - name: Extract full CLI version from Dockerfile
         id: extract_cli_version
