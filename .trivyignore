@@ -1,0 +1,25 @@
+# Trivy Ignore File for ast-github-action
+# CVEs listed here are accepted risks or have patches pending
+# Format: CVE-XXXX-XXXXX or GHSA-xxxx-xxxx-xxxx
+# Optional: exp=2026-12-31 (expiry date to re-evaluate)
+
+# Wolfi OS Layer (inherited from checkmarx/ast-cli:2.3.55)
+CVE-2026-6791 # glibc fixed version available in newer base images
+
+# Go Binary Dependencies
+# Syft (SBOM generation)
+CVE-2026-33481 # Syft improper temporary file cleanup, fixed in v1.42.3
+
+# Docker/Moby (contained usage, no privilege escalation risk)
+CVE-2026-34040 exp=2027-06-30 # Moby authorization bypass - monitor for v29.3.1+
+CVE-2026-33997 # Moby privilege validation bypass during plugin installation
+
+# ORAS-Go (artifact registry operations)
+CVE-2026-50151 exp=2027-06-30 # oras-go credential forwarding via Location header, fixed in v2.6.1
+CVE-2026-50162 # oras-go symlink traversal in file store
+GHSA-vh4v-2xq2-g5cg # ORAS forwards registry credentials across redirects
+CVE-2026-48978 # oras-go bearer token realm hijacking
+
+# Go Standard Library
+CVE-2026-39822 # Root escape via symlink + trailing slash
+CVE-2026-42505 # ECH privacy leak in crypto/tls
