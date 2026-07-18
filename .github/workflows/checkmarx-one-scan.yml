@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   cx-scan:
-    name: Checkmarx One Scan
+    name: cx-scan
     runs-on: cx-public-ubuntu-x64
     steps:
       - name: Checkout
