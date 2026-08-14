@@ -23,3 +23,8 @@ CVE-2026-48978 # oras-go bearer token realm hijacking
 # Go Standard Library
 CVE-2026-39822 # Root escape via symlink + trailing slash
 CVE-2026-42505 # ECH privacy leak in crypto/tls
+
+# golang.org/x/net (via stdlib) - disclosed 2026-08-14, fix requires Go toolchain
+# upgrade to 1.26.6/1.27.0-rc.3 in ast-cli; tracked for the next cx release.
+CVE-2026-39821 exp=2026-09-30 # x/net/idna privilege escalation via incorrect Punycode label processing
+CVE-2026-46600 exp=2026-09-30 # x/net/dns/dnsmessage DoS via invalid DNS record parsing
