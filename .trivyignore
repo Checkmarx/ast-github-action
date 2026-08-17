@@ -28,3 +28,11 @@ CVE-2026-42505 # ECH privacy leak in crypto/tls
 # upgrade to 1.26.6/1.27.0-rc.3 in ast-cli; tracked for the next cx release.
 CVE-2026-39821 exp=2026-09-30 # x/net/idna privilege escalation via incorrect Punycode label processing
 CVE-2026-46600 exp=2026-09-30 # x/net/dns/dnsmessage DoS via invalid DNS record parsing
+
+# Go stdlib (app/bin/cx, gobinary) - same Go 1.26.6/1.27.0-rc.3 toolchain upgrade as above
+CVE-2026-33818 exp=2026-09-30 # encoding/asn1 DoS via excessive recursion in Unmarshal
+CVE-2026-56853 exp=2026-09-30 # net/http unencrypted HTTP/2 connections DoS
+CVE-2026-56858 exp=2026-09-30 # html/template XSS via pathological input
+CVE-2026-56859 exp=2026-09-30 # encoding/xml DoS via recursion depth issue
+CVE-2026-56860 exp=2026-09-30 # net/url DoS from quadratic complexity in path parsing
+CVE-2026-56862 exp=2026-09-30 # crypto/tls DoS via indefinite KeyUpdate messages
