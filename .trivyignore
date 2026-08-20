@@ -23,3 +23,7 @@ CVE-2026-48978 # oras-go bearer token realm hijacking
 # Go Standard Library
 CVE-2026-39822 # Root escape via symlink + trailing slash
 CVE-2026-42505 # ECH privacy leak in crypto/tls
+
+# Wolfi OS Layer (inherited from checkmarx/ast-cli:2.3.63)
+CVE-2026-38753 exp=2026-XX-XX # busybox awk_sub() DoS, fixed in 1.38.0-r0, pending base image update
+CVE-2026-38754 exp=2026-XX-XX # busybox ash.c heap overflow, fixed in 1.38.0-r0, pending base image update
