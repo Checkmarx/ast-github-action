@@ -3,7 +3,7 @@ description: 'Simplify Checkmarx Scanning of source code along with Result consu
 author: 'Checkmarx'
 inputs:
   cx_keyring_mode:
-    required: false
+    required: true
     default: 'disabled'
     description: 'disable keyring mode for cxcli, default is disabled'
   base_uri:
