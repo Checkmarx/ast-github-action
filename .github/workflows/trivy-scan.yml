@@ -28,7 +28,7 @@ jobs:
         run: docker build -t "ast-github-action:${IMAGE_TAG}" .
 
       - name: Fail build on CRITICAL or HIGH vulnerabilities
-        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
+        uses: step-security/trivy-action@4d04e2d32ba36aae5693467644b22741d68f9115 # v0.36.0
         with:
           image-ref: ast-github-action:${{ github.sha }}
           format: table
