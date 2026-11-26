@@ -21,9 +21,10 @@ jobs:
   update-base-image:
     name: Update Base Image
     runs-on: cx-public-ubuntu-x64
+    environment: release-automation
     permissions:
-      contents: write  # for git commit and push of Dockerfile changes
-      pull-requests: write  # for step-security/create-pull-request to open a PR
+      contents: read  # for actions/checkout; the branch push and the PR use the GitHub App token
+      id-token: write  # for configure-aws-credentials to assume the AWS role via OIDC
 
     steps:
       - name: Checkout Repository
@@ -34,13 +35,17 @@ jobs:
       - name: Get Version and SHA256 Manifest Digest
         id: checkmarx-ast-cli
         env:
-          CLI_VERSION_INPUT: ${{ github.event.inputs.cli_version }}
+          CLI_VERSION_INPUT: ${{ github.event.inputs.cli_version || github.event.client_payload.version }}
         run: |
           REPO="checkmarx/ast-cli"
           TOKEN=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${REPO}:pull" | jq -r .token)
 
           # Fetch the latest version if not provided
           if [[ -n "${CLI_VERSION_INPUT}" ]]; then
+            if ! [[ "${CLI_VERSION_INPUT}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::Invalid CLI version: ${CLI_VERSION_INPUT}"
+              exit 1
+            fi
             RELEASE_TAG="${CLI_VERSION_INPUT}"
           else
             RELEASE_TAG=$(curl -s -H "Authorization: Bearer $TOKEN" "https://registry.hub.docker.com/v2/${REPO}/tags/list" | \
@@ -49,6 +54,10 @@ jobs:
 
           DIGEST=$(curl -s -I -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
             "https://registry.hub.docker.com/v2/${REPO}/manifests/${RELEASE_TAG}" | grep -i "Docker-Content-Digest" | awk '{print $2}' | tr -d '\r')
+          if [[ -z "${DIGEST}" ]]; then
+            echo "::error::No manifest digest found for ${REPO}:${RELEASE_TAG} on Docker Hub."
+            exit 1
+          fi
 
           # Get the current tag from the Dockerfile
           CURRENT_TAG=$(grep -oP '(?<=FROM checkmarx/ast-cli:)[^@]+' Dockerfile)
@@ -70,12 +79,50 @@ jobs:
           git add Dockerfile
           git commit -m "Update checkmarx-ast-cli to ${RELEASE_TAG}"
 
+      - name: Configure AWS credentials
+        if: env.CURRENT_TAG != env.RELEASE_TAG
+        uses: step-security/configure-aws-credentials@1448016543d4432bd608e0de7871c7bf9e9be925 # v6.2.1
+        with:
+          role-to-assume: ${{ secrets.PLUGINS_APP_ROLE_ARN }}
+          aws-region: ${{ secrets.PLUGINS_APP_AWS_REGION }}
+          role-session-name: plugins-release-update-pr
+
+      - name: Fetch GitHub App private key
+        if: env.CURRENT_TAG != env.RELEASE_TAG
+        uses: step-security/aws-secretsmanager-get-secrets@102b6b2a2528747bcc321bb99ef326d8be7ef58f # v3.0.1
+        with:
+          secret-ids: PLUGINS_APP_KEY,${{ secrets.PLUGINS_APP_SECRET_NAME }}
+
+      - name: Mask each line of the private key
+        if: env.CURRENT_TAG != env.RELEASE_TAG
+        run: |
+          while IFS= read -r line; do
+            line="${line%$'\r'}"
+            if [ -n "${line}" ]; then
+              echo "::add-mask::${line}"
+            fi
+          done <<< "${PLUGINS_APP_KEY}"
+
+      - name: Create GitHub App token
+        id: app-token
+        if: env.CURRENT_TAG != env.RELEASE_TAG
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.PLUGINS_APP_CLIENT_ID }}
+          private-key: ${{ env.PLUGINS_APP_KEY }}
+          permission-contents: write  # push the update branch
+          permission-pull-requests: write  # open the PR and enable auto-merge
+
+      - name: Remove the private key from the environment
+        if: env.CURRENT_TAG != env.RELEASE_TAG
+        run: echo "PLUGINS_APP_KEY=" >> "${GITHUB_ENV}"
+
       - name: Create Pull Request
         id: cretae_pull_request
         if: env.CURRENT_TAG != env.RELEASE_TAG
         uses: step-security/create-pull-request@50c103da2b9ca12cd5bc013fc6931051a5aa872b # v8.1.1
         with:
-          token: ${{ secrets.AUTOMATION_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           commit-message: Update checkmarx-ast-cli to ${{ env.RELEASE_TAG }}
           title: Update checkmarx-ast-cli binaries with ${{ env.RELEASE_TAG }}
           body: |
@@ -86,3 +133,10 @@ jobs:
             [1]: https://github.com/Checkmarx/checkmarx-ast-cli
           labels: cxone
           branch: feature/update_cli_${{ env.RELEASE_TAG }}
+
+      - name: Enable auto-merge (squash after 2 cx-maintainers approvals)
+        if: steps.cretae_pull_request.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ steps.cretae_pull_request.outputs.pull-request-number }}
+        run: gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --auto --squash
